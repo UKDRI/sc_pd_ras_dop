@@ -1,0 +1,20 @@
+#+TITLE: ParkinsonPathAI (Working title) - AI Models for Pathway Analysis in Parkinson’s Disease
+
+#+Author: Sam Neaves
+
+* Introduction
+
+This project focuses on analyzing single-cell transcriptomic data from
+brain cells of both control and Parkinson’s disease donors. Our goal
+is to characterize the complex interplay between the RAS and dopamine
+pathways using symbolic AI techniques. By employing methods like
+descriptive rule induction, causal analysis, and model
+building/repair, we aim to identify and understand unique cell states
+associated with Parkinson’s disease.
+
+
+Our approach reconciles gene networks with experimental data, allowing
+us to reason about network consistency and potentially discover key
+molecular signatures involved in disease progression. This repository
+contains code, data preprocessing steps, and model implementation
+details for this exploratory analysis.
