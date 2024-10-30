@@ -15,6 +15,14 @@ associated with Parkinson’s disease.
 
 Our approach reconciles gene networks with experimental data, allowing
 us to reason about network consistency and potentially discover key
-molecular signatures involved in disease progression. This repository
-contains code, data preprocessing steps, and model implementation
+molecular signatures involved in disease progression. This repository will
+contain code, data preprocessing steps, and model implementation
 details for this exploratory analysis.
+
+This is an open scientific project, actively developed in the
+open-source community and a continuous work in progress. As the
+results are preliminary, they may evolve over time with further
+analysis and validation. If you spot any errors or have suggestions,
+please feel free to open an issue. Contributions and feedback from the
+community are welcome to help improve and refine our understanding of
+the RAS and dopamine pathways in Parkinson’s disease.
