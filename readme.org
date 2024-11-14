@@ -570,7 +570,17 @@ Target augment_gene_list built
 
 This results in the creation of four files in the pybravo_output dir
 
-expanded-provenance.csv expanded-unified-provenance.csv expanded-unified.sif expanded.sif
+expanded_reg_md10-provenance.csv
+expanded_reg_md10-unified-provenance.csv expanded_reg_md10-unified.sif
+expanded_reg_md10.sif
+
+The expanded_reg_md10-unified.sif file can be viewed in cyto scape.
+
+#+CAPTION: Gene Regulation Network
+#+NAME:   fig:1
+[[./data/plots/expanded_reg_md10-unified.png]]
+
+
 
 
 
