@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-14 Thu 10:11 -->
+<!-- 2024-11-14 Thu 12:56 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ParkinsonPathAI (Working title) - AI Models for Pathway Analysis in Parkinson’s Disease</title>
@@ -201,32 +201,32 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org07d41b4">1. Introduction</a></li>
-<li><a href="#org854c1df">2. Data</a>
+<li><a href="#orgd57cd71">1. Introduction</a></li>
+<li><a href="#org63dafb1">2. Data</a>
 <ul>
-<li><a href="#org89b314c">2.1. System biology approach</a>
+<li><a href="#org4c22518">2.1. System biology approach</a>
 <ul>
-<li><a href="#orga3d9385">2.1.1. Intreptation of sequence data as instances in state space.</a></li>
+<li><a href="#org8ee49de">2.1.1. Intreptation of sequence data as instances in state space.</a></li>
 </ul>
 </li>
-<li><a href="#orgc03ba4e">2.2. RAS MAPK pathway</a></li>
-<li><a href="#org3b045d4">2.3. Subgroup discovery of celluar states</a></li>
-<li><a href="#org1aced4c">2.4. Data info</a>
+<li><a href="#org10024bd">2.2. RAS MAPK pathway</a></li>
+<li><a href="#org7c8be84">2.3. Subgroup discovery of celluar states</a></li>
+<li><a href="#orga54843f">2.4. Data info</a>
 <ul>
-<li><a href="#org6f9ee42">2.4.1. Get the normalised expression values</a></li>
-<li><a href="#orga32e889">2.4.2. Get the count expression values</a></li>
+<li><a href="#org5358ff0">2.4.1. Get the normalised expression values</a></li>
+<li><a href="#org2262ee9">2.4.2. Get the count expression values</a></li>
 </ul>
 </li>
-<li><a href="#orga558250">2.5. Finding the overlap of list of genes that we get back from pathway commons and our data</a></li>
+<li><a href="#orgd7d2eb9">2.5. Finding the overlap of list of genes that we get back from pathway commons and our data</a></li>
 </ul>
 </li>
-<li><a href="#orgc8ee169">3. do we want to extract min graph of nodes in subgroup rule?</a></li>
+<li><a href="#orgfbefeff">3. do we want to extract min graph of nodes in subgroup rule?</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org07d41b4" class="outline-2">
-<h2 id="org07d41b4"><span class="section-number-2">1.</span> Introduction</h2>
+<div id="outline-container-orgd57cd71" class="outline-2">
+<h2 id="orgd57cd71"><span class="section-number-2">1.</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This project focuses on analyzing single-cell transcriptomic data from
@@ -258,8 +258,8 @@ the RAS and dopamine pathways in Parkinson’s disease.
 </div>
 </div>
 
-<div id="outline-container-org854c1df" class="outline-2">
-<h2 id="org854c1df"><span class="section-number-2">2.</span> Data</h2>
+<div id="outline-container-org63dafb1" class="outline-2">
+<h2 id="org63dafb1"><span class="section-number-2">2.</span> Data</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Biological cell samples were collected postmortem from the ventral
@@ -271,67 +271,64 @@ length. [INSERT DETALS OF SEQUENCING TECH OR REFERNCE]
 </p>
 </div>
 
-<div id="outline-container-org89b314c" class="outline-3">
-<h3 id="org89b314c"><span class="section-number-3">2.1.</span> System biology approach</h3>
+<div id="outline-container-org4c22518" class="outline-3">
+<h3 id="org4c22518"><span class="section-number-3">2.1.</span> System biology approach</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
-Our approach to this analysis is based on symbolic systems biology.
-In systems biology we aim to understand and model the biological
-reality at a system level, that is understanding how many aspects of
-biology interact to cause our observations. This is in conrast to
-looking at specific decompatialised observations. Symbolic system
-biology differs from quantitive symbolic biology in the level of
-abstraction.
-The use of discrete symbols to represent aspects of the system rather
-than specific quantitites has a number of advantages which we seek to
-exploit.
-Firstly, the abstraction of measured data to symbols is a way to
-handle noise.
-Secondly, the abstraction reduces the size of state space that we are examining.
-This means that certain computational methods become tractable.
-Thirdly, as our aim is to understand what is happening and ultimatly
-control the system.  It is therefore important that our models and their dynamics
-are intertplble, so that suggested interventions and there
-consequences can be ratified in a laboratory setting.
+Our approach to this analysis is grounded in symbolic systems
+biology. In systems biology, our goal is to understand and model
+biological reality at a systems level. This means focusing on how
+multiple aspects of biology interact to produce observable outcomes,
+contrasting with traditional approaches that isolate individual
+phenomena. Symbolic systems biology differs from quantitative systems
+biology in the level of abstraction it applies.
 </p>
 
-<p>
-Forthyly, there is evidence that symbolic abstraction is sufficent to model the dynamics in
-many cases.
-</p>
 
 <p>
-Biological reality is extremely complicated.
+Using discrete symbols to represent components of the system, rather
+than specific quantities, offers several advantages. First,
+abstracting measured data into symbolic form allows us to manage noise
+in the data. Second, this abstraction reduces the size of the state
+space we analyze, making certain computational methods more
+feasible. Third, our goal is not only to understand the system but
+also to control it. Therefore, it’s essential that our models and
+their dynamics are interpretable, allowing suggested interventions and
+their potential consequences to be validated in a laboratory setting.
 </p>
 
-<p>
-The basic idea of DNA -&gt; (transcribed) RNA -&gt; (translated) Protein,
-which takes part in a series of biochemical reactions to build,
-maintain and controll cells is
-sound and present however the details around transcription,
-translation and metabolic pathways ultimatly leading to disease are
-complex and what we seek to understand.
-</p>
 
 <p>
-In somatic cells the DNA is immutable as they replicate into daughter
-cells.
-The differnce between cells .
-Cell differnation.
-Gene regulatory networks.
+Finally, there is evidence that symbolic abstraction is sufficient to
+model biological dynamics in many cases.
 </p>
 
+
 <p>
-Transcription can be bursty.
-Alternative splicing
-Protein complex formation. - chaperones.
-Epigentics, methylation and histone access.
+Biological reality is highly complex. While the central dogma—DNA
+transcribed to RNA, translated to protein—outlines the basic process
+of cellular maintenance and control, the specifics of transcription,
+translation, and metabolic pathways leading to disease are intricate
+and require further exploration.
+</p>
+
+
+<p>
+For instance, in somatic cells, DNA remains stable as cells
+replicate. Differences between cells arise through processes such as
+differentiation and gene regulation. Transcription can occur in
+bursts, and alternative splicing allows for multiple proteins from a
+single gene. Additionally, protein complexes may form with the aid of
+chaperones, and epigenetic mechanisms, such as methylation and histone
+modification, affect gene accessibility.
 </p>
 </div>
 
 
-<div id="outline-container-orga3d9385" class="outline-4">
-<h4 id="orga3d9385"><span class="section-number-4">2.1.1.</span> Intreptation of sequence data as instances in state space.</h4>
+
+
+<div id="outline-container-org8ee49de" class="outline-4">
+<h4 id="org8ee49de"><span class="section-number-4">2.1.1.</span> Intreptation of sequence data as instances in state space.</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <p>
 In our analysis of transcriptome from nuclei, previous work has
@@ -342,8 +339,8 @@ In addition cell states have been identified by y method.
 </div>
 </div>
 
-<div id="outline-container-orgc03ba4e" class="outline-3">
-<h3 id="orgc03ba4e"><span class="section-number-3">2.2.</span> RAS MAPK pathway</h3>
+<div id="outline-container-org10024bd" class="outline-3">
+<h3 id="org10024bd"><span class="section-number-3">2.2.</span> RAS MAPK pathway</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 In this work we are intrested in these pathways and the interplay.
@@ -364,7 +361,7 @@ Raas genes:
 </pre>
 </div>
 
-<pre class="example" id="org35efb66">
+<pre class="example" id="orgb750314">
 ACE
 ADCY
 AGTR1
@@ -424,7 +421,7 @@ Dopamine KEGG pathway:
 </pre>
 </div>
 
-<pre class="example" id="orgb851b40">
+<pre class="example" id="orgdb896e2">
 AKT3
 CREB3
 GNB5
@@ -614,7 +611,7 @@ the scripts dir)
 </pre>
 </div>
 
-<pre class="example" id="org593081a">
+<pre class="example" id="org5d49521">
 --- Upstream regulation network in 68.57 seconds ---
 Number of nodes = 1339
 Number of edges = 12032
@@ -661,21 +658,21 @@ Target augment_gene_list built
 
 
 <p>
-This results in the creation of four files in the pybravo<sub>output</sub> dir
+This results in the creation of four files in the pybravo_output dir
 </p>
 
 <p>
-expanded<sub>reg</sub><sub>md10</sub>-provenance.csv
-expanded<sub>reg</sub><sub>md10</sub>-unified-provenance.csv expanded<sub>reg</sub><sub>md10</sub>-unified.sif
-expanded<sub>reg</sub><sub>md10.sif</sub>
+expanded_reg_md10-provenance.csv
+expanded_reg_md10-unified-provenance.csv expanded_reg_md10-unified.sif
+expanded_reg_md10.sif
 </p>
 
 <p>
-The expanded<sub>reg</sub><sub>md10</sub>-unified.sif file can be viewed in cyto scape.
+The expanded_reg_md10-unified.sif file can be viewed in cyto scape.
 </p>
 
 
-<div id="org85d3fe9" class="figure">
+<div id="org70bb3a0" class="figure">
 <p><img src="./data/plots/expanded_reg_md10-unified.png" alt="expanded_reg_md10-unified.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Gene Regulation Network</p>
@@ -687,8 +684,8 @@ The expanded<sub>reg</sub><sub>md10</sub>-unified.sif file can be viewed in cyto
 
 
 
-<div id="outline-container-org3b045d4" class="outline-3">
-<h3 id="org3b045d4"><span class="section-number-3">2.3.</span> Subgroup discovery of celluar states</h3>
+<div id="outline-container-org7c8be84" class="outline-3">
+<h3 id="org7c8be84"><span class="section-number-3">2.3.</span> Subgroup discovery of celluar states</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 As a first step we want to follow the spirit of ww11 bomber command.
@@ -699,6 +696,15 @@ the aircraft armour would be improved by designing armour for
 improvements where damage had not been observed to have occured. As
 these were planes that were lost.
 </p>
+
+
+
+<div id="orge4fdf94" class="figure">
+<p><img src="./data/plots/Survivorship-bias.png" alt="Survivorship-bias.png" width="&quot;100px&quot;" />
+</p>
+<p><span class="figure-number">Figure 2: </span>A 'State' of a surviving bomber</p>
+</div>
+
 
 <p>
 In our analagy it is known that in parkinson disease dn's are lost, so
@@ -755,19 +761,19 @@ can be seen as a feature selection technique.
 </div>
 </div>
 
-<div id="outline-container-org1aced4c" class="outline-3">
-<h3 id="org1aced4c"><span class="section-number-3">2.4.</span> Data info</h3>
+<div id="outline-container-orga54843f" class="outline-3">
+<h3 id="orga54843f"><span class="section-number-3">2.4.</span> Data info</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 "Just sending the single nuclei data for the dopaminergic neurons in our atlas as Caleb suggested.
-The file “SNatlas<sub>DaNs</sub><sub>seurat.RData</sub>” is in the usual Dropbox folder.
-The Seurat object in it is called “sn<sub>atlas</sub><sub>dans</sub>” and contains all
+The file “SNatlas_DaNs_seurat.RData” is in the usual Dropbox folder.
+The Seurat object in it is called “sn_atlas_dans” and contains all
 neurons across all disease stages and subtypes. You can access disease
-by sn<sub>atlas</sub><sub>dans</sub>$Disease and cell subtype by
-sn<sub>atlas</sub><sub>dans</sub>$CellSubType. And extract gene expression data as raw
-counts genes<sub>counts</sub>&lt;-as.matrix(GetAssayData(sn<sub>atlas</sub><sub>dans</sub>, slot =
+by sn_atlas_dans$Disease and cell subtype by
+sn_atlas_dans$CellSubType. And extract gene expression data as raw
+counts genes_counts&lt;-as.matrix(GetAssayData(sn_atlas_dans, slot =
 "counts")) or normalised
-genes<sub>norm</sub>&lt;-as.matrix(GetAssayData(sn<sub>atlas</sub><sub>dans</sub>, slot = "data"))."
+genes_norm&lt;-as.matrix(GetAssayData(sn_atlas_dans, slot = "data"))."
 </p>
 
 
@@ -789,8 +795,8 @@ data_location <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b
 </div>
 </div>
 
-<div id="outline-container-org6f9ee42" class="outline-4">
-<h4 id="org6f9ee42"><span class="section-number-4">2.4.1.</span> Get the normalised expression values</h4>
+<div id="outline-container-org5358ff0" class="outline-4">
+<h4 id="org5358ff0"><span class="section-number-4">2.4.1.</span> Get the normalised expression values</h4>
 <div class="outline-text-4" id="text-2-4-1">
 <div class="org-src-container">
 <pre class="src src-R">genes_norm<span style="color: #008b8b;">&lt;-</span>as.matrix(GetAssayData(sn_atlas_dans, slot = <span style="color: #8b2252;">"data"</span>))
@@ -800,8 +806,8 @@ data_location <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b
 </div>
 
 
-<div id="outline-container-orga32e889" class="outline-4">
-<h4 id="orga32e889"><span class="section-number-4">2.4.2.</span> Get the count expression values</h4>
+<div id="outline-container-org2262ee9" class="outline-4">
+<h4 id="org2262ee9"><span class="section-number-4">2.4.2.</span> Get the count expression values</h4>
 <div class="outline-text-4" id="text-2-4-2">
 <div class="org-src-container">
 <pre class="src src-R">genes_counts<span style="color: #008b8b;">&lt;-</span>as.matrix(GetAssayData(sn_atlas_dans, slot = <span style="color: #8b2252;">"counts"</span>))
@@ -811,35 +817,148 @@ data_location <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b
 </div>
 </div>
 
-<div id="outline-container-orga558250" class="outline-3">
-<h3 id="orga558250"><span class="section-number-3">2.5.</span> Finding the overlap of list of genes that we get back from pathway commons and our data</h3>
+<div id="outline-container-orgd7d2eb9" class="outline-3">
+<h3 id="orgd7d2eb9"><span class="section-number-3">2.5.</span> Finding the overlap of list of genes that we get back from pathway commons and our data</h3>
 <div class="outline-text-3" id="text-2-5">
 <div class="org-src-container">
-<pre class="src src-R">node_table <span style="color: #008b8b;">&lt;-</span> read.csv(<span style="color: #8b2252;">"/Users/samneaves/Documents/influence_graph_project/default_node.csv"</span>)
-head(node_table)
+<pre class="src src-R">network_data <span style="color: #008b8b;">&lt;-</span> read.table(<span style="color: #8b2252;">"./data/pybravo_output/expanded_reg_md10-unified.sif"</span>, quote = <span style="color: #8b2252;">""</span>, header = <span style="color: #228b22;">FALSE</span>, stringsAsFactors = <span style="color: #228b22;">FALSE</span>, sep = <span style="color: #8b2252;">"\t"</span>)
+head(network_data)
+nodes <span style="color: #008b8b;">&lt;-</span> unique(c(network_data$V1, network_data$V3))
 </pre>
 </div>
 
 <pre class="example">
-  degree.layout                name selected         shared.name
-1            59                 JUN    false                 JUN
-2             4             JUN/FOS    false             JUN/FOS
-3            64                 FOS    false                 FOS
-4            15               SCN5A    false               SCN5A
-5             5 SMAD3/SMAD4/JUN/FOS    false SMAD3/SMAD4/JUN/FOS
-6             4            JUN/ATF2    false            JUN/ATF2
+        V1         V2     V3
+1 Fra1/JUN ACTIVATION   CCL2
+2 Fra1/JUN ACTIVATION   Fra1
+3 Fra1/JUN ACTIVATION    IL6
+4 Fra1/JUN ACTIVATION p14ARF
+5 Fra1/JUN ACTIVATION   MMP9
+6 Fra1/JUN ACTIVATION  CXCL8
 </pre>
+
+
+<div class="org-src-container">
+<pre class="src src-R">length(nodes)
+</pre>
+</div>
+
+<pre class="example">
+[1] 1053
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #b22222;"># </span><span style="color: #b22222;">Convert the rownames of genes_counts into a vector</span>
+genes_names <span style="color: #008b8b;">&lt;-</span> rownames(genes_counts)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Get the intersection between the 'name' column in node_table and the rownames of genes_counts_subset_df</span>
+common_names <span style="color: #008b8b;">&lt;-</span> intersect(nodes, genes_names)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">View the result</span>
+length(common_names)
+</pre>
+</div>
+
+<pre class="example">
+526
+</pre>
+
+
+
+<p>
+In the graph representation we have genes and protein complexes.
+A protein complex node is represented by Item/Item. For example
+</p>
+
+<p>
+SMAD3/SMAD4/JUN/FOS
+</p>
+
+<p>
+When we match our gene expression data to the network. These nodes
+will be unobserved. We will need to infer if they are able to
+form/activate.
+</p>
+
+<p>
+In the way that the pybravo paper describes these nodes are used in
+there iggy analysis. The part of edge is treated as plus. But I think the standard consistency
+check is only looking for at least one positive edge. So not sure if
+that is appropiate. (will detail later).
+</p>
+
+<p>
+For the time being the number of complexes seem to be :
+</p>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #b22222;"># </span><span style="color: #b22222;">Identify rows in the 'name' column that contain '/'</span>
+complexes <span style="color: #008b8b;">&lt;-</span> grep(<span style="color: #8b2252;">"/"</span>, nodes)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Count the number of complexes</span>
+num_complexes <span style="color: #008b8b;">&lt;-</span> length(complexes)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">View the count</span>
+num_complexes
+</pre>
+</div>
+
+<pre class="example">
+296
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #b22222;"># </span><span style="color: #b22222;">Count occurrences of each edge type in the second column (V2)</span>
+edge_counts <span style="color: #008b8b;">&lt;-</span> table(network_data$V2)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Display the counts of each edge type</span>
+print(edge_counts)
+</pre>
+</div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">ACTIVATION</td>
+<td class="org-right">1710</td>
+</tr>
+
+<tr>
+<td class="org-left">INHIBITION</td>
+<td class="org-right">655</td>
+</tr>
+
+<tr>
+<td class="org-left">PART_OF</td>
+<td class="org-right">567</td>
+</tr>
+
+<tr>
+<td class="org-left">UNKNOWN</td>
+<td class="org-right">95</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc8ee169" class="outline-2">
-<h2 id="orgc8ee169"><span class="section-number-2">3.</span> do we want to extract min graph of nodes in subgroup rule?</h2>
+<div id="outline-container-orgfbefeff" class="outline-2">
+<h2 id="orgfbefeff"><span class="section-number-2">3.</span> do we want to extract min graph of nodes in subgroup rule?</h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Sam Neaves</p>
-<p class="date">Created: 2024-11-14 Thu 10:11</p>
+<p class="date">Created: 2024-11-14 Thu 12:56</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
