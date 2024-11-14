@@ -523,11 +523,11 @@ the scripts dir)
 
 #+RESULTS:
 #+begin_example
---- Upstream regulation network in 66.0 seconds ---
+--- Upstream regulation network in 68.57 seconds ---
 Number of nodes = 1339
 Number of edges = 12032
-SIF network written to ../data/pybravo_output/expanded.sif
-Basic regulation reaction provenance written to ../data/pybravo_output/expanded-provenance.csv
+SIF network written to ../data/pybravo_output/expanded_reg.sif
+Basic regulation reaction provenance written to ../data/pybravo_output/expanded_reg-provenance.csv
 
 | Node | Degree Centrality |
 |------|------|
