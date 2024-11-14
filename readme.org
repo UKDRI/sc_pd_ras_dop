@@ -89,9 +89,12 @@ In addition cell states have been identified by y method.
 ** RAS MAPK pathway
 
 In this work we are intrested in these pathways and the interplay.
-In order to get a list of genes that we are intreseted in and there
-interactions, we first manually curate a list of genes by augmenting a
-list of querying for list of pathway genes.
+
+I obtained two lists of genes from the two pathways from a collegue
+(Viola - check where she got them from).
+In order to get a full list of genes that we are intreseted in and their
+interactions, we augment our intital list and query pathway commons to
+obtain a network of genes. We use the pyBravo tool to make this query.
 
 The intial list is :
 
@@ -298,7 +301,7 @@ MAPK10
 These were provided by Viola.
 
 The intersection of these files is:
-#+begin_src bash :results output :export both
+#+begin_src bash :results output :exports both
   grep -Fxf ./data/initial_gene_list_files/DopamineKEGGpathway.txt ./data/initial_gene_list_files/raas_genes.txt
 #+end_src
 
@@ -501,19 +504,22 @@ Next in order to understand which other genes have known interactions
 with this list and how this list is related we query pathway commons
 using pybravo.
 
-In order for pybravo to work it needs to be able to connect to a
-sparql endpoint of pathway commons. Unforntly this resource can be
-unrelaibly, however it is possible to set up a local sparql end point
-by building a docker container. A docker recipe file is provided from
-this github repo:
+For Pybravo to function, it must connect to a SPARQL endpoint from
+Pathway Commons. Unfortunately, this resource can be unreliable at
+times. However, it’s possible to set up a local SPARQL endpoint by
+building a Docker container. A Docker recipe file is available in this
+GitHub repository:
+
 https://github.com/mkarikom/PathwayCommons-VOS#pathwaycommons-v12-on-virtuoso-7
 
-With pybravo installed and an appropiate conda enivorment set up and
-then pybravo set to point at our local instance of pathway commons
-sparql end point we can query the resource.
+With Pybravo installed and an appropriate Conda environment set up, we
+can configure Pybravo to connect to our local instance of the Pathway
+Commons SPARQL endpoint for querying.
 
-We have set up the command to run from a biomake file (makeprog - in
-the scripts dir)
+
+We have set up the command to run from a Biomake file (makeprog in the
+scripts directory).
+
 
 
 #+begin_src bash :dir "./scripts/" :exports both :eval query :results output
