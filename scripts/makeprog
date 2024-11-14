@@ -4,4 +4,4 @@ make_env <-- [],'conda create --name pybravo python=3.7 rdflib requests matplotl
 
 test2 <-- [], 'conda run -n pybravo python /Users/samneaves/Documents/pyBRAvo/src/pyBravo.py --regulation --fast --input_genes JUN/FOS SCN5A -md 2 -co -su -sy -excl mirtarbase'.
 
-augment_gene_list <-- ['Homo_sapiens.gene_info','../data/initial_gene_list_files/initial_gene_list.txt'], 'conda run -n pybravo python /Users/samneaves/Documents/pyBRAvo/src/pyBravo.py --regulation --fast --input_file ../data/initial_gene_list_files/initial_gene_list.txt -md 4 -co -su -sy -excl mirtarbase -o ../data/pybravo_output/expanded'.
+augment_gene_list <-- ['Homo_sapiens.gene_info','../data/initial_gene_list_files/initial_gene_list.txt'], 'conda run -n pybravo python /Users/samneaves/Documents/pyBRAvo/src/pyBravo.py --regulation --fast --input_file ../data/initial_gene_list_files/initial_gene_list.txt -reg -md 10 -co -su -sy -excl mirtarbase msigdb -o ../data/pybravo_output/expanded_reg_md10'.
