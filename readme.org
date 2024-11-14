@@ -8,11 +8,10 @@
 This project focuses on analyzing single-cell transcriptomic data from
 brain cells of both control and Parkinson’s disease donors. Our goal
 is to characterize the complex interplay between the RAS and dopamine
-pathways using symbolic AI techniques. By employing methods like
+pathways, we will attempt to do this using symbolic AI techniques. By employing methods like
 descriptive rule induction, causal analysis, and model
 building/repair, we aim to identify and understand unique cell states
 associated with Parkinson’s disease.
-
 
 Our approach reconciles gene networks with experimental data, allowing
 us to reason about network consistency and potentially discover key
