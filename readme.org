@@ -497,3 +497,70 @@ TH
 TNF
      178 ./data/initial_gene_list_files/initial_gene_list.txt
 #+end_example
+
+Next in order to understand which other genes have known interactions
+with this list and how this list is related we query pathway commons
+using pybravo.
+
+In order for pybravo to work it needs to be able to connect to a
+sparql endpoint of pathway commons. Unforntly this resource can be
+unrelaibly, however it is possible to set up a local sparql end point
+by building a docker container. A docker recipe file is provided from
+this github repo:
+https://github.com/mkarikom/PathwayCommons-VOS#pathwaycommons-v12-on-virtuoso-7
+
+With pybravo installed and an appropiate conda enivorment set up and
+then pybravo set to point at our local instance of pathway commons
+sparql end point we can query the resource.
+
+We have set up the command to run from a biomake file (makeprog - in
+the scripts dir)
+
+
+#+begin_src bash :dir "./scripts/" :eval query :results output
+  biomake "augment_gene_list" | tail -n 40
+#+end_src
+
+#+RESULTS:
+#+begin_example
+--- Upstream regulation network in 66.95 seconds ---
+Number of nodes = 1339
+Number of edges = 12032
+SIF network written to ../data/pybravo_output/expanded.sif
+Basic regulation reaction provenance written to ../data/pybravo_output/expanded-provenance.csv
+
+| Node | Degree Centrality |
+|------|------|
+| NOG | 0.264 | 
+| SP1 | 0.182 | 
+| LEF1 | 0.17 | 
+| MAZ | 0.168 | 
+| TCF3 | 0.155 | 
+| FOXO4 | 0.143 | 
+| TGFB1 | 0.138 | 
+| JUN | 0.136 | 
+| MYC | 0.128 | 
+| PAX4 | 0.123 | 
+
+--- Network simplification in 2.4 seconds ---
+SIF network written to ../data/pybravo_output/expanded-unified.sif
+Basic regulation reaction provenance written to ../data/pybravo_output/expanded-unified-provenance.csv
+Nodes after simplification = 1229
+Edges after simplification = 11912
+
+| Node | Degree Centrality |
+|------|------|
+| NOG | 0.276 | 
+| DAND5 | 0.195 | 
+| LEF1 | 0.182 | 
+| MAZ | 0.178 | 
+| TCF7L1 | 0.176 | 
+| FOXO4 | 0.155 | 
+| JUN | 0.151 | 
+| TGFB1 | 0.149 | 
+| HNF1A | 0.149 | 
+| PVT1 | 0.139 | 
+
+
+Target augment_gene_list built
+#+end_example
