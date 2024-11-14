@@ -1,0 +1,846 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-11-14 Thu 10:11 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ParkinsonPathAI (Working title) - AI Models for Pathway Analysis in Parkinson’s Disease</title>
+<meta name="author" content="Sam Neaves" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">ParkinsonPathAI (Working title) - AI Models for Pathway Analysis in Parkinson’s Disease</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org07d41b4">1. Introduction</a></li>
+<li><a href="#org854c1df">2. Data</a>
+<ul>
+<li><a href="#org89b314c">2.1. System biology approach</a>
+<ul>
+<li><a href="#orga3d9385">2.1.1. Intreptation of sequence data as instances in state space.</a></li>
+</ul>
+</li>
+<li><a href="#orgc03ba4e">2.2. RAS MAPK pathway</a></li>
+<li><a href="#org3b045d4">2.3. Subgroup discovery of celluar states</a></li>
+<li><a href="#org1aced4c">2.4. Data info</a>
+<ul>
+<li><a href="#org6f9ee42">2.4.1. Get the normalised expression values</a></li>
+<li><a href="#orga32e889">2.4.2. Get the count expression values</a></li>
+</ul>
+</li>
+<li><a href="#orga558250">2.5. Finding the overlap of list of genes that we get back from pathway commons and our data</a></li>
+</ul>
+</li>
+<li><a href="#orgc8ee169">3. do we want to extract min graph of nodes in subgroup rule?</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org07d41b4" class="outline-2">
+<h2 id="org07d41b4"><span class="section-number-2">1.</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This project focuses on analyzing single-cell transcriptomic data from
+brain cells of both control and Parkinson’s disease donors. Our goal
+is to characterize the complex interplay between the RAS and dopamine
+pathways, we will attempt to do this using symbolic AI techniques. By employing methods like
+descriptive rule induction, causal analysis, and model
+building/repair, we aim to identify and understand unique cell states
+associated with Parkinson’s disease.
+</p>
+
+<p>
+Our approach reconciles gene networks with experimental data, allowing
+us to reason about network consistency and potentially discover key
+molecular signatures involved in disease progression. This repository will
+contain code, data preprocessing steps, and model implementation
+details for this exploratory analysis.
+</p>
+
+<p>
+This is an open scientific project, actively developed in the
+open-source community and a continuous work in progress. As the
+results are preliminary, they may evolve over time with further
+analysis and validation. If you spot any errors or have suggestions,
+please feel free to open an issue. Contributions and feedback from the
+community are welcome to help improve and refine our understanding of
+the RAS and dopamine pathways in Parkinson’s disease.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org854c1df" class="outline-2">
+<h2 id="org854c1df"><span class="section-number-2">2.</span> Data</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Biological cell samples were collected postmortem from the ventral
+substantia nigra of seven control samples, nine Parkinson's disease
+samples, and four samples from patients with Incidental Lewy Body
+Disorder. The nuclei of these cells were extracted and sequenced,
+totaling 23,885 nuclei. The sequecning was deep and full
+length. [INSERT DETALS OF SEQUENCING TECH OR REFERNCE]
+</p>
+</div>
+
+<div id="outline-container-org89b314c" class="outline-3">
+<h3 id="org89b314c"><span class="section-number-3">2.1.</span> System biology approach</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Our approach to this analysis is based on symbolic systems biology.
+In systems biology we aim to understand and model the biological
+reality at a system level, that is understanding how many aspects of
+biology interact to cause our observations. This is in conrast to
+looking at specific decompatialised observations. Symbolic system
+biology differs from quantitive symbolic biology in the level of
+abstraction.
+The use of discrete symbols to represent aspects of the system rather
+than specific quantitites has a number of advantages which we seek to
+exploit.
+Firstly, the abstraction of measured data to symbols is a way to
+handle noise.
+Secondly, the abstraction reduces the size of state space that we are examining.
+This means that certain computational methods become tractable.
+Thirdly, as our aim is to understand what is happening and ultimatly
+control the system.  It is therefore important that our models and their dynamics
+are intertplble, so that suggested interventions and there
+consequences can be ratified in a laboratory setting.
+</p>
+
+<p>
+Forthyly, there is evidence that symbolic abstraction is sufficent to model the dynamics in
+many cases.
+</p>
+
+<p>
+Biological reality is extremely complicated.
+</p>
+
+<p>
+The basic idea of DNA -&gt; (transcribed) RNA -&gt; (translated) Protein,
+which takes part in a series of biochemical reactions to build,
+maintain and controll cells is
+sound and present however the details around transcription,
+translation and metabolic pathways ultimatly leading to disease are
+complex and what we seek to understand.
+</p>
+
+<p>
+In somatic cells the DNA is immutable as they replicate into daughter
+cells.
+The differnce between cells .
+Cell differnation.
+Gene regulatory networks.
+</p>
+
+<p>
+Transcription can be bursty.
+Alternative splicing
+Protein complex formation. - chaperones.
+Epigentics, methylation and histone access.
+</p>
+</div>
+
+
+<div id="outline-container-orga3d9385" class="outline-4">
+<h4 id="orga3d9385"><span class="section-number-4">2.1.1.</span> Intreptation of sequence data as instances in state space.</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+In our analysis of transcriptome from nuclei, previous work has
+identified cell types using x method.
+In addition cell states have been identified by y method.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc03ba4e" class="outline-3">
+<h3 id="orgc03ba4e"><span class="section-number-3">2.2.</span> RAS MAPK pathway</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+In this work we are intrested in these pathways and the interplay.
+In order to get a list of genes that we are intreseted in and there
+interactions, we first manually curate a list of genes by augmenting a
+list of querying for list of pathway genes.
+</p>
+
+<p>
+The intial list is :
+</p>
+
+<p>
+Raas genes:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">cat ./data/initial_gene_list_files/raas_genes.txt
+</pre>
+</div>
+
+<pre class="example" id="org35efb66">
+ACE
+ADCY
+AGTR1
+AGTR2
+AGT
+ATF2
+CCL2
+CCL5
+DAG1
+ELK1
+ERK1
+ERK2
+FOS
+GNAQ
+GRB2
+IP3
+JAK2
+JNK
+JUN
+MAP2K1
+MAP2K2
+MAP2K4
+MAP3K1
+NFKB1
+NO
+NOX1
+MAPK
+PAK
+PGE2
+PI3K
+PIP2
+PKA
+PKC
+PLCG1
+PTGER2
+PTK2
+PTK2B
+PTPN6
+RAC1
+RAF1
+HRAS
+KRAS
+REN
+SHC1
+SOS1
+STAT1
+STAT3
+TNF
+</pre>
+
+<p>
+Dopamine KEGG pathway:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">cat ./data/initial_gene_list_files/DopamineKEGGpathway.txt
+</pre>
+</div>
+
+<pre class="example" id="orgb851b40">
+AKT3
+CREB3
+GNB5
+ADCY5
+COMT
+CREB1
+ATF2
+ATF6B
+MAPK14
+CREB3L4
+CALML6
+DDC
+DRD1
+DRD2
+DRD3
+DRD4
+DRD5
+AKT1
+AKT2
+LRTOMT
+PLCB1
+FOS
+GNAI1
+GNAI2
+GNAI3
+GNAL
+GNAQ
+GNAO1
+GNAS
+GNB1
+GNB2
+GNB3
+GNG3
+GNG4
+GNG5
+GNG7
+GNG10
+GNG11
+GNGT1
+GNGT2
+PPP2R3B
+GRIA1
+GRIA2
+GRIA3
+GRIA4
+GRIN2A
+GRIN2B
+GSK3A
+GSK3B
+ITPR1
+ITPR2
+ITPR3
+KCNJ3
+KCNJ5
+KCNJ6
+KCNJ9
+KIF5A
+KIF5B
+KIF5C
+ARNTL
+ARRB1
+ARRB2
+MAOA
+MAOB
+ATF4
+CALY
+GNG13
+CALML5
+PLCB2
+PLCB3
+PLCB4
+GNG2
+PPP1CA
+PPP1CB
+PPP1CC
+PPP2R3C
+PPP2CA
+PPP2CB
+PPP2R1A
+PPP2R1B
+PPP2R2A
+PPP2R2B
+PPP2R2C
+PPP2R3A
+PPP2R5A
+PPP2R5B
+PPP2R5C
+PPP2R5D
+PPP2R5E
+PPP3CA
+PPP3CB
+PPP3CC
+PRKACA
+PRKACB
+PRKACG
+PRKCA
+PRKCB
+PRKCG
+PPP2R2D
+GNG12
+MAPK8
+MAPK11
+MAPK13
+GNB4
+MAPK12
+SCN1A
+CREB3L2
+SLC6A3
+TH
+CACNA1A
+CACNA1B
+CACNA1C
+CACNA1D
+CALM1
+CALM2
+CALM3
+CALML3
+CAMK2A
+CAMK2B
+CAMK2D
+CAMK2G
+PPP1R1B
+CREB3L3
+CREB3L1
+CALML4
+GNG8
+CLOCK
+CREB5
+SLC18A2
+SLC18A1
+MAPK9
+MAPK10
+
+</pre>
+
+<p>
+These were provided by Viola.
+</p>
+
+<p>
+The intersection of these files is:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">grep -Fxf ./data/initial_gene_list_files/DopamineKEGGpathway.txt ./data/initial_gene_list_files/raas_genes.txt
+</pre>
+</div>
+
+<p>
+The union of these files is:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">cat ./data/initial_gene_list_files/DopamineKEGGpathway.txt ./data/initial_gene_list_files/raas_genes.txt | sort | uniq | tee ./data/initial_gene_list_files/initial_gene_list.txt
+wc -l ./data/initial_gene_list_files/initial_gene_list.txt
+</pre>
+</div>
+
+<p>
+Next in order to understand which other genes have known interactions
+with this list and how this list is related we query pathway commons
+using pybravo.
+</p>
+
+<p>
+In order for pybravo to work it needs to be able to connect to a
+sparql endpoint of pathway commons. Unforntly this resource can be
+unrelaibly, however it is possible to set up a local sparql end point
+by building a docker container. A docker recipe file is provided from
+this github repo:
+<a href="https://github.com/mkarikom/PathwayCommons-VOS#pathwaycommons-v12-on-virtuoso-7">https://github.com/mkarikom/PathwayCommons-VOS#pathwaycommons-v12-on-virtuoso-7</a>
+</p>
+
+<p>
+With pybravo installed and an appropiate conda enivorment set up and
+then pybravo set to point at our local instance of pathway commons
+sparql end point we can query the resource.
+</p>
+
+<p>
+We have set up the command to run from a biomake file (makeprog - in
+the scripts dir)
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-bash">biomake <span style="color: #8b2252;">"augment_gene_list"</span> | tail -n 40
+</pre>
+</div>
+
+<pre class="example" id="org593081a">
+--- Upstream regulation network in 68.57 seconds ---
+Number of nodes = 1339
+Number of edges = 12032
+SIF network written to ../data/pybravo_output/expanded_reg.sif
+Basic regulation reaction provenance written to ../data/pybravo_output/expanded_reg-provenance.csv
+
+| Node | Degree Centrality |
+|------|------|
+| NOG | 0.264 | 
+| SP1 | 0.182 | 
+| LEF1 | 0.17 | 
+| MAZ | 0.168 | 
+| TCF3 | 0.155 | 
+| FOXO4 | 0.143 | 
+| TGFB1 | 0.138 | 
+| JUN | 0.136 | 
+| MYC | 0.128 | 
+| PAX4 | 0.123 | 
+
+--- Network simplification in 2.49 seconds ---
+SIF network written to ../data/pybravo_output/expanded_reg-unified.sif
+Basic regulation reaction provenance written to ../data/pybravo_output/expanded_reg-unified-provenance.csv
+Nodes after simplification = 1229
+Edges after simplification = 11912
+
+| Node | Degree Centrality |
+|------|------|
+| NOG | 0.276 | 
+| DAND5 | 0.195 | 
+| LEF1 | 0.182 | 
+| MAZ | 0.178 | 
+| TCF7L1 | 0.176 | 
+| FOXO4 | 0.155 | 
+| JUN | 0.151 | 
+| TGFB1 | 0.149 | 
+| HNF1A | 0.149 | 
+| PVT1 | 0.139 | 
+
+
+Target augment_gene_list built
+</pre>
+
+
+
+
+<p>
+This results in the creation of four files in the pybravo<sub>output</sub> dir
+</p>
+
+<p>
+expanded<sub>reg</sub><sub>md10</sub>-provenance.csv
+expanded<sub>reg</sub><sub>md10</sub>-unified-provenance.csv expanded<sub>reg</sub><sub>md10</sub>-unified.sif
+expanded<sub>reg</sub><sub>md10.sif</sub>
+</p>
+
+<p>
+The expanded<sub>reg</sub><sub>md10</sub>-unified.sif file can be viewed in cyto scape.
+</p>
+
+
+<div id="org85d3fe9" class="figure">
+<p><img src="./data/plots/expanded_reg_md10-unified.png" alt="expanded_reg_md10-unified.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Gene Regulation Network</p>
+</div>
+</div>
+</div>
+
+
+
+
+
+<div id="outline-container-org3b045d4" class="outline-3">
+<h3 id="org3b045d4"><span class="section-number-3">2.3.</span> Subgroup discovery of celluar states</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+As a first step we want to follow the spirit of ww11 bomber command.
+The story goes that aeroplanes returning to england were analysed and
+where damage had occured this was observed. It was then infered that
+planes could survive in such a state, so to improve surviablilty of
+the aircraft armour would be improved by designing armour for
+improvements where damage had not been observed to have occured. As
+these were planes that were lost.
+</p>
+
+<p>
+In our analagy it is known that in parkinson disease dn's are lost, so
+observations from parkinson paitence of cell states are of neurons
+that have survived.
+</p>
+
+<p>
+Forntuelty we do have access to CTRL data. Of course these are not
+from people who have parkinsons but we hope to be able to use this as
+a proxy.
+</p>
+
+<p>
+We wish to identify descriptions (in terms of conjunctions of gene
+expression statements) that select group of cell states that are
+statistically differnt in terms of there distrubtion statistics from
+the combined population of cells.
+</p>
+
+<p>
+In order to do this we turn to the task of "Subgroup discovery" first
+described by Wrobel et al. Subgroup discovery is a data mining/kdd/ml
+task that lies at the intersection of classification and
+clustering. We use labelled data as in classification, but we wish to
+describe groups of (statisically) intresting instances. We wish for
+the descriptions to be interprtable and informative.
+</p>
+
+<p>
+Subgroup discovery has been used in bioinformatics for analysing gene
+expression before in x, y,z. in those studies it is similar to Gene set enrichment analysis. where
+genes are the instances, there descriptions are annotations such as
+GO-TERMs and there label are binary (differntly expressed or not).
+</p>
+
+<p>
+In contrast to these previous studies,  our instances are
+cells/nuclai and are target/class/label is CTRL or parkinson and are
+features are gene expression values as we want to identify and
+describe subgroups of cellular transcriptome states which appear in
+ctrl samples but not parkinson patients.
+</p>
+
+<p>
+In this first inital analysis and attempt to identify subgroups of
+cellular states we limit the subgroup discovery to a propositional
+data mining task. We do not use the relations provided by the query to
+pathway commons. These could potentially be usefull. If we wanted to
+explore that then we would need to use a method such as RSD,
+potentially hedwig. Instead the query to Pathway commons using pybravo
+can be seen as a feature selection technique.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1aced4c" class="outline-3">
+<h3 id="org1aced4c"><span class="section-number-3">2.4.</span> Data info</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+"Just sending the single nuclei data for the dopaminergic neurons in our atlas as Caleb suggested.
+The file “SNatlas<sub>DaNs</sub><sub>seurat.RData</sub>” is in the usual Dropbox folder.
+The Seurat object in it is called “sn<sub>atlas</sub><sub>dans</sub>” and contains all
+neurons across all disease stages and subtypes. You can access disease
+by sn<sub>atlas</sub><sub>dans</sub>$Disease and cell subtype by
+sn<sub>atlas</sub><sub>dans</sub>$CellSubType. And extract gene expression data as raw
+counts genes<sub>counts</sub>&lt;-as.matrix(GetAssayData(sn<sub>atlas</sub><sub>dans</sub>, slot =
+"counts")) or normalised
+genes<sub>norm</sub>&lt;-as.matrix(GetAssayData(sn<sub>atlas</sub><sub>dans</sub>, slot = "data"))."
+</p>
+
+
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #008b8b;">library</span>(dplyr)
+<span style="color: #008b8b;">library</span>(Seurat)
+<span style="color: #008b8b;">library</span>(patchwork)
+
+data_location <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b2252;">"/Users/samneaves/Documents/test_data/forSam/SNatlas_DaNs_seurat.RData"</span>
+<span style="color: #008b8b;">load</span>(data_location)
+
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-R">head(sn_atlas_dans$CellSubType)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org6f9ee42" class="outline-4">
+<h4 id="org6f9ee42"><span class="section-number-4">2.4.1.</span> Get the normalised expression values</h4>
+<div class="outline-text-4" id="text-2-4-1">
+<div class="org-src-container">
+<pre class="src src-R">genes_norm<span style="color: #008b8b;">&lt;-</span>as.matrix(GetAssayData(sn_atlas_dans, slot = <span style="color: #8b2252;">"data"</span>))
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga32e889" class="outline-4">
+<h4 id="orga32e889"><span class="section-number-4">2.4.2.</span> Get the count expression values</h4>
+<div class="outline-text-4" id="text-2-4-2">
+<div class="org-src-container">
+<pre class="src src-R">genes_counts<span style="color: #008b8b;">&lt;-</span>as.matrix(GetAssayData(sn_atlas_dans, slot = <span style="color: #8b2252;">"counts"</span>))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga558250" class="outline-3">
+<h3 id="orga558250"><span class="section-number-3">2.5.</span> Finding the overlap of list of genes that we get back from pathway commons and our data</h3>
+<div class="outline-text-3" id="text-2-5">
+<div class="org-src-container">
+<pre class="src src-R">node_table <span style="color: #008b8b;">&lt;-</span> read.csv(<span style="color: #8b2252;">"/Users/samneaves/Documents/influence_graph_project/default_node.csv"</span>)
+head(node_table)
+</pre>
+</div>
+
+<pre class="example">
+  degree.layout                name selected         shared.name
+1            59                 JUN    false                 JUN
+2             4             JUN/FOS    false             JUN/FOS
+3            64                 FOS    false                 FOS
+4            15               SCN5A    false               SCN5A
+5             5 SMAD3/SMAD4/JUN/FOS    false SMAD3/SMAD4/JUN/FOS
+6             4            JUN/ATF2    false            JUN/ATF2
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc8ee169" class="outline-2">
+<h2 id="orgc8ee169"><span class="section-number-2">3.</span> do we want to extract min graph of nodes in subgroup rule?</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Sam Neaves</p>
+<p class="date">Created: 2024-11-14 Thu 10:11</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
