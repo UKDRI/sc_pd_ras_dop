@@ -593,6 +593,14 @@ the aircraft armour would be improved by designing armour for
 improvements where damage had not been observed to have occured. As
 these were planes that were lost.
 
+
+#+CAPTION: A 'State' of a surviving bomber
+#+NAME:   fig:2
+#+ATTR_ORG: :width "50"
+#+ATTR_HTML: :width "100px"
+[[./data/plots/Survivorship-bias.png]]
+
+
 In our analagy it is known that in parkinson disease dn's are lost, so
 observations from parkinson paitence of cell states are of neurons
 that have survived.
