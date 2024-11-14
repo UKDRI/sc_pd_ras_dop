@@ -1,6 +1,6 @@
 # -*- org-confirm-babel-evaluate: nil -*-
 #+TITLE: ParkinsonPathAI (Working title) - AI Models for Pathway Analysis in Parkinson’s Disease
-
+#+OPTIONS: ^:nil
 #+Author: Sam Neaves
 
 * Introduction
