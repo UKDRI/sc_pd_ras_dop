@@ -26,3 +26,58 @@ analysis and validation. If you spot any errors or have suggestions,
 please feel free to open an issue. Contributions and feedback from the
 community are welcome to help improve and refine our understanding of
 the RAS and dopamine pathways in Parkinson’s disease.
+
+* Data
+
+Biological cell samples were collected postmortem from the ventral
+substantia nigra of seven control samples, nine Parkinson's disease
+samples, and four samples from patients with Incidental Lewy Body
+Disorder. The nuclei of these cells were extracted and sequenced,
+totaling 23,885 nuclei. The sequecning was deep and full
+length. [INSERT DETALS OF SEQUENCING TECH OR REFERNCE]
+
+** System biology approach
+
+Our approach to this analysis is based on symbolic systems biology.
+In systems biology we aim to understand and model the biological
+reality at a system level, that is understanding how many aspects of
+biology interact to cause our observations. This is in conrast to
+looking at specific decompatialised observations. Symbolic system
+biology differs from quantitive symbolic biology in the level of
+abstraction.
+The use of discrete symbols to represent aspects of the system rather
+than specific quantitites has a number of advantages which we seek to
+exploit.
+Firstly, the abstraction of measured data to symbols is a way to
+handle noise.
+Secondly, the abstraction reduces the size of state space that we are examining.
+This means that certain computational methods become tractable.
+Thirdly, as our aim is to understand what is happening and ultimatly
+control the system.  It is therefore important that our models and their dynamics
+are intertplble, so that suggested interventions and there
+consequences can be ratified in a laboratory setting.
+
+Forthyly, there is evidence that symbolic abstraction is sufficent to model the dynamics in
+many cases.
+
+Biological reality is extremely complicated.
+
+The basic idea of DNA -> (transcribed) RNA -> (translated) Protein,
+which takes part in a series of biochemical reactions to build,
+maintain and controll cells is
+sound and present however the details around transcription,
+translation and metabolic pathways ultimatly leading to disease are
+complex and what we seek to understand.
+
+In somatic cells the DNA is immutable as they replicate into daughter
+cells.
+The differnce between cells .
+Cell differnation.
+Gene regulatory networks.
+
+Transcription can be bursty.
+Alternative splicing
+Protein complex formation. - chaperones.
+Epigentics, methylation and histone access.
+
+
