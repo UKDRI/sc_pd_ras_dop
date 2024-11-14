@@ -517,13 +517,13 @@ We have set up the command to run from a biomake file (makeprog - in
 the scripts dir)
 
 
-#+begin_src bash :dir "./scripts/" :eval query :results output
+#+begin_src bash :dir "./scripts/" :export both :eval query :results output
   biomake "augment_gene_list" | tail -n 40
 #+end_src
 
 #+RESULTS:
 #+begin_example
---- Upstream regulation network in 66.95 seconds ---
+--- Upstream regulation network in 66.0 seconds ---
 Number of nodes = 1339
 Number of edges = 12032
 SIF network written to ../data/pybravo_output/expanded.sif
@@ -542,7 +542,7 @@ Basic regulation reaction provenance written to ../data/pybravo_output/expanded-
 | MYC | 0.128 | 
 | PAX4 | 0.123 | 
 
---- Network simplification in 2.4 seconds ---
+--- Network simplification in 2.53 seconds ---
 SIF network written to ../data/pybravo_output/expanded-unified.sif
 Basic regulation reaction provenance written to ../data/pybravo_output/expanded-unified-provenance.csv
 Nodes after simplification = 1229
@@ -566,51 +566,6 @@ Target augment_gene_list built
 #+end_example
 
 
-
-
-** results
---- Network simplification in 0.86 seconds ---
-SIF network written to out-unified.sif
-Basic regulation reaction provenance written to out-unified-provenance.csv
-Nodes after simplification = 959
-Edges after simplification = 7929
-
-| Node   | Degree Centrality |
-|--------+-------------------|
-| NOG    |             0.248 |
-| DAND5  |             0.176 |
-| LEF1   |             0.165 |
-| MAZ    |             0.163 |
-| TCF7L1 |             0.157 |
-| HNF1A  |             0.151 |
-| FOXO4  |              0.15 |
-| PVT1   |             0.141 |
-| PITX2  |             0.137 |
-| JUN    |             0.134 |
-
-md=2
-
-
-max depth, md = 4
-
---- Network simplification in 2.71 seconds ---
-SIF network written to out-unified.sif
-Basic regulation reaction provenance written to out-unified-provenance.csv
-Nodes after simplification = 1229
-Edges after simplification = 11912
-
-| Node   | Degree Centrality |
-|--------+-------------------|
-| NOG    |             0.276 |
-| DAND5  |             0.195 |
-| LEF1   |             0.182 |
-| MAZ    |             0.178 |
-| TCF7L1 |             0.176 |
-| FOXO4  |             0.155 |
-| JUN    |             0.151 |
-| TGFB1  |             0.149 |
-| HNF1A  |             0.149 |
-| PVT1   |             0.139 |
 
 
 This results in the creation of four files in the pybravo_output dir
