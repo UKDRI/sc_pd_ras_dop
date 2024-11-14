@@ -618,3 +618,53 @@ This results in the creation of four files in the pybravo_output dir
 expanded-provenance.csv expanded-unified-provenance.csv expanded-unified.sif expanded.sif
 
 
+
+** Subgroup discovery of celluar states
+
+As a first step we want to follow the spirit of ww11 bomber command.
+The story goes that aeroplanes returning to england were analysed and
+where damage had occured this was observed. It was then infered that
+planes could survive in such a state, so to improve surviablilty of
+the aircraft armour would be improved by designing armour for
+improvements where damage had not been observed to have occured. As
+these were planes that were lost.
+
+In our analagy it is known that in parkinson disease dn's are lost, so
+observations from parkinson paitence of cell states are of neurons
+that have survived.
+
+Forntuelty we do have access to CTRL data. Of course these are not
+from people who have parkinsons but we hope to be able to use this as
+a proxy.
+
+We wish to identify descriptions (in terms of conjunctions of gene
+expression statements) that select group of cell states that are
+statistically differnt in terms of there distrubtion statistics from
+the combined population of cells.
+
+In order to do this we turn to the task of "Subgroup discovery" first
+described by Wrobel et al. Subgroup discovery is a data mining/kdd/ml
+task that lies at the intersection of classification and
+clustering. We use labelled data as in classification, but we wish to
+describe groups of (statisically) intresting instances. We wish for
+the descriptions to be interprtable and informative.
+
+Subgroup discovery has been used in bioinformatics for analysing gene
+expression before in x, y,z. in those studies it is similar to Gene set enrichment analysis. where
+genes are the instances, there descriptions are annotations such as
+GO-TERMs and there label are binary (differntly expressed or not).
+
+In contrast to these previous studies,  our instances are
+cells/nuclai and are target/class/label is CTRL or parkinson and are
+features are gene expression values as we want to identify and
+describe subgroups of cellular transcriptome states which appear in
+ctrl samples but not parkinson patients.
+
+In this first inital analysis and attempt to identify subgroups of
+cellular states we limit the subgroup discovery to a propositional
+data mining task. We do not use the relations provided by the query to
+pathway commons. These could potentially be usefull. If we wanted to
+explore that then we would need to use a method such as RSD,
+potentially hedwig. Instead the query to Pathway commons using pybravo
+can be seen as a feature selection technique.
+
