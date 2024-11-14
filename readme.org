@@ -686,6 +686,29 @@ genes_norm<-as.matrix(GetAssayData(sn_atlas_dans, slot = "data"))
 genes_counts<-as.matrix(GetAssayData(sn_atlas_dans, slot = "counts"))
 #+end_src
 
+** Finding the overlap of list of genes that we get back from pathway commons and our data
+#+begin_src R :session :results output :exports both
+  network_data <- read.table("./data/pybravo_output/expanded_reg_md10-unified.sif", quote = "", header = FALSE, stringsAsFactors = FALSE, sep = "\t")
+  head(network_data)
+  nodes <- unique(c(network_data$V1, network_data$V3))
+#+end_src
+
+#+RESULTS:
+:         V1         V2     V3
+: 1 Fra1/JUN ACTIVATION   CCL2
+: 2 Fra1/JUN ACTIVATION   Fra1
+: 3 Fra1/JUN ACTIVATION    IL6
+: 4 Fra1/JUN ACTIVATION p14ARF
+: 5 Fra1/JUN ACTIVATION   MMP9
+: 6 Fra1/JUN ACTIVATION  CXCL8
+
+#+begin_src R :session :results output :exports both
+  length(nodes)
+#+end_src
+
+#+RESULTS:
+: [1] 1053
+
 * do we want to extract min graph of nodes in subgroup rule?
 
 
