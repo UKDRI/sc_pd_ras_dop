@@ -81,3 +81,18 @@ Protein complex formation. - chaperones.
 Epigentics, methylation and histone access.
 
 
+*** Intreptation of sequence data as instances in state space.
+
+In our analysis of transcriptome from nuclei, previous work has
+identified cell types using x method.
+In addition cell states have been identified by y method.
+
+** RAS MAPK pathway
+
+In this work we are intrested in these pathways and the interplay.
+In order to get a list of genes that we are intreseted in and there
+interactions, we first manually curate a list of genes by augmenting a
+list of querying for list of pathway genes.
+
+The intial list is :
+
