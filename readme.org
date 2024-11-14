@@ -765,9 +765,10 @@ will be unobserved. We will need to infer if they are able to
 form/activate.
 
 In the way that the pybravo paper describes these nodes are used in
-there iggy analysis. The part of edge is treated as plus. But I think the standard consistency
-check is only looking for at least one positive edge. So not sure if
-that is appropiate. (will detail later).
+there iggy analysis. The 'part_of' edge is treated as plus. But I think the standard consistency
+check is only looking for at least one positive edge to label a node
+as consistant So not sure if that is appropiate. (will add detail to
+this point later).
 
 For the time being the number of complexes seem to be :
 
