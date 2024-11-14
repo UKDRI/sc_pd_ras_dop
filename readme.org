@@ -564,3 +564,52 @@ Edges after simplification = 11912
 
 Target augment_gene_list built
 #+end_example
+
+
+
+
+** results
+--- Network simplification in 0.86 seconds ---
+SIF network written to out-unified.sif
+Basic regulation reaction provenance written to out-unified-provenance.csv
+Nodes after simplification = 959
+Edges after simplification = 7929
+
+| Node   | Degree Centrality |
+|--------+-------------------|
+| NOG    |             0.248 |
+| DAND5  |             0.176 |
+| LEF1   |             0.165 |
+| MAZ    |             0.163 |
+| TCF7L1 |             0.157 |
+| HNF1A  |             0.151 |
+| FOXO4  |              0.15 |
+| PVT1   |             0.141 |
+| PITX2  |             0.137 |
+| JUN    |             0.134 |
+
+md=2
+
+
+max depth, md = 4
+
+--- Network simplification in 2.71 seconds ---
+SIF network written to out-unified.sif
+Basic regulation reaction provenance written to out-unified-provenance.csv
+Nodes after simplification = 1229
+Edges after simplification = 11912
+
+| Node   | Degree Centrality |
+|--------+-------------------|
+| NOG    |             0.276 |
+| DAND5  |             0.195 |
+| LEF1   |             0.182 |
+| MAZ    |             0.178 |
+| TCF7L1 |             0.176 |
+| FOXO4  |             0.155 |
+| JUN    |             0.151 |
+| TGFB1  |             0.149 |
+| HNF1A  |             0.149 |
+| PVT1   |             0.139 |
+
+
