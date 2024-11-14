@@ -838,6 +838,22 @@ write.csv(expression_matrix, file = "./data/cell_expression_with_disease.csv", r
 
 #+RESULTS:
 
+
+#+begin_src R :session :exports both
+
+# Extract the count matrix for the subset and transpose it for cells as rows
+count_matrix <- as.data.frame(t(as.matrix(sn_atlas_dans_ctrl_vs_pd_pathway@assays$RNA@counts)))
+
+# Add Disease column from metadata
+count_matrix$Disease <- sn_atlas_dans_ctrl_vs_pd_pathway@meta.data$Disease
+
+# Save to CSV
+write.csv(count_matrix, file = "./data/cell_count_with_disease.csv", row.names = TRUE)
+
+#+end_src
+
+#+RESULTS:
+
 * do we want to extract min graph of nodes in subgroup rule?
 
 
