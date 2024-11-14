@@ -591,13 +591,16 @@ The expanded_reg_md10-unified.sif file can be viewed in cyto scape.
 
 ** Subgroup discovery of celluar states
 
-As a first step we want to follow the spirit of ww11 bomber command.
-The story goes that aeroplanes returning to england were analysed and
-where damage had occured this was observed. It was then infered that
-planes could survive in such a state, so to improve surviablilty of
-the aircraft armour would be improved by designing armour for
-improvements where damage had not been observed to have occured. As
-these were planes that were lost.
+
+As a first step in our analysis, we take inspiration from an approach
+used by WWII bomber command to improve aircraft survivability. The
+story goes that analysts examined planes returning to England to see
+where they had sustained damage. They inferred that planes could
+survive damage in these areas, so to improve survivability, they added
+armor to areas where damage had not been observed, presuming planes
+hit in these unscathed areas did not return. This concept, known as
+"survivorship bias," helps us focus on the states that are less likely
+to survive or, in our case, cells lost in disease.
 
 
 #+CAPTION: A 'State' of a surviving bomber
