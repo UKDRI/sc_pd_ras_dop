@@ -38,47 +38,46 @@ length. [INSERT DETALS OF SEQUENCING TECH OR REFERNCE]
 
 ** System biology approach
 
-Our approach to this analysis is based on symbolic systems biology.
-In systems biology we aim to understand and model the biological
-reality at a system level, that is understanding how many aspects of
-biology interact to cause our observations. This is in conrast to
-looking at specific decompatialised observations. Symbolic system
-biology differs from quantitive symbolic biology in the level of
-abstraction.
-The use of discrete symbols to represent aspects of the system rather
-than specific quantitites has a number of advantages which we seek to
-exploit.
-Firstly, the abstraction of measured data to symbols is a way to
-handle noise.
-Secondly, the abstraction reduces the size of state space that we are examining.
-This means that certain computational methods become tractable.
-Thirdly, as our aim is to understand what is happening and ultimatly
-control the system.  It is therefore important that our models and their dynamics
-are intertplble, so that suggested interventions and there
-consequences can be ratified in a laboratory setting.
+Our approach to this analysis is grounded in symbolic systems
+biology. In systems biology, our goal is to understand and model
+biological reality at a systems level. This means focusing on how
+multiple aspects of biology interact to produce observable outcomes,
+contrasting with traditional approaches that isolate individual
+phenomena. Symbolic systems biology differs from quantitative systems
+biology in the level of abstraction it applies.
 
-Forthyly, there is evidence that symbolic abstraction is sufficent to model the dynamics in
-many cases.
 
-Biological reality is extremely complicated.
+Using discrete symbols to represent components of the system, rather
+than specific quantities, offers several advantages. First,
+abstracting measured data into symbolic form allows us to manage noise
+in the data. Second, this abstraction reduces the size of the state
+space we analyze, making certain computational methods more
+feasible. Third, our goal is not only to understand the system but
+also to control it. Therefore, it’s essential that our models and
+their dynamics are interpretable, allowing suggested interventions and
+their potential consequences to be validated in a laboratory setting.
 
-The basic idea of DNA -> (transcribed) RNA -> (translated) Protein,
-which takes part in a series of biochemical reactions to build,
-maintain and controll cells is
-sound and present however the details around transcription,
-translation and metabolic pathways ultimatly leading to disease are
-complex and what we seek to understand.
 
-In somatic cells the DNA is immutable as they replicate into daughter
-cells.
-The differnce between cells .
-Cell differnation.
-Gene regulatory networks.
+Finally, there is evidence that symbolic abstraction is sufficient to
+model biological dynamics in many cases.
 
-Transcription can be bursty.
-Alternative splicing
-Protein complex formation. - chaperones.
-Epigentics, methylation and histone access.
+
+Biological reality is highly complex. While the central dogma—DNA
+transcribed to RNA, translated to protein—outlines the basic process
+of cellular maintenance and control, the specifics of transcription,
+translation, and metabolic pathways leading to disease are intricate
+and require further exploration.
+
+
+For instance, in somatic cells, DNA remains stable as cells
+replicate. Differences between cells arise through processes such as
+differentiation and gene regulation. Transcription can occur in
+bursts, and alternative splicing allows for multiple proteins from a
+single gene. Additionally, protein complexes may form with the aid of
+chaperones, and epigenetic mechanisms, such as methylation and histone
+modification, affect gene accessibility.
+
+
 
 
 *** Intreptation of sequence data as instances in state space.
