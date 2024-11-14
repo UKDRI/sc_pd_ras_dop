@@ -800,6 +800,44 @@ print(edge_counts)
 | PART_OF    |  567 |
 | UNKNOWN    |   95 |
 
+
+#+begin_src R :session :exports both
+  str(sn_atlas_dans)
+  summary(sn_atlas_dans)
+#+end_src
+
+#+RESULTS:
+
+We want to select Cells that are either control or parkinsons
+We want to only select the genes that are in our network.
+#+begin_src R :session :exports both
+  sn_atlas_dans_ctrl_vs_pd <- subset(sn_atlas_dans, subset = Disease %in% c("CTR", "PD_B5-6", "PD_B3-4"))
+  sn_atlas_dans_ctrl_vs_pd_pathway <- sn_atlas_dans_ctrl_vs_pd[common_names,]
+  dim(sn_atlas_dans_ctrl_vs_pd_pathway)
+
+  
+#+end_src
+
+#+RESULTS:
+|  526 |
+| 6385 |
+
+#+begin_src R :session :exports both
+
+# Extract the expression matrix for the subset
+expression_matrix <- as.data.frame(t(as.matrix(sn_atlas_dans_ctrl_vs_pd_pathway@assays$RNA@data)))
+
+# Add Disease column from metadata
+expression_matrix$Disease <- sn_atlas_dans_ctrl_vs_pd_pathway@meta.data$Disease
+
+# Save to CSV
+write.csv(expression_matrix, file = "./data/cell_expression_with_disease.csv", row.names = TRUE)
+
+
+#+end_src
+
+#+RESULTS:
+
 * do we want to extract min graph of nodes in subgroup rule?
 
 
