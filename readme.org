@@ -722,3 +722,8 @@ genes_counts<-as.matrix(GetAssayData(sn_atlas_dans, slot = "counts"))
 #+end_src
 
 * do we want to extract min graph of nodes in subgroup rule?
+
+
+
+
+
