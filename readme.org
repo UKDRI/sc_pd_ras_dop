@@ -542,9 +542,9 @@ Basic regulation reaction provenance written to ../data/pybravo_output/expanded_
 | MYC | 0.128 | 
 | PAX4 | 0.123 | 
 
---- Network simplification in 2.53 seconds ---
-SIF network written to ../data/pybravo_output/expanded-unified.sif
-Basic regulation reaction provenance written to ../data/pybravo_output/expanded-unified-provenance.csv
+--- Network simplification in 2.49 seconds ---
+SIF network written to ../data/pybravo_output/expanded_reg-unified.sif
+Basic regulation reaction provenance written to ../data/pybravo_output/expanded_reg-unified-provenance.csv
 Nodes after simplification = 1229
 Edges after simplification = 11912
 
