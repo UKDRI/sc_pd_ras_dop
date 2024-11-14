@@ -668,3 +668,15 @@ explore that then we would need to use a method such as RSD,
 potentially hedwig. Instead the query to Pathway commons using pybravo
 can be seen as a feature selection technique.
 
+** Data info
+
+"Just sending the single nuclei data for the dopaminergic neurons in our atlas as Caleb suggested.
+The file “SNatlas_DaNs_seurat.RData” is in the usual Dropbox folder.
+The Seurat object in it is called “sn_atlas_dans” and contains all
+neurons across all disease stages and subtypes. You can access disease
+by sn_atlas_dans$Disease and cell subtype by
+sn_atlas_dans$CellSubType. And extract gene expression data as raw
+counts genes_counts<-as.matrix(GetAssayData(sn_atlas_dans, slot =
+"counts")) or normalised
+genes_norm<-as.matrix(GetAssayData(sn_atlas_dans, slot = "data"))."
+
