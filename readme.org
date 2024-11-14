@@ -709,6 +709,20 @@ genes_counts<-as.matrix(GetAssayData(sn_atlas_dans, slot = "counts"))
 #+RESULTS:
 : [1] 1053
 
+#+begin_src R :session :exports both
+  # Convert the rownames of genes_counts into a vector
+  genes_names <- rownames(genes_counts)
+
+  # Get the intersection between the 'name' column in node_table and the rownames of genes_counts_subset_df
+  common_names <- intersect(nodes, genes_names)
+
+  # View the result
+  length(common_names)
+#+end_src
+
+#+RESULTS:
+: 526
+
 * do we want to extract min graph of nodes in subgroup rule?
 
 
