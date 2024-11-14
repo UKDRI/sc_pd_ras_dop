@@ -613,3 +613,8 @@ Edges after simplification = 11912
 | PVT1   |             0.139 |
 
 
+This results in the creation of four files in the pybravo_output dir
+
+expanded-provenance.csv expanded-unified-provenance.csv expanded-unified.sif expanded.sif
+
+
