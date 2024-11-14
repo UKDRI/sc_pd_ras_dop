@@ -680,3 +680,44 @@ counts genes_counts<-as.matrix(GetAssayData(sn_atlas_dans, slot =
 "counts")) or normalised
 genes_norm<-as.matrix(GetAssayData(sn_atlas_dans, slot = "data"))."
 
+
+
+#+begin_src R :session :eval query 
+  library(dplyr)
+  library(Seurat)
+  library(patchwork)
+
+  data_location <- "/Users/samneaves/Documents/test_data/forSam/SNatlas_DaNs_seurat.RData"
+  load(data_location)
+
+#+end_src
+
+#+RESULTS:
+: sn_atlas_dans
+
+#+begin_src R :session
+head(sn_atlas_dans$CellSubType)
+#+end_src
+
+#+RESULTS:
+| DaN_0 |
+| DaN_0 |
+| DaN_1 |
+| DaN_1 |
+| DaN_0 |
+| DaN_0 |
+
+*** Get the normalised expression values
+#+begin_src R :session :results none
+genes_norm<-as.matrix(GetAssayData(sn_atlas_dans, slot = "data"))
+#+end_src
+
+#+RESULTS:
+
+
+*** Get the count expression values
+
+#+begin_src R :session :results none
+genes_counts<-as.matrix(GetAssayData(sn_atlas_dans, slot = "counts"))
+#+end_src
+
