@@ -723,6 +723,51 @@ genes_counts<-as.matrix(GetAssayData(sn_atlas_dans, slot = "counts"))
 #+RESULTS:
 : 526
 
+
+In the graph representation we have genes and protein complexes.
+A protein complex node is represented by Item/Item. For example
+
+SMAD3/SMAD4/JUN/FOS
+
+When we match our gene expression data to the network. These nodes
+will be unobserved. We will need to infer if they are able to
+form/activate.
+
+In the way that the pybravo paper describes these nodes are used in
+there iggy analysis. The part of edge is treated as plus. But I think the standard consistency
+check is only looking for at least one positive edge. So not sure if
+that is appropiate. (will detail later).
+
+For the time being the number of complexes seem to be :
+
+#+begin_src R :session :exports both
+# Identify rows in the 'name' column that contain '/'
+complexes <- grep("/", nodes)
+
+# Count the number of complexes
+num_complexes <- length(complexes)
+
+# View the count
+num_complexes
+#+end_src
+
+#+RESULTS:
+: 296
+
+#+begin_src R :session :exports both
+# Count occurrences of each edge type in the second column (V2)
+edge_counts <- table(network_data$V2)
+
+# Display the counts of each edge type
+print(edge_counts)
+#+end_src
+
+#+RESULTS:
+| ACTIVATION | 1710 |
+| INHIBITION |  655 |
+| PART_OF    |  567 |
+| UNKNOWN    |   95 |
+
 * do we want to extract min graph of nodes in subgroup rule?
 
 
