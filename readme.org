@@ -873,10 +873,15 @@ print(f"Current Conda environment: {conda_env}")
 
 The following code makes sure orange know which attribute is class
 #+begin_src python :session myorangesession :results output :exports both
-    conda_env = os.environ.get("CONDA_DEFAULT_ENV")
-    print(f"Current Conda environment second go: {conda_env}")
-    import Orange
-    from Orange.data import Domain, Table
+  conda_env = os.environ.get("CONDA_DEFAULT_ENV")
+  print(f"Current Conda environment second go: {conda_env}")
+  import Orange
+  from Orange.data import Domain, Table, StringVariable
+
+  # Load the data
+  data = Table("./data/cell_count_with_disease.csv")
+
+
 
     # Load the data
     data = Table("./data/cell_count_with_disease.csv")
