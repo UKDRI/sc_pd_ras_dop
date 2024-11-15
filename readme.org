@@ -1038,6 +1038,15 @@ for rule in classifier.rule_list:
     print(f"Rule: {rule}")
     for class_value, count in class_counts.items():
         print(f"  {class_value}: {count}")
+
+    # Now get the instance IDs covered by the rule
+    instance_ids = [
+        str(data_with_class_discrete.metas[i][0])  # assuming the meta attribute is at index 0
+        for i in range(len(covered_examples)) if covered_examples[i]
+    ]
+
+    print(f"  Covered instance IDs: {', '.join(instance_ids)}")
+
 #+end_src
 
 #+RESULTS:
