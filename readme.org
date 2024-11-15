@@ -920,7 +920,7 @@ My export to csv is weird. Ignore for the moment.
   disc = Orange.preprocess.Discretize()
   disc.method = Orange.preprocess.discretize.EntropyMDL()
   data_with_class_discrete = disc(data_with_class)
-  data_with_class_discrete.save("./data/cell_count_with_disease_mdl_discrete.tab")
+  data_with_class_discrete.save("./data/cell_count_with_disease_mdl_discrete2.tab")
 
   # Convert the Orange table to a pandas DataFrame
   data_df = pd.DataFrame(data_with_class_discrete.X, columns=[attr.name for attr in data_with_class_discrete.domain.attributes])
