@@ -888,9 +888,8 @@ The following code makes sure orange know which attribute is class
   disease = data.domain["Disease"]
   meta_var = StringVariable("ID")
 
-    # Separate attributes and disease variable
-    attributes = [attr for attr in data.domain.attributes if attr.name != "Disease"]
-    disease = data.domain["Disease"]
+  # Create a new domain with the disease column as the class variable
+  new_domain = Domain(attributes, class_vars=disease,  metas=[meta_var])
 
     # Create a new domain with the disease column as the class variable
     new_domain = Domain(attributes, class_vars=disease)
