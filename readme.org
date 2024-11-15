@@ -1021,9 +1021,11 @@ Rule: IF TRUE THEN Disease=CTR
 
 #+begin_src python :session myorangesession :results output :exports both
 from collections import Counter
+
 # Extract the features and class labels from data
 X = data_with_class_discrete.X  # feature matrix
 Y = data_with_class_discrete.Y  # class labels
+
 # Evaluate each rule and count class occurrences
 for rule in classifier.rule_list:
     covered_examples = rule.evaluate_data(X)  # returns a boolean array of covered examples
