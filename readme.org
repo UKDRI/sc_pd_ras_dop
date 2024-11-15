@@ -891,11 +891,11 @@ The following code makes sure orange know which attribute is class
   # Create a new domain with the disease column as the class variable
   new_domain = Domain(attributes, class_vars=disease,  metas=[meta_var])
 
-    # Create a new domain with the disease column as the class variable
-    new_domain = Domain(attributes, class_vars=disease)
+  # Apply this new domain to your data
+  data_with_class = Table.from_table(new_domain, data)
 
-    # Apply this new domain to your data
-    data_with_class = Table.from_table(new_domain, data)
+  # Add back the meta var
+  data_with_class.metas = data.metas
 
     # Verify the domain and check the class variable
     print("New domain:", data_with_class.domain)
