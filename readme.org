@@ -883,8 +883,10 @@ The following code makes sure orange know which attribute is class
 
 
 
-    # Load the data
-    data = Table("./data/cell_count_with_disease.csv")
+  # Separate attributes and disease variable
+  attributes = [attr for attr in data.domain.attributes if attr.name != "Disease"]
+  disease = data.domain["Disease"]
+  meta_var = StringVariable("ID")
 
     # Separate attributes and disease variable
     attributes = [attr for attr in data.domain.attributes if attr.name != "Disease"]
