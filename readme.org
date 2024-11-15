@@ -897,10 +897,11 @@ The following code makes sure orange know which attribute is class
   # Add back the meta var
   data_with_class.metas = data.metas
 
-    # Verify the domain and check the class variable
-    print("New domain:", data_with_class.domain)
-    print("Class variable:", data_with_class.domain.class_var)
-    print("Class values:", data_with_class.domain.class_var.values)
+
+  # Verify the domain and check the class variable
+  print("New domain:", data_with_class.domain)
+  print("Class variable:", data_with_class.domain.class_var)
+  print("Class values:", data_with_class.domain.class_var.values)
 
 #+end_src
 
