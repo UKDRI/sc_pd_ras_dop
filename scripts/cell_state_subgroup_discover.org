@@ -6,6 +6,11 @@
 #+HTML_HEAD: pre.example { max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9; }
 #+HTML_HEAD: </style>
 
+* About
+
+This work is a part of the [[file:../readme.org][ParkinsonPathAI]] project. The code described
+here follows part 1 this is part 2 of the work.
+
 * Introduction
 
 This notebook contains code to perform subgroup discovery of single
