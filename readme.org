@@ -5,6 +5,7 @@
 #+HTML_HEAD: <style>
 #+HTML_HEAD: pre.example { max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9; }
 #+HTML_HEAD: </style>
+#+EXPORT_FILE_NAME: docs/readme.html
 
 
 * Introduction
@@ -145,11 +146,11 @@ In addition cell states have been identified by y method.
 
 * Get the prior knowledge network
 
-[[file:scripts/get_prior_knowledge_network.org][Get prior knowledge network steps]] 
+[[file:scripts/get_prior_knowledge_network.org][Get prior knowledge network steps]]
 
 * Basic properties of single cell data and prior knowledge network
 
-[[file:scripts/intial_exploration_and_extraction.org][Inital data exploration and extraction]] 
+[[file:scripts/intial_exploration_and_extraction.org][Inital data exploration and extraction]]
 
 * Subgroup discovery of cellular states
 

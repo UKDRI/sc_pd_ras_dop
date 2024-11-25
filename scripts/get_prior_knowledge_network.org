@@ -5,6 +5,7 @@
 #+HTML_HEAD: <style>
 #+HTML_HEAD: pre.example { max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9; }
 #+HTML_HEAD: </style>
+#+EXPORT_FILE_NAME: docs/get_prior_knowledge_network.html
 
 * About
 
