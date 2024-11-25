@@ -222,3 +222,145 @@ for rule in classifier.rule_list:
     print(f"  Covered instance IDs: {', '.join(instance_ids)}")
 
 #+end_src
+
+
+* Visualise discovered subgroups
+
+
+* Lets make an up set plot
+
+#+begin_src R :session :exports both
+
+  
+#+end_src
+
+#+begin_src R :file 4.png :session :results graphics file :exports both
+library(lattice)
+xyplot(1:10 ~ 1:10)
+#+end_src
+
+#+RESULTS:
+[[file:4.png]]
+
+#+begin_src R :file upset_demo.png :session :results graphics file :exports both
+  movies <- read.csv( system.file("extdata", "movies.csv", package = "UpSetR"), header=T, sep=";" )
+  library("UpSetR")
+  upset(movies,attribute.plots=list(gridrows=60,plots=list(list(plot=scatter_plot, x="ReleaseDate", y="AvgRating"),
+  list(plot=scatter_plot, x="ReleaseDate", y="Watches"),list(plot=scatter_plot, x="Watches", y="AvgRating"),
+  list(plot=histogram, x="ReleaseDate")), ncols = 2))
+#+end_src
+
+#+RESULTS:
+[[file:upset_demo.png]]
+
+Try and have the ids in the first colum
+#+begin_src python :session myorangesession :results output :exports both
+import pandas as pd
+
+# Extract the features and class labels from data
+X = data_with_class_discrete.X  # feature matrix
+Y = data_with_class_discrete.Y  # class labels
+
+# Get instance IDs
+instance_ids = [str(data_with_class_discrete.metas[i][0]) for i in range(len(Y))]
+
+# Initialize a DataFrame to store coverage information
+coverage_df = pd.DataFrame(index=range(X.shape[0]), columns=['id'] + [str(rule) for rule in classifier.rule_list])
+
+# Fill the 'id' column with instance IDs
+coverage_df['id'] = instance_ids
+
+# Evaluate each rule and fill coverage DataFrame
+for rule in classifier.rule_list:
+    covered_examples = rule.evaluate_data(X)  # returns a boolean array of covered examples
+    
+    # Fill the DataFrame with 1s and 0s based on rule coverage
+    coverage_df[str(rule)] = covered_examples.astype(int)
+
+# Save the coverage DataFrame to a CSV file
+coverage_df.to_csv('./data/rule_coverage.csv', index=False)
+
+print("Coverage matrix saved to './data/rule_coverage.csv'")
+#+end_src
+
+#+RESULTS:
+: Coverage matrix saved to 'rule_coverage.csv'
+
+#+begin_src R :file upset_instances.png :session :results graphics file :exports both
+  rule_cover_data <- read.csv("./data/rule_coverage.csv", row.names = 1)
+   library(UpSetR)
+
+  data_binary <- data.frame(t(rule_cover_data))
+
+  upset(data_binary, nsets = 20, sets = colnames(data), keep.order = TRUE)
+#+end_src
+
+#+RESULTS:
+[[file:upset_instances.png]]
+
+
+#+begin_src R :file upset_rules.png :session :results graphics file :exports both
+  #rule_cover_data <- read.csv("./data/rule_coverage.csv", row.names = 1)
+  #library(UpSetR)
+
+  data_binary <- data.frame(rule_cover_data)
+
+  upset(data_binary, nsets = 20, sets = colnames(data), keep.order = TRUE)
+#+end_src
+
+#+RESULTS:
+[[file:upset_rules.png]]
+
+#+begin_src R :file upset_rules_complex.png :session :results graphics file :exports both
+  #rule_cover_data <- read.csv("./data/rule_coverage.csv", row.names = 1)
+  #library(UpSetR)
+  #detach("package:UpSetR", unload=TRUE)
+  library(ComplexUpset)
+
+  set_size(8, 3)
+  genres = colnames(movies)[18:24]
+  upset(movies, genres, name='genre', width_ratio=0.1)
+#+end_src
+
+#+RESULTS:
+[[file:upset_rules_complex.png]]
+
+* Mini graph for each rule?
+* thing
+#+header: :width 2000 :height 800
+#+begin_src R :file complex_upset_rules.png :session :results graphics file :exports both
+
+
+
+  library(ggplot2)
+  library(ComplexUpset)
+  movies = as.data.frame(ggplot2movies::movies)
+  head(movies, 3)
+  genres = colnames(movies)[18:24]
+  genres
+
+  movies[genres] = movies[genres] == 1
+  t(head(movies[genres], 3))
+
+  movies[movies$mpaa == '', 'mpaa'] = NA
+  movies = na.omit(movies)
+
+  #upset(movies, genres, name='genre', width_ratio=0.1)
+
+  rule_cover_data <- read.csv("./data/rule_coverage.csv", row.names = 1)
+
+  items = colnames(rule_cover_data)[1:10]
+
+
+#  quartz(width = 100, height = 5)
+#pdf("upset_plot_test_10_8.pdf", width = 100, height = 8)
+upset(rule_cover_data, items, name='genre', width_ratio=0.1, n_intersections=15)
+#dev.off()
+#+end_src
+
+#+RESULTS:
+[[file:complex_upset_rules.png]]
+
+* Next steps
+
+In the next page we will perform sign consistency modeling :
