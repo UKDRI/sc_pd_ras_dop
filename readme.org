@@ -6,6 +6,7 @@
 #+HTML_HEAD: pre.example { max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9; }
 #+HTML_HEAD: </style>
 #+EXPORT_FILE_NAME: docs/readme.html
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
 
 
 * Introduction
@@ -93,9 +94,10 @@ substantia nigra of seven control samples, nine Parkinson's disease
 samples, and four samples from patients with Incidental Lewy Body
 Disorder. The nuclei of these cells were extracted and sequenced,
 totaling 23,885 nuclei. The sequecning was deep and full
-length. [INSERT DETALS OF SEQUENCING TECH OR REFERNCE]
+length.
+** TODO [INSERT DETALS OF SEQUENCING TECH OR REFERNCE]
 
-** System biology approach
+* System biology approach
 
 Our approach to this analysis is grounded in symbolic systems
 biology. In systems biology, our goal is to understand and model
@@ -137,36 +139,56 @@ chaperones, and epigenetic mechanisms, such as methylation and histone
 modification, affect gene accessibility.
 
 
-*** Intreptation of sequence data as instances in state space.
+** Intreptation of sequence data as instances in state space.
 
 In our analysis of transcriptome from nuclei, previous work has
 identified cell types using x method.
 In addition cell states have been identified by y method.
 
+* Analysis Steps
 
-* Get the prior knowledge network
+The following litrate notebook constitute the analysis done in this
+work. Each one contains code and prose explaining the work done.
 
-[[file:scripts/get_prior_knowledge_network.org][Get prior knowledge network steps]]
+** Step 1. Get the prior knowledge network
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+   [[file:scripts/get_prior_knowledge_network.org][Get prior knowledge network steps]]
 
-* Basic properties of single cell data and prior knowledge network
+** Step 2. Basic properties of single cell data and prior knowledge network
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+   [[file:scripts/initial_exploration_and_extraction.org][Initial data exploration and extraction]]
 
-[[file:scripts/initial_exploration_and_extraction.org][Initial data exploration and extraction]]
+** Step 3. Subgroup discovery of cellular states
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+   [[file:scripts/cell_state_subgroup_discover.org][Cell state subgroup discovery]]
 
-* Subgroup discovery of cellular states
+** TODO Step 4. Sign Consitency Modeling
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+   
+ho
+** TODO Step 5.  Boolean network modeling
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+   
 
-[[file:scripts/cell_state_subgroup_discover.org][Cell state subgroup discovery]]
+** TODO Step 6.  Counterfactual Reasoning
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
 
-* Sign Consitency Modeling
+* Nextflow execution
 
-** TODO link to this notebook with bash/asp code
+If you just want to just run the analysis yourself you may want to
+execute the code steps as part of the nextflow pipline.
 
-* Boolean network modeling
-
-** TODO boolean network modeling code
-
-* Counterfactual Reasoning
-
-** TODO Counterfactual Reasoning code
-
-
+** TODO add code and instructions for nextflow execution
 
