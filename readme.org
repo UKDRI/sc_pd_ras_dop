@@ -150,11 +150,11 @@ In addition cell states have been identified by y method.
 
 * Basic properties of single cell data and prior knowledge network
 
-[[file:scripts/intial_exploration_and_extraction.org][Inital data exploration and extraction]]
+[[file:scripts/initial_exploration_and_extraction.org][Initial data exploration and extraction]]
 
 * Subgroup discovery of cellular states
 
-[[file:cell_state_subgroup_subgroup_discover.org][Cell state subgroup discovery]]
+[[file:scripts/cell_state_subgroup_discover.org][Cell state subgroup discovery]]
 
 * Sign Consitency Modeling
 
