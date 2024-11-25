@@ -6,6 +6,7 @@
 #+HTML_HEAD: pre.example { max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9; }
 #+HTML_HEAD: </style>
 #+EXPORT_FILE_NAME: docs/cell_state_subgroup_discover.html
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
 
 * About
 
