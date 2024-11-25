@@ -1,0 +1,104 @@
+# -*- org-confirm-babel-evaluate: nil -*-
+#+TITLE: Get prior knowledge network
+#+OPTIONS: ^:nil
+#+Author: Sam Neaves
+#+HTML_HEAD: <style>
+#+HTML_HEAD: pre.example { max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9; }
+#+HTML_HEAD: </style>
+
+* About
+
+This work is a part of the [[file:../readme.org][ParkinsonPathAI]] project. The code described
+here is part 1 of the work.
+
+** TODO RAS MAPK pathway (Check where Viola got these gene lists from).
+
+In this work we are intrested in the interplay between the RAAS and
+MAPK pathways because..
+
+I obtained two lists of genes from the two pathways from a collegue.
+
+In order to get a full list of genes that we are intreseted in and their
+interactions, we augment our intital list and query pathway commons to
+obtain a network of genes. We use the pyBravo tool to make this query.
+
+The intial list is :
+
+
+** Raas genes:
+#+begin_src bash :dir "./scripts/" :results output :exports both :tangle ./scripts/get_genelist.sh :comments link :shebang "#!/bin/bash"
+  cat ../data/initial_gene_list_files/raas_genes.txt
+#+end_src
+
+** Dopamine KEGG pathway:
+
+#+begin_src bash bash :dir "./scripts/" :results output :exports both  :tangle ./scripts/get_genelist.sh :comments link :shebang "#!/bin/bash"
+  cat ./data/initial_gene_list_files/DopamineKEGGpathway.txt
+#+end_src
+
+
+The intersection of these files is:
+#+begin_src bash :results output :exports both
+  grep -Fxf ./data/initial_gene_list_files/DopamineKEGGpathway.txt ./data/initial_gene_list_files/raas_genes.txt
+#+end_src
+
+
+
+The union of these files is:
+
+#+begin_src bash :results output :export both
+  cat ./data/initial_gene_list_files/DopamineKEGGpathway.txt ./data/initial_gene_list_files/raas_genes.txt | sort | uniq | tee ./data/initial_gene_list_files/initial_gene_list.txt
+  wc -l ./data/initial_gene_list_files/initial_gene_list.txt
+#+end_src
+
+
+
+Next in order to understand which other genes have known interactions
+with this list and how this list is related we query pathway commons
+using pybravo.
+
+For Pybravo to function, it must connect to a SPARQL endpoint from
+Pathway Commons. Unfortunately, this resource can be unreliable at
+times. However, it’s possible to set up a local SPARQL endpoint by
+building a Docker container. A Docker recipe file is available in this
+GitHub repository:
+
+https://github.com/mkarikom/PathwayCommons-VOS#pathwaycommons-v12-on-virtuoso-7
+
+With Pybravo installed and an appropriate Conda environment set up, we
+can configure Pybravo to connect to our local instance of the Pathway
+Commons SPARQL endpoint for querying.
+
+
+We have set up the command to run from a Biomake file (makeprog in the
+scripts directory).
+
+
+
+#+begin_src bash :dir "./scripts/" :exports both :eval query :results output
+  biomake "augment_gene_list" | tail -n 40
+#+end_src
+
+
+This results in the creation of four files in the pybravo_output dir
+
+expanded_reg_md10-provenance.csv
+expanded_reg_md10-unified-provenance.csv expanded_reg_md10-unified.sif
+expanded_reg_md10.sif
+
+The expanded_reg_md10-unified.sif file can be viewed in cyto scape.
+
+* Visualize the network
+
+
+#+CAPTION: Gene Regulation Network
+#+NAME:   fig:1
+[[./data/plots/expanded_reg_md10-unified.png]]
+
+
+* Next steps
+
+In the next page we will import the single cell data alongside the
+network describe some properties of the data and then make a data
+table of the transcriptome in our samples and genes of intrest.
+
