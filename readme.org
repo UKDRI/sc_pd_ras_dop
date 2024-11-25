@@ -31,6 +31,60 @@ please feel free to open an issue. Contributions and feedback from the
 community are welcome to help improve and refine our understanding of
 the RAS and dopamine pathways in Parkinson’s disease.
 
+* Code Organization
+
+This project is hosted on GitHub and follows a clear and structured
+approach to organizing code and documentation.
+
+** Code Accessibility and Literate Programming
+The code is written in a
+[[https://en.wikipedia.org/wiki/Literate_programming][literate programming style]] , integrating code
+and explanatory prose. This approach enhances readability and provides
+clear context for each step in the analysis. The primary medium for
+this documentation is [[https://orgmode.org/][Emacs Org mode files]] , which resemble Markdown
+but offer several additional features, including:
+
+- Advanced Formatting: Support for tables, source code blocks, and
+  inline evaluation of code.
+  
+- Integration with Analysis: Directly execute embedded code blocks.
+  
+- Export Capabilities: Generate various formats like HTML, PDF, and
+  plain text from the same source file.
+  
+- Tangled Scripts and Workflow Execution
+From these Org files, tangled scripts are generated. Tangling extracts
+the source code blocks into standalone scripts, enabling flexible
+execution:
+
+
+- Step-by-Step Execution: Run individual scripts to focus on specific
+  parts of the analysis. This is especially useful if you are
+  interested in a single stage of the workflow.
+  
+- Pipeline Execution: The tangled scripts are also integrated into a
+  Nextflow pipeline, allowing the entire workflow to be executed in
+  one process. The Nextflow execution enhances reproducibilty,
+  portabilty and scalabilty of the code.
+  
+
+** File Formats and Visualization
+The Org files are plain text and can be viewed or edited in any text
+editor. However, to improve accessibility and provide a visually
+appealing presentation, the Org files are exported to HTML and hosted
+on GitHub Pages. This HTML version enhances the user experience by
+incorporating multimedia elements like images, links, and interactive
+visualizations.
+
+
+** Accessing the Files
+- Org File: The main Org file for this project is located at: [Link to Org file].
+- HTML View: The corresponding HTML version can be accessed here: [Link to GitHub Pages].
+This organization ensures that the code is both transparent and
+user-friendly, making it easy for collaborators to understand,
+replicate, and extend the analysis.
+
+
 * Data
 
 Biological cell samples were collected postmortem from the ventral
