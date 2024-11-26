@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-11-26 Tue 15:27 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cell State Subgroup Discovery</title>
+<meta name="author" content="Sam Neaves" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/bigblow_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/bigblow_theme/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/bigblow_theme/css/hideshow.css"/>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/bigblow.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/hideshow.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href=""> HOME </a>
+</div><div id="content" class="content">
+<h1 class="title">Cell State Subgroup Discovery</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org6697b46">1. About</a></li>
+<li><a href="#orge945443">2. Introduction</a>
+<ul>
+<li><a href="#org4cd91a9">2.1. Subgroup discovery of celluar states</a></li>
+</ul>
+</li>
+<li><a href="#org8325e2a">3. Visualise discovered subgroups</a></li>
+<li><a href="#orgbc3a954">4. Lets make an up set plot</a></li>
+<li><a href="#orgdba2b1d">5. Mini graph for each rule?</a></li>
+<li><a href="#org0708420">6. thing</a></li>
+<li><a href="#org6ff38be">7. Next steps</a></li>
+</ul>
+</div>
+</div>
+<div id="navigation"> <div id="mytitle"><h1>ParkinsonPathAI (Working title) - AI Models for Pathway Analysis in Parkinson’s Disease</h1></div>
+<ul class="org-ul">
+<li><a href="overview.html">Overview</a></li>
+<li><a href="get_prior_knowledge_network.html">Get prior knowledge network</a></li>
+<li><a href="initial_exploration_and_extraction.html">Initial Data Exploration and Data Extraction</a></li>
+<li><a href="cell_state_subgroup_discover.html">Cell State Subgroup Discovery</a></li>
+<li><a href="cell_state_subgroup_discover.html">Cell State Subgroup Discovery2</a></li>
+</ul>
+</div>
+<div id="outline-container-org6697b46" class="outline-2">
+<h2 id="org6697b46"><span class="section-number-2">1.</span> About</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This work is a part of the <a href="../readme.html">ParkinsonPathAI</a> project. The code described
+here follows part 1 this is part 2 of the work.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge945443" class="outline-2">
+<h2 id="orge945443"><span class="section-number-2">2.</span> Introduction</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+This notebook contains code to perform subgroup discovery of single
+Cell Gene expression data.
+</p>
+</div>
+
+<div id="outline-container-org4cd91a9" class="outline-3">
+<h3 id="org4cd91a9"><span class="section-number-3">2.1.</span> Subgroup discovery of celluar states</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+As a first step in our analysis, we take inspiration from an approach
+used by WWII bomber command to improve aircraft survivability. The
+story goes that analysts examined planes returning to England to see
+where they had sustained damage. They inferred that planes could
+survive damage in these areas, so to improve survivability, they added
+armor to areas where damage had not been observed, presuming planes
+hit in these unscathed areas did not return. This concept, known as
+"survivorship bias," helps us focus on the states that are less likely
+to survive or, in our case, cells lost in disease.
+</p>
+
+
+
+<div id="org3a50dce" class="figure">
+<p><img src="./data/plots/Survivorship-bias.png" alt="Survivorship-bias.png" width="&quot;100px&quot;" />
+</p>
+<p><span class="figure-number">Figure 1: </span>A 'State' of a surviving bomber</p>
+</div>
+
+
+
+<p>
+In our analogy, dopaminergic neurons (DNs) are known to be lost in
+Parkinson’s disease. Therefore, cell states we observe in Parkinson’s
+patients represent neurons that have managed to survive the
+disease. Unlike bomber command who did not have access to planes that
+did not return we also have access to data from control (CTRL)
+individuals who do not have Parkinson’s disease, which we use as a
+proxy for healthy neuron states.
+</p>
+
+
+<p>
+Our goal is to identify descriptions—defined as combinations of gene
+expression levels—that select subgroups of cell states with
+statistically distinct patterns compared to the overall population of
+cells. Specifically, we want to identify cellular states that are
+common in CTRL samples but absent in Parkinson’s patients, aiming to
+uncover features that may correlate with cell survival.
+</p>
+
+<p>
+Once we have done this, we will be able to order cellular states using
+pseudo time methods and try to understand why healthy peoples cells
+are able to transistion into these states but people with parkinsons
+disease are not.
+</p>
+
+<p>
+To achieve this first step of identifying cellular states that appear
+in CTRLS but not parkinson patients, we employ subgroup discovery, a data mining task
+first described by Wrobel et al., which lies at the intersection of
+classification and clustering. Subgroup discovery uses labeled data as
+in classification, but its purpose is to describe statistically
+interesting instances within these groups, aiming for descriptions
+that are both interpretable and informative.
+</p>
+
+
+<p>
+Subgroup discovery has previously been used in bioinformatics to
+analyze gene expression, in tasks similar to gene set enrichment
+analysis (GSEA). In GSEA, genes are instances, their descriptions are
+annotations (such as GO terms), and labels are binary (e.g.,
+differentially expressed or not). In contrast, our instances are cells
+(or nuclei), our labels are CTRL or Parkinson’s, and our features are
+gene expression values. Our goal is to identify and describe subgroups
+of cellular transcriptomic states that are prominent in CTRL samples
+but absent in Parkinson’s patients, potentially uncovering gene
+expression profiles linked to neuron survival.
+</p>
+
+
+<p>
+For this initial analysis, we limit subgroup discovery to a
+propositional data mining task, focusing on attributes at the
+individual cell level. While we do not yet incorporate relational
+information available from Pathway Commons, such relationships could
+provide valuable context in the future. Exploring this would require
+methods like Relational Subgroup Discovery (RSD) or potentially
+Hedwig. Currently, we use the query to Pathway Commons, executed
+through Pybravo, primarily as a feature selection technique to focus
+on gene expressions of interest.
+</p>
+
+
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b22222;"># </span><span style="color: #b22222;">Your Python code here</span>
+<span style="color: #483d8b;">print</span>(<span style="color: #8b2252;">"Hello from Conda environment woop!"</span>)
+
+<span style="color: #a020f0;">import</span> os
+
+<span style="color: #a0522d;">conda_env</span> = os.environ.get(<span style="color: #8b2252;">"CONDA_DEFAULT_ENV"</span>)
+<span style="color: #483d8b;">print</span>(f<span style="color: #8b2252;">"Current Conda environment: </span>{conda_env}<span style="color: #8b2252;">"</span>)
+
+</pre>
+</div>
+
+<pre class="example">
+Hello from Conda environment woop!
+Current Conda environment: orange3
+</pre>
+
+
+<p>
+The following code makes sure orange know which attribute is class
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a0522d;">conda_env</span> = os.environ.get(<span style="color: #8b2252;">"CONDA_DEFAULT_ENV"</span>)
+<span style="color: #483d8b;">print</span>(f<span style="color: #8b2252;">"Current Conda environment second go: </span>{conda_env}<span style="color: #8b2252;">"</span>)
+<span style="color: #a020f0;">import</span> Orange
+<span style="color: #a020f0;">from</span> Orange.data <span style="color: #a020f0;">import</span> Domain, Table, StringVariable
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Load the data</span>
+<span style="color: #a0522d;">data</span> = Table(<span style="color: #8b2252;">"./data/cell_count_with_disease.csv"</span>)
+
+
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Separate attributes and disease variable</span>
+<span style="color: #a0522d;">attributes</span> = [attr <span style="color: #a020f0;">for</span> attr <span style="color: #a020f0;">in</span> data.domain.attributes <span style="color: #a020f0;">if</span> attr.name != <span style="color: #8b2252;">"Disease"</span>]
+<span style="color: #a0522d;">disease</span> = data.domain[<span style="color: #8b2252;">"Disease"</span>]
+<span style="color: #a0522d;">meta_var</span> = StringVariable(<span style="color: #8b2252;">"ID"</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Create a new domain with the disease column as the class variable</span>
+<span style="color: #a0522d;">new_domain</span> = Domain(attributes, class_vars=disease,  metas=[meta_var])
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Apply this new domain to your data</span>
+<span style="color: #a0522d;">data_with_class</span> = Table.from_table(new_domain, data)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Add back the meta var</span>
+data_with_class.<span style="color: #a0522d;">metas</span> = data.metas
+
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Verify the domain and check the class variable</span>
+<span style="color: #483d8b;">print</span>(<span style="color: #8b2252;">"New domain:"</span>, data_with_class.domain)
+<span style="color: #483d8b;">print</span>(<span style="color: #8b2252;">"Class variable:"</span>, data_with_class.domain.class_var)
+<span style="color: #483d8b;">print</span>(<span style="color: #8b2252;">"Class values:"</span>, data_with_class.domain.class_var.values)
+
+</pre>
+</div>
+
+<pre class="example">
+Current Conda environment second go: orange3
+New domain: [CCL2, FOS, JUN, CREB1, SRF, ELK1, JDP2, HGF, SP1, VEGFA, TNF, AGTR1, INS, AKT1, NLRC5, TP63, NOG, ARRB1, TGFB1, IFNG, EPO, ATF4, EIF2A, ESR2, AHR, CALM3, CCL5, IL4, ALB, IL1B, S100B, HMGB1, LEP, IL17A, OSM, IL1A, IKBKB, CRP, VDR, SOD2, EGF, SLC6A3, TGFA, TNFSF11, F2, ADRB2, MFGE8, PIK3CA, IFNA1, JAK2, NR1I2, BCL2L1, IGF1, MAPK12, IAPP, SULF1, KRAS, PARP1, IGF1R, IL18, MAPK14, FN1, NFKB1, MAPK9, TP53, IGBP1, PPP3CA, CXCL12, CDKN1A, STAT3, NDFIP1, IFNB1, ESR1, NTN1, MPO, CCND1, C5, FOXO3, NQO1, IL33, PTGS2, SNCA, CLEC4E, IL15, TNFAIP3, CYP3A4, SHH, FGF8, CNTF, FOXP3, IL32, AGXT, GDNF, YAP1, IL23R, TYK2, SMAD3, SMAD4, RHOA, CD4, FOSB, E2F3, EGR4, EGR1, PPARA, NR3C1, CNR2, HRH2, PPARG, NFKBIA, TLR4, P2RY6, KAT2B, CREBBP, GATA3, PAK1, FOXA1, ENO1, MYCBP, IL6, FOXO4, RB1, HBP1, HDAC2, POU4F1, MITF, HIF1A, SLC39A8, CXCR4, CYP4Z1, CTNNB1, CGB3, TNFSF10, BMP4, CSF2, TAC1, ICAM1, ABCB4, GH1, IL5, ALPK1, IL2, CXCL8, MVK, FCER2, TP73, CD28, FOXO1, HMOX1, ELANE, BDNF, GHRL, DDB2, PTHLH, EDN1, CLPTM1L, CA9, EP300, TYMP, FSHB, MAP3K20, GNAQ, IL24, RNF34, IL6R, IGF2, BSG, PML, MAPT, PRKN, CD40LG, ERCC4, SIRT1, CITED2, NPM1, SOX30, SERPINB5, NGF, RB1CC1, MDM2, AKR1B1, TGFB2, ACTA2, STK11, SRSF2, RELA, DNMT3B, RASSF1, HDAC1, HRH4, TGIF1, FGF7, EZH2, TFAP2C, PTEN, HRAS, CDKN1B, GSN, KEAP1, E2F1, VEGFC, TLR2, PRODH, NFE2L2, PSEN2, SQSTM1, CYP1A1, PKM, DPP3, CYP1A2, BRCA1, RXRA, RHEB, SRC, NCOA6, SULT2A1, PPARGC1A, NR1H3, AR, TRIM33, MSI1, EGFR, BRAF, CXCR3, LY96, CYLD, FOXM1, CREM, PTPRH, ZBTB17, FGF13, AP1S1, S1PR3, ARNT, HDAC7, RBPJ, MAF, IRF4, PIM1, SKI, CEBPA, E2F4, JUND, TNIK, HES1, TLE1, AES, YY1, DVL3, JAK1, LCK, JAK3, TRRAP, TERT, DNMT3A, GFI1, IRF7, LEF1, TAF9, FOXG1, SSRP1, IL12A, IL12B, TRPV1, CD3D, CD3E, CD247, RNASEL, PDGFB, NFKB2, BCL3, GBA, NCOA1, CD44, GATA1, FOXA2, EOMES, EGR3, EGR2, ETS1, WT1, TWIST1, SNAI1, GATA2, IL13, IL1RN, CFD, BID, E4F1, EPAS1, HSPA1A, PLAUR, WNT3A, DHFR, IRF1, ADIPOQ, MMP9, TGFBI, CD2, NTS, PLA2G1B, KIT, MAP2K6, PPARD, ERCC6, OGT, CAV1, RALA, ATG7, LGALS1, ATG13, DHCR24, DDIT4, MUC1, ARSB, PROM1, JAG1, NCOA2, NFATC1, CSF1, RNF128, RBL1, FGF16, SMARCA4, RNF39, CPAMD8, HNF1A, LHB, COPS5, TCF7L2, SMARCA2, KAT2A, TCF7L1, NOC2L, IL27, ATF3, USF2, PARP14, BCL6, E2F6, IL4R, NFX1, TAF10, TAF12, PITX2, PTCH1, HTR2A, PTGER1, NR1H4, P2RY11, RELB, CYSLTR1, NRIP1, CTCF, ETS2, MEN1, GLI1, CHGA, THPO, KITLG, FASLG, HSF1, ATG5, CFTR, ADAR, FASN, TIMP1, HSPA5, HOXC4, KISS1, HHIP, TBX21, RNASEH2A, APP, PSEN1, RASSF3, NDUFA2, BRIP1, SPTLC3, INSR, PPIA, GLI3, KLF4, FAS, GLI2, CD82, PRKAA2, CEBPZ, TSHB, PTMA, CTGF, MTSS1, TXLNG, MLX, TRH, KAT5, RUVBL1, RUVBL2, SRPRA, TRIM28, AKT3, TH, SLC18A2, PCBP4, ACE, PTK2, ARNTL, COMT, STAT1, MAPK3, MAPK1, PRKCA, CALML4, CAMK2D, GNG11, GNG5, GSK3A, ITPR3, MAOB, LRTOMT, MAPK13, PLCB1, PPP1CA, PPP1CB, PRKACG, PTGER2, SHC1, VAT1, DAP, TP53BP1, ZNF225, AREG, ERAL1, MLXIPL, AKT2, CACNA1A, CALM1, CACNA1B, CAMK2G, CREB3L2, CREB5, DAG1, CREB3L4, DRD4, DRD2, GNAL, GNAI2, GNAS, GNAO1, GNG10, GNB5, GNG12, GNG2, GNG8, GNG7, GNG4, GRIA1, GNGT1, GRIA3, GRIA2, GRIA4, GRIN2A, GSK3B, ITPR1, ITPR2, KCNJ3, KIF5C, KIF5A, MAOA, MAPK10, MAPK8, PPP1R1B, PPP2CA, PPP2R2D, PPP2R1B, PPP2R2A, PPP2R2B, PPP2R2C, PPP2R5A, PPP2R5E, PPP2R5C, PPP3CC, PRKACB, PRKCB, SCN1A, HLA-DQB1, PRRT2, RNASE1, KCTD11, MPP2, RAD1, HEBP1, IL27RA, HDAC9, SCG2, ARRB2, CALML3, CALML5, CAMK2B, CREB3L1, GNB4, GNB3, KCNJ5, MAP3K1, MAPK11, PLCB4, CGB7, CGB5, CGB8, AHRR, DDC, KCNJ6, PPP2R5B, CAMK2A, CREB3L3, GNB1, PPP2CB, PPP2R5D, GRIP1, PRODH2, PEMT, SPEN, RAF1, LAP3, PTK2B, TPO | Disease] {ID}
+Class variable: Disease
+Class values: ('CTR', 'PD_B3-4', 'PD_B5-6')
+</pre>
+
+
+<p>
+My export to csv is weird. Ignore for the moment.
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> pandas <span style="color: #a020f0;">as</span> pd
+<span style="color: #a0522d;">conda_env</span> = os.environ.get(<span style="color: #8b2252;">"CONDA_DEFAULT_ENV"</span>)
+<span style="color: #483d8b;">print</span>(f<span style="color: #8b2252;">"Current Conda environment second go: </span>{conda_env}<span style="color: #8b2252;">"</span>)
+
+<span style="color: #a0522d;">disc</span> = Orange.preprocess.Discretize()
+disc.<span style="color: #a0522d;">method</span> = Orange.preprocess.discretize.EntropyMDL()
+<span style="color: #a0522d;">data_with_class_discrete</span> = disc(data_with_class)
+data_with_class_discrete.save(<span style="color: #8b2252;">"./data/cell_count_with_disease_mdl_discrete2.tab"</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Convert the Orange table to a pandas DataFrame</span>
+<span style="color: #a0522d;">data_df</span> = pd.DataFrame(data_with_class_discrete.X, columns=[attr.name <span style="color: #a020f0;">for</span> attr <span style="color: #a020f0;">in</span> data_with_class_discrete.domain.attributes])
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Add the class variable if it exists</span>
+<span style="color: #a0522d;">data_df</span>[data_with_class_discrete.domain.class_var.name] = [<span style="color: #483d8b;">str</span>(val) <span style="color: #a020f0;">for</span> val <span style="color: #a020f0;">in</span> data_with_class_discrete.Y]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Save the DataFrame as a CSV file</span>
+data_df.to_csv(<span style="color: #8b2252;">"./data/cell_count_with_disease_mdl_discrete.csv"</span>, index=<span style="color: #008b8b;">False</span>)
+
+</pre>
+</div>
+
+<pre class="example">
+Current Conda environment second go: orange3
+</pre>
+
+
+
+<div class="org-src-container">
+<pre class="src src-python">
+
+<span style="color: #483d8b;">print</span>(<span style="color: #8b2252;">"Hello from third block"</span>)
+<span style="color: #a0522d;">conda_env</span> = os.environ.get(<span style="color: #8b2252;">"CONDA_DEFAULT_ENV"</span>)
+<span style="color: #483d8b;">print</span>(f<span style="color: #8b2252;">"Current Conda environment second go: </span>{conda_env}<span style="color: #8b2252;">"</span>)
+<span style="color: #a020f0;">import</span> Orange
+<span style="color: #483d8b;">print</span>(Orange.version.version)
+<span style="color: #a0522d;">learner</span> = Orange.classification.CN2SDLearner()
+learner.rule_finder.search_algorithm.<span style="color: #a0522d;">beam_width</span> = 10
+learner.rule_finder.search_strategy.<span style="color: #a0522d;">constrain_continuous</span> = <span style="color: #008b8b;">True</span>
+learner.rule_finder.general_validator.<span style="color: #a0522d;">min_covered_examples</span> = 15
+learner.rule_finder.general_validator.<span style="color: #a0522d;">max_rule_length</span> = 6
+<span style="color: #a0522d;">classifier</span> = learner(data_with_class_discrete)
+<span style="color: #a020f0;">for</span> rule <span style="color: #a020f0;">in</span> classifier.rule_list:
+   <span style="color: #483d8b;">print</span>(f<span style="color: #8b2252;">"Rule: </span>{rule}<span style="color: #8b2252;">"</span>)
+</pre>
+</div>
+
+
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">from</span> collections <span style="color: #a020f0;">import</span> Counter
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Extract the features and class labels from data</span>
+<span style="color: #a0522d;">X</span> = data_with_class_discrete.X  <span style="color: #b22222;"># </span><span style="color: #b22222;">feature matrix</span>
+<span style="color: #a0522d;">Y</span> = data_with_class_discrete.Y  <span style="color: #b22222;"># </span><span style="color: #b22222;">class labels</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Evaluate each rule and count class occurrences</span>
+<span style="color: #a020f0;">for</span> rule <span style="color: #a020f0;">in</span> classifier.rule_list:
+    <span style="color: #a0522d;">covered_examples</span> = rule.evaluate_data(X)  <span style="color: #b22222;"># </span><span style="color: #b22222;">returns a boolean array of covered examples</span>
+    <span style="color: #a0522d;">class_counts</span> = Counter(
+        <span style="color: #483d8b;">str</span>(data_with_class_discrete.domain.class_var.values[<span style="color: #483d8b;">int</span>(Y[i])])
+        <span style="color: #a020f0;">for</span> i <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">range</span>(<span style="color: #483d8b;">len</span>(Y)) <span style="color: #a020f0;">if</span> covered_examples[i]
+    )
+
+    <span style="color: #b22222;"># </span><span style="color: #b22222;">Print rule and counts for each class</span>
+    <span style="color: #483d8b;">print</span>(f<span style="color: #8b2252;">"Rule: </span>{rule}<span style="color: #8b2252;">"</span>)
+    <span style="color: #a020f0;">for</span> class_value, count <span style="color: #a020f0;">in</span> class_counts.items():
+        <span style="color: #483d8b;">print</span>(f<span style="color: #8b2252;">"  </span>{class_value}<span style="color: #8b2252;">: </span>{count}<span style="color: #8b2252;">"</span>)
+
+    <span style="color: #b22222;"># </span><span style="color: #b22222;">Now get the instance IDs covered by the rule</span>
+    <span style="color: #a0522d;">instance_ids</span> = [
+        <span style="color: #483d8b;">str</span>(data_with_class_discrete.metas[i][0])  <span style="color: #b22222;"># </span><span style="color: #b22222;">assuming the meta attribute is at index 0</span>
+        <span style="color: #a020f0;">for</span> i <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">range</span>(<span style="color: #483d8b;">len</span>(covered_examples)) <span style="color: #a020f0;">if</span> covered_examples[i]
+    ]
+
+    <span style="color: #483d8b;">print</span>(f<span style="color: #8b2252;">"  Covered instance IDs: </span>{', '.join(instance_ids)}<span style="color: #8b2252;">"</span>)
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org8325e2a" class="outline-2">
+<h2 id="org8325e2a"><span class="section-number-2">3.</span> Visualise discovered subgroups</h2>
+</div>
+
+
+<div id="outline-container-orgbc3a954" class="outline-2">
+<h2 id="orgbc3a954"><span class="section-number-2">4.</span> Lets make an up set plot</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+<pre class="src src-R">
+
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #008b8b;">library</span>(lattice)
+xyplot(1:10 ~ 1:10)
+</pre>
+</div>
+
+
+<div id="org3d0e04b" class="figure">
+<p><img src="4.png" alt="4.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-R">movies <span style="color: #008b8b;">&lt;-</span> read.csv( system.file(<span style="color: #8b2252;">"extdata"</span>, <span style="color: #8b2252;">"movies.csv"</span>, package = <span style="color: #8b2252;">"UpSetR"</span>), header=T, sep=<span style="color: #8b2252;">";"</span> )
+<span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"UpSetR"</span>)
+upset(movies,attribute.plots=list(gridrows=60,plots=list(list(plot=scatter_plot, x=<span style="color: #8b2252;">"ReleaseDate"</span>, y=<span style="color: #8b2252;">"AvgRating"</span>),
+list(plot=scatter_plot, x=<span style="color: #8b2252;">"ReleaseDate"</span>, y=<span style="color: #8b2252;">"Watches"</span>),list(plot=scatter_plot, x=<span style="color: #8b2252;">"Watches"</span>, y=<span style="color: #8b2252;">"AvgRating"</span>),
+list(plot=histogram, x=<span style="color: #8b2252;">"ReleaseDate"</span>)), ncols = 2))
+</pre>
+</div>
+
+
+<div id="orgfa388cb" class="figure">
+<p><img src="upset_demo.png" alt="upset_demo.png" />
+</p>
+</div>
+
+<p>
+Try and have the ids in the first colum
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #a020f0;">import</span> pandas <span style="color: #a020f0;">as</span> pd
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Extract the features and class labels from data</span>
+<span style="color: #a0522d;">X</span> = data_with_class_discrete.X  <span style="color: #b22222;"># </span><span style="color: #b22222;">feature matrix</span>
+<span style="color: #a0522d;">Y</span> = data_with_class_discrete.Y  <span style="color: #b22222;"># </span><span style="color: #b22222;">class labels</span>
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Get instance IDs</span>
+<span style="color: #a0522d;">instance_ids</span> = [<span style="color: #483d8b;">str</span>(data_with_class_discrete.metas[i][0]) <span style="color: #a020f0;">for</span> i <span style="color: #a020f0;">in</span> <span style="color: #483d8b;">range</span>(<span style="color: #483d8b;">len</span>(Y))]
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Initialize a DataFrame to store coverage information</span>
+<span style="color: #a0522d;">coverage_df</span> = pd.DataFrame(index=<span style="color: #483d8b;">range</span>(X.shape[0]), columns=[<span style="color: #8b2252;">'id'</span>] + [<span style="color: #483d8b;">str</span>(rule) <span style="color: #a020f0;">for</span> rule <span style="color: #a020f0;">in</span> classifier.rule_list])
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Fill the 'id' column with instance IDs</span>
+<span style="color: #a0522d;">coverage_df</span>[<span style="color: #8b2252;">'id'</span>] = instance_ids
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Evaluate each rule and fill coverage DataFrame</span>
+<span style="color: #a020f0;">for</span> rule <span style="color: #a020f0;">in</span> classifier.rule_list:
+    <span style="color: #a0522d;">covered_examples</span> = rule.evaluate_data(X)  <span style="color: #b22222;"># </span><span style="color: #b22222;">returns a boolean array of covered examples</span>
+
+    <span style="color: #b22222;"># </span><span style="color: #b22222;">Fill the DataFrame with 1s and 0s based on rule coverage</span>
+    <span style="color: #a0522d;">coverage_df</span>[<span style="color: #483d8b;">str</span>(rule)] = covered_examples.astype(<span style="color: #483d8b;">int</span>)
+
+<span style="color: #b22222;"># </span><span style="color: #b22222;">Save the coverage DataFrame to a CSV file</span>
+coverage_df.to_csv(<span style="color: #8b2252;">'./data/rule_coverage.csv'</span>, index=<span style="color: #008b8b;">False</span>)
+
+<span style="color: #483d8b;">print</span>(<span style="color: #8b2252;">"Coverage matrix saved to './data/rule_coverage.csv'"</span>)
+</pre>
+</div>
+
+<pre class="example">
+Coverage matrix saved to 'rule_coverage.csv'
+</pre>
+
+
+<div class="org-src-container">
+<pre class="src src-R">rule_cover_data <span style="color: #008b8b;">&lt;-</span> read.csv(<span style="color: #8b2252;">"./data/rule_coverage.csv"</span>, row.names = 1)
+ <span style="color: #008b8b;">library</span>(UpSetR)
+
+data_binary <span style="color: #008b8b;">&lt;-</span> data.frame(t(rule_cover_data))
+
+upset(data_binary, nsets = 20, sets = colnames(data), keep.order = <span style="color: #228b22;">TRUE</span>)
+</pre>
+</div>
+
+
+<div id="org1a5085f" class="figure">
+<p><img src="upset_instances.png" alt="upset_instances.png" />
+</p>
+</div>
+
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #b22222;">#</span><span style="color: #b22222;">rule_cover_data &lt;- read.csv("./data/rule_coverage.csv", row.names = 1)</span>
+<span style="color: #b22222;">#</span><span style="color: #b22222;">library(UpSetR)</span>
+
+data_binary <span style="color: #008b8b;">&lt;-</span> data.frame(rule_cover_data)
+
+upset(data_binary, nsets = 20, sets = colnames(data), keep.order = <span style="color: #228b22;">TRUE</span>)
+</pre>
+</div>
+
+
+<div id="orgbb9dc4d" class="figure">
+<p><img src="upset_rules.png" alt="upset_rules.png" />
+</p>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-R"><span style="color: #b22222;">#</span><span style="color: #b22222;">rule_cover_data &lt;- read.csv("./data/rule_coverage.csv", row.names = 1)</span>
+<span style="color: #b22222;">#</span><span style="color: #b22222;">library(UpSetR)</span>
+<span style="color: #b22222;">#</span><span style="color: #b22222;">detach("package:UpSetR", unload=TRUE)</span>
+<span style="color: #008b8b;">library</span>(ComplexUpset)
+
+set_size(8, 3)
+genres = colnames(movies)[18:24]
+upset(movies, genres, name=<span style="color: #8b2252;">'genre'</span>, width_ratio=0.1)
+</pre>
+</div>
+
+
+<div id="org348727d" class="figure">
+<p><img src="upset_rules_complex.png" alt="upset_rules_complex.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdba2b1d" class="outline-2">
+<h2 id="orgdba2b1d"><span class="section-number-2">5.</span> Mini graph for each rule?</h2>
+</div>
+<div id="outline-container-org0708420" class="outline-2">
+<h2 id="org0708420"><span class="section-number-2">6.</span> thing</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+<pre class="src src-R">
+
+
+  <span style="color: #008b8b;">library</span>(ggplot2)
+  <span style="color: #008b8b;">library</span>(ComplexUpset)
+  movies = as.data.frame(ggplot2movies::movies)
+  head(movies, 3)
+  genres = colnames(movies)[18:24]
+  genres
+
+  movies[genres] = movies[genres] == 1
+  t(head(movies[genres], 3))
+
+  movies[movies$mpaa == <span style="color: #8b2252;">''</span>, <span style="color: #8b2252;">'mpaa'</span>] = <span style="color: #228b22;">NA</span>
+  movies = na.omit(movies)
+
+  <span style="color: #b22222;">#</span><span style="color: #b22222;">upset(movies, genres, name='genre', width_ratio=0.1)</span>
+
+  rule_cover_data <span style="color: #008b8b;">&lt;-</span> read.csv(<span style="color: #8b2252;">"./data/rule_coverage.csv"</span>, row.names = 1)
+
+  items = colnames(rule_cover_data)[1:10]
+
+
+<span style="color: #b22222;">#  </span><span style="color: #b22222;">quartz(width = 100, height = 5)</span>
+<span style="color: #b22222;">#</span><span style="color: #b22222;">pdf("upset_plot_test_10_8.pdf", width = 100, height = 8)</span>
+upset(rule_cover_data, items, name=<span style="color: #8b2252;">'genre'</span>, width_ratio=0.1, n_intersections=15)
+<span style="color: #b22222;">#</span><span style="color: #b22222;">dev.off()</span>
+</pre>
+</div>
+
+
+<div id="org9fd5ce3" class="figure">
+<p><img src="complex_upset_rules.png" alt="complex_upset_rules.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6ff38be" class="outline-2">
+<h2 id="org6ff38be"><span class="section-number-2">7.</span> Next steps</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+In the next page we will perform sign consistency modeling :
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Sam Neaves</p>
+<p class="date">Created: 2024-11-26 Tue 15:27</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

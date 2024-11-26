@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-11-26 Tue 15:27 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Get prior knowledge network</title>
+<meta name="author" content="Sam Neaves" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/bigblow_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/bigblow_theme/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/bigblow_theme/css/hideshow.css"/>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/bigblow.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/bigblow_theme/js/hideshow.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href=""> HOME </a>
+</div><div id="content" class="content">
+<h1 class="title">Get prior knowledge network</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgb4ce5e6">1. About</a></li>
+<li><a href="#orga7e4e8d">2. <span class="todo TODO">TODO</span> RAS MAPK pathway (Check where Viola got these gene lists from).</a>
+<ul>
+<li><a href="#org08b0ad2">2.1. Raas genes:</a></li>
+<li><a href="#org9437db3">2.2. Dopamine KEGG pathway:</a></li>
+</ul>
+</li>
+<li><a href="#orge58ab45">3. Visualize the network</a></li>
+<li><a href="#org60d6a3d">4. Next steps</a></li>
+</ul>
+</div>
+</div>
+<div id="navigation"> <div id="mytitle"><h1>ParkinsonPathAI (Working title) - AI Models for Pathway Analysis in Parkinson’s Disease</h1></div>
+<ul class="org-ul">
+<li><a href="overview.html">Overview</a></li>
+<li><a href="get_prior_knowledge_network.html">Get prior knowledge network</a></li>
+<li><a href="initial_exploration_and_extraction.html">Initial Data Exploration and Data Extraction</a></li>
+<li><a href="cell_state_subgroup_discover.html">Cell State Subgroup Discovery</a></li>
+<li><a href="cell_state_subgroup_discover.html">Cell State Subgroup Discovery2</a></li>
+</ul>
+</div>
+
+<div id="outline-container-orgb4ce5e6" class="outline-2">
+<h2 id="orgb4ce5e6"><span class="section-number-2">1.</span> About</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This work is a part of the <a href="../readme.html">ParkinsonPathAI</a> project. The code described
+here is part 1 of the work.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga7e4e8d" class="outline-2">
+<h2 id="orga7e4e8d"><span class="section-number-2">2.</span> <span class="todo TODO">TODO</span> RAS MAPK pathway (Check where Viola got these gene lists from).</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+In this work we are intrested in the interplay between the RAAS and
+MAPK pathways because..
+</p>
+
+<p>
+I obtained two lists of genes from the two pathways from a collegue.
+</p>
+
+<p>
+In order to get a full list of genes that we are intreseted in and their
+interactions, we augment our intital list and query pathway commons to
+obtain a network of genes. We use the pyBravo tool to make this query.
+</p>
+
+<p>
+The intial list is :
+</p>
+</div>
+
+
+<div id="outline-container-org08b0ad2" class="outline-3">
+<h3 id="org08b0ad2"><span class="section-number-3">2.1.</span> Raas genes:</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+<pre class="src src-bash">cat ../data/initial_gene_list_files/raas_genes.txt
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9437db3" class="outline-3">
+<h3 id="org9437db3"><span class="section-number-3">2.2.</span> Dopamine KEGG pathway:</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+<pre class="src src-bash">cat ./data/initial_gene_list_files/DopamineKEGGpathway.txt
+</pre>
+</div>
+
+
+<p>
+The intersection of these files is:
+</p>
+<div class="org-src-container">
+<pre class="src src-bash">grep -Fxf ./data/initial_gene_list_files/DopamineKEGGpathway.txt ./data/initial_gene_list_files/raas_genes.txt
+</pre>
+</div>
+
+
+
+<p>
+The union of these files is:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">cat ./data/initial_gene_list_files/DopamineKEGGpathway.txt ./data/initial_gene_list_files/raas_genes.txt | sort | uniq | tee ./data/initial_gene_list_files/initial_gene_list.txt
+wc -l ./data/initial_gene_list_files/initial_gene_list.txt
+</pre>
+</div>
+
+
+
+<p>
+Next in order to understand which other genes have known interactions
+with this list and how this list is related we query pathway commons
+using pybravo.
+</p>
+
+<p>
+For Pybravo to function, it must connect to a SPARQL endpoint from
+Pathway Commons. Unfortunately, this resource can be unreliable at
+times. However, it’s possible to set up a local SPARQL endpoint by
+building a Docker container. A Docker recipe file is available in this
+GitHub repository:
+</p>
+
+<p>
+<a href="https://github.com/mkarikom/PathwayCommons-VOS#pathwaycommons-v12-on-virtuoso-7">https://github.com/mkarikom/PathwayCommons-VOS#pathwaycommons-v12-on-virtuoso-7</a>
+</p>
+
+<p>
+With Pybravo installed and an appropriate Conda environment set up, we
+can configure Pybravo to connect to our local instance of the Pathway
+Commons SPARQL endpoint for querying.
+</p>
+
+
+<p>
+We have set up the command to run from a Biomake file (makeprog in the
+scripts directory).
+</p>
+
+
+
+<div class="org-src-container">
+<pre class="src src-bash">biomake <span style="color: #8b2252;">"augment_gene_list"</span> | tail -n 40
+</pre>
+</div>
+
+
+<p>
+This results in the creation of four files in the pybravo_output dir
+</p>
+
+<p>
+expanded_reg_md10-provenance.csv
+expanded_reg_md10-unified-provenance.csv expanded_reg_md10-unified.sif
+expanded_reg_md10.sif
+</p>
+
+<p>
+The expanded_reg_md10-unified.sif file can be viewed in cyto scape.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge58ab45" class="outline-2">
+<h2 id="orge58ab45"><span class="section-number-2">3.</span> Visualize the network</h2>
+<div class="outline-text-2" id="text-3">
+
+<div id="org3348bfb" class="figure">
+<p><img src="./data/plots/expanded_reg_md10-unified.png" alt="expanded_reg_md10-unified.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Gene Regulation Network</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org60d6a3d" class="outline-2">
+<h2 id="org60d6a3d"><span class="section-number-2">4.</span> Next steps</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+In the next page we will import the single cell data alongside the
+network describe some properties of the data and then make a data
+table of the transcriptome in our samples and genes of intrest.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Sam Neaves</p>
+<p class="date">Created: 2024-11-26 Tue 15:27</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
