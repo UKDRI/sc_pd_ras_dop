@@ -5,14 +5,15 @@
 #+HTML_HEAD: <style>
 #+HTML_HEAD: pre.example { max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9; }
 #+HTML_HEAD: </style>
-#+EXPORT_FILE_NAME: docs/get_prior_knowledge_network.html
+#+EXPORT_FILE_NAME: ../docs/get_prior_knowledge_network.html
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
 
 * About
 
 This work is a part of the [[file:../readme.org][ParkinsonPathAI]] project. The code described
 here is part 1 of the work.
 
-** TODO RAS MAPK pathway (Check where Viola got these gene lists from).
+* TODO RAS MAPK pathway (Check where Viola got these gene lists from).
 
 In this work we are intrested in the interplay between the RAAS and
 MAPK pathways because..

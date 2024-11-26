@@ -1,11 +1,11 @@
-# -*- org-confirm-babel-evaluate: nil -*-
+n# -*- org-confirm-babel-evaluate: nil -*-
 #+TITLE: Cell State Subgroup Discovery
 #+OPTIONS: ^:nil
 #+Author: Sam Neaves
 #+EXPORT_FILE_NAME: ../public_html/cell_state_subgroup_discover.html
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
 
-#+HTML_LINK_UP: index.html
+#+HTML_LINK_UP: overview.html
 #+HTML: <div id="navigation"> <div id="mytitle"><h1>ParkinsonPathAI (Working title) - AI Models for Pathway Analysis in Parkinson’s Disease</h1></div>
 #+INCLUDE: "sitemap.org" :lines "3-"
 #+HTML: </div>

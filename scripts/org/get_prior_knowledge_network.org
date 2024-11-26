@@ -5,7 +5,7 @@
 #+EXPORT_FILE_NAME: ../public_html/get_prior_knowledge_network.html
 #+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
 
-#+HTML_LINK_UP: index.html
+#+HTML_LINK_UP: overview.html
 #+HTML: <div id="navigation"> <div id="mytitle"><h1>ParkinsonPathAI (Working title) - AI Models for Pathway Analysis in Parkinson’s Disease</h1></div>
 #+INCLUDE: "sitemap.org" :lines "3-"
 #+HTML: </div>

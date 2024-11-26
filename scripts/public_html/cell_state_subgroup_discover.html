@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-26 Tue 15:27 -->
+<!-- 2024-11-26 Tue 16:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cell State Subgroup Discovery</title>
@@ -24,7 +24,7 @@
 </head>
 <body>
 <div id="org-div-home-and-up">
- <a accesskey="h" href="index.html"> UP </a>
+ <a accesskey="h" href="overview.html"> UP </a>
  |
  <a accesskey="H" href=""> HOME </a>
 </div><div id="content" class="content">
@@ -33,17 +33,17 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org6697b46">1. About</a></li>
-<li><a href="#orge945443">2. Introduction</a>
+<li><a href="#org7983ebe">1. About</a></li>
+<li><a href="#org0b2f231">2. Introduction</a>
 <ul>
-<li><a href="#org4cd91a9">2.1. Subgroup discovery of celluar states</a></li>
+<li><a href="#org8d34c24">2.1. Subgroup discovery of celluar states</a></li>
 </ul>
 </li>
-<li><a href="#org8325e2a">3. Visualise discovered subgroups</a></li>
-<li><a href="#orgbc3a954">4. Lets make an up set plot</a></li>
-<li><a href="#orgdba2b1d">5. Mini graph for each rule?</a></li>
-<li><a href="#org0708420">6. thing</a></li>
-<li><a href="#org6ff38be">7. Next steps</a></li>
+<li><a href="#orgb8a9ecb">3. Visualise discovered subgroups</a></li>
+<li><a href="#orgcb8b420">4. Lets make an up set plot</a></li>
+<li><a href="#org055e422">5. Mini graph for each rule?</a></li>
+<li><a href="#org1dc4764">6. thing</a></li>
+<li><a href="#org3944e85">7. Next steps</a></li>
 </ul>
 </div>
 </div>
@@ -56,8 +56,8 @@
 <li><a href="cell_state_subgroup_discover.html">Cell State Subgroup Discovery2</a></li>
 </ul>
 </div>
-<div id="outline-container-org6697b46" class="outline-2">
-<h2 id="org6697b46"><span class="section-number-2">1.</span> About</h2>
+<div id="outline-container-org7983ebe" class="outline-2">
+<h2 id="org7983ebe"><span class="section-number-2">1.</span> About</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This work is a part of the <a href="../readme.html">ParkinsonPathAI</a> project. The code described
@@ -66,8 +66,8 @@ here follows part 1 this is part 2 of the work.
 </div>
 </div>
 
-<div id="outline-container-orge945443" class="outline-2">
-<h2 id="orge945443"><span class="section-number-2">2.</span> Introduction</h2>
+<div id="outline-container-org0b2f231" class="outline-2">
+<h2 id="org0b2f231"><span class="section-number-2">2.</span> Introduction</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 This notebook contains code to perform subgroup discovery of single
@@ -75,8 +75,8 @@ Cell Gene expression data.
 </p>
 </div>
 
-<div id="outline-container-org4cd91a9" class="outline-3">
-<h3 id="org4cd91a9"><span class="section-number-3">2.1.</span> Subgroup discovery of celluar states</h3>
+<div id="outline-container-org8d34c24" class="outline-3">
+<h3 id="org8d34c24"><span class="section-number-3">2.1.</span> Subgroup discovery of celluar states</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 As a first step in our analysis, we take inspiration from an approach
@@ -92,7 +92,7 @@ to survive or, in our case, cells lost in disease.
 
 
 
-<div id="org3a50dce" class="figure">
+<div id="org5510995" class="figure">
 <p><img src="./data/plots/Survivorship-bias.png" alt="Survivorship-bias.png" width="&quot;100px&quot;" />
 </p>
 <p><span class="figure-number">Figure 1: </span>A 'State' of a surviving bomber</p>
@@ -316,13 +316,13 @@ learner.rule_finder.general_validator.<span style="color: #a0522d;">max_rule_len
 </div>
 
 
-<div id="outline-container-org8325e2a" class="outline-2">
-<h2 id="org8325e2a"><span class="section-number-2">3.</span> Visualise discovered subgroups</h2>
+<div id="outline-container-orgb8a9ecb" class="outline-2">
+<h2 id="orgb8a9ecb"><span class="section-number-2">3.</span> Visualise discovered subgroups</h2>
 </div>
 
 
-<div id="outline-container-orgbc3a954" class="outline-2">
-<h2 id="orgbc3a954"><span class="section-number-2">4.</span> Lets make an up set plot</h2>
+<div id="outline-container-orgcb8b420" class="outline-2">
+<h2 id="orgcb8b420"><span class="section-number-2">4.</span> Lets make an up set plot</h2>
 <div class="outline-text-2" id="text-4">
 <div class="org-src-container">
 <pre class="src src-R">
@@ -337,7 +337,7 @@ xyplot(1:10 ~ 1:10)
 </div>
 
 
-<div id="org3d0e04b" class="figure">
+<div id="org9390ed5" class="figure">
 <p><img src="4.png" alt="4.png" />
 </p>
 </div>
@@ -352,7 +352,7 @@ list(plot=histogram, x=<span style="color: #8b2252;">"ReleaseDate"</span>)), nco
 </div>
 
 
-<div id="orgfa388cb" class="figure">
+<div id="org1bdc164" class="figure">
 <p><img src="upset_demo.png" alt="upset_demo.png" />
 </p>
 </div>
@@ -406,7 +406,7 @@ upset(data_binary, nsets = 20, sets = colnames(data), keep.order = <span style="
 </div>
 
 
-<div id="org1a5085f" class="figure">
+<div id="org0f0b914" class="figure">
 <p><img src="upset_instances.png" alt="upset_instances.png" />
 </p>
 </div>
@@ -423,7 +423,7 @@ upset(data_binary, nsets = 20, sets = colnames(data), keep.order = <span style="
 </div>
 
 
-<div id="orgbb9dc4d" class="figure">
+<div id="org08cd344" class="figure">
 <p><img src="upset_rules.png" alt="upset_rules.png" />
 </p>
 </div>
@@ -441,18 +441,18 @@ upset(movies, genres, name=<span style="color: #8b2252;">'genre'</span>, width_r
 </div>
 
 
-<div id="org348727d" class="figure">
+<div id="org5c8ed22" class="figure">
 <p><img src="upset_rules_complex.png" alt="upset_rules_complex.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgdba2b1d" class="outline-2">
-<h2 id="orgdba2b1d"><span class="section-number-2">5.</span> Mini graph for each rule?</h2>
+<div id="outline-container-org055e422" class="outline-2">
+<h2 id="org055e422"><span class="section-number-2">5.</span> Mini graph for each rule?</h2>
 </div>
-<div id="outline-container-org0708420" class="outline-2">
-<h2 id="org0708420"><span class="section-number-2">6.</span> thing</h2>
+<div id="outline-container-org1dc4764" class="outline-2">
+<h2 id="org1dc4764"><span class="section-number-2">6.</span> thing</h2>
 <div class="outline-text-2" id="text-6">
 <div class="org-src-container">
 <pre class="src src-R">
@@ -486,15 +486,15 @@ upset(rule_cover_data, items, name=<span style="color: #8b2252;">'genre'</span>,
 </div>
 
 
-<div id="org9fd5ce3" class="figure">
+<div id="org33f4b63" class="figure">
 <p><img src="complex_upset_rules.png" alt="complex_upset_rules.png" />
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6ff38be" class="outline-2">
-<h2 id="org6ff38be"><span class="section-number-2">7.</span> Next steps</h2>
+<div id="outline-container-org3944e85" class="outline-2">
+<h2 id="org3944e85"><span class="section-number-2">7.</span> Next steps</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 In the next page we will perform sign consistency modeling :
@@ -504,7 +504,7 @@ In the next page we will perform sign consistency modeling :
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Sam Neaves</p>
-<p class="date">Created: 2024-11-26 Tue 15:27</p>
+<p class="date">Created: 2024-11-26 Tue 16:15</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

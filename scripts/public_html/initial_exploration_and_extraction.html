@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-26 Tue 15:26 -->
+<!-- 2024-11-26 Tue 16:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Initial Data Exploration and Data Extraction</title>
@@ -24,7 +24,7 @@
 </head>
 <body>
 <div id="org-div-home-and-up">
- <a accesskey="h" href="index.html"> UP </a>
+ <a accesskey="h" href="overview.html"> UP </a>
  |
  <a accesskey="H" href=""> HOME </a>
 </div><div id="content" class="content">
@@ -33,17 +33,17 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org02a91a8">1. About</a></li>
-<li><a href="#org1d503c4">2. Data info</a>
+<li><a href="#orga5706ce">1. About</a></li>
+<li><a href="#orgf958c29">2. Data info</a>
 <ul>
-<li><a href="#orgdb7a441">2.1. Get the normalised expression values</a></li>
-<li><a href="#orgceb2097">2.2. Get the count expression values</a></li>
+<li><a href="#org807b5c6">2.1. Get the normalised expression values</a></li>
+<li><a href="#orga81c410">2.2. Get the count expression values</a></li>
 </ul>
 </li>
-<li><a href="#org56a3c8d">3. Finding the overlap</a></li>
-<li><a href="#org027dcf7">4. Complexes</a></li>
-<li><a href="#org5fc4b45">5. Edge types</a></li>
-<li><a href="#orgdd8fc8e">6. Select cells and genes</a></li>
+<li><a href="#orgff4fc78">3. Finding the overlap</a></li>
+<li><a href="#org0fb76b5">4. Complexes</a></li>
+<li><a href="#org57e068a">5. Edge types</a></li>
+<li><a href="#orga00a45d">6. Select cells and genes</a></li>
 </ul>
 </div>
 </div>
@@ -57,8 +57,8 @@
 </ul>
 </div>
 
-<div id="outline-container-org02a91a8" class="outline-2">
-<h2 id="org02a91a8"><span class="section-number-2">1.</span> About</h2>
+<div id="outline-container-orga5706ce" class="outline-2">
+<h2 id="orga5706ce"><span class="section-number-2">1.</span> About</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This work is a part of the <a href="../readme.html">ParkinsonPathAI</a> project. The code described
@@ -68,8 +68,8 @@ here is part 2 of the work.
 </div>
 
 
-<div id="outline-container-org1d503c4" class="outline-2">
-<h2 id="org1d503c4"><span class="section-number-2">2.</span> Data info</h2>
+<div id="outline-container-orgf958c29" class="outline-2">
+<h2 id="orgf958c29"><span class="section-number-2">2.</span> Data info</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 "Just sending the single nuclei data for the dopaminergic neurons in our atlas as Caleb suggested.
@@ -102,8 +102,8 @@ data_location <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b
 </div>
 </div>
 
-<div id="outline-container-orgdb7a441" class="outline-3">
-<h3 id="orgdb7a441"><span class="section-number-3">2.1.</span> Get the normalised expression values</h3>
+<div id="outline-container-org807b5c6" class="outline-3">
+<h3 id="org807b5c6"><span class="section-number-3">2.1.</span> Get the normalised expression values</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-R">genes_norm<span style="color: #008b8b;">&lt;-</span>as.matrix(GetAssayData(sn_atlas_dans, slot = <span style="color: #8b2252;">"data"</span>))
@@ -113,8 +113,8 @@ data_location <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b
 </div>
 
 
-<div id="outline-container-orgceb2097" class="outline-3">
-<h3 id="orgceb2097"><span class="section-number-3">2.2.</span> Get the count expression values</h3>
+<div id="outline-container-orga81c410" class="outline-3">
+<h3 id="orga81c410"><span class="section-number-3">2.2.</span> Get the count expression values</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-R">genes_counts<span style="color: #008b8b;">&lt;-</span>as.matrix(GetAssayData(sn_atlas_dans, slot = <span style="color: #8b2252;">"counts"</span>))
@@ -124,8 +124,8 @@ data_location <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b
 </div>
 </div>
 
-<div id="outline-container-org56a3c8d" class="outline-2">
-<h2 id="org56a3c8d"><span class="section-number-2">3.</span> Finding the overlap</h2>
+<div id="outline-container-orgff4fc78" class="outline-2">
+<h2 id="orgff4fc78"><span class="section-number-2">3.</span> Finding the overlap</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Find the overlap of list of genes that we get back from pathway commons and our data
@@ -176,8 +176,8 @@ length(common_names)
 </div>
 </div>
 
-<div id="outline-container-org027dcf7" class="outline-2">
-<h2 id="org027dcf7"><span class="section-number-2">4.</span> Complexes</h2>
+<div id="outline-container-org0fb76b5" class="outline-2">
+<h2 id="org0fb76b5"><span class="section-number-2">4.</span> Complexes</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 In the graph representation we have genes and protein complexes.
@@ -224,8 +224,8 @@ num_complexes
 </div>
 </div>
 
-<div id="outline-container-org5fc4b45" class="outline-2">
-<h2 id="org5fc4b45"><span class="section-number-2">5.</span> Edge types</h2>
+<div id="outline-container-org57e068a" class="outline-2">
+<h2 id="org57e068a"><span class="section-number-2">5.</span> Edge types</h2>
 <div class="outline-text-2" id="text-5">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #b22222;"># </span><span style="color: #b22222;">Count occurrences of each edge type in the second column (V2)</span>
@@ -276,8 +276,8 @@ summary(sn_atlas_dans)
 </div>
 </div>
 </div>
-<div id="outline-container-orgdd8fc8e" class="outline-2">
-<h2 id="orgdd8fc8e"><span class="section-number-2">6.</span> Select cells and genes</h2>
+<div id="outline-container-orga00a45d" class="outline-2">
+<h2 id="orga00a45d"><span class="section-number-2">6.</span> Select cells and genes</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 We want to select Cells that are either control or parkinsons
@@ -342,7 +342,7 @@ write.csv(count_matrix, file = <span style="color: #8b2252;">"./data/cell_count_
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Sam Neaves</p>
-<p class="date">Created: 2024-11-26 Tue 15:26</p>
+<p class="date">Created: 2024-11-26 Tue 16:15</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
