@@ -1,0 +1,72 @@
+/* Ensure the navigation menu spans the top */
+#navigation {
+    clear: both;
+    max-width: 810px;
+    /*width: 60%; /* Make the menu span the full width */
+    background-color: grey; /* Set a background color */
+    overflow: hidden; /* Clear floating children, if any */
+    padding: 0;
+    margin: 0;
+    position: fixed;
+    top: 0;
+}
+
+/* Remove default list styling */
+#navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Arrange list items horizontally */
+    justify-content: center; /* Optionally center the menu items */
+}
+
+/* Style each list item */
+#navigation ul li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Style links inside the list items */
+#navigation ul li a {
+    display: block; /* Make the entire li clickable */
+    color: white; /* Text color */
+    text-align: center; /* Center text */
+    padding: 14px 20px; /* Add padding around links */
+    text-decoration: none; /* Remove underline */
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+/* Change link background on hover */
+#navigation ul li a:hover {
+    background-color: #575757; /* Change to a slightly lighter background */
+}
+
+#content {
+  margin-top: 120px; /* Add a top margin to avoid content overlay */
+}
+
+pre.example {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+/* Target the navigation list */
+#navigation ul li:nth-child(1) {
+    color: red !important; /* First item */
+}
+
+#navigation ul li:nth-child(2) {
+    color: blue !important; /* Second item */
+}
+
+#navigation ul li:nth-child(3) {
+    color: green !important; /* Third item */
+}
+
+#navigation ul li:nth-child(4) {
+    color: orange !important; /* Fourth item */
+}
