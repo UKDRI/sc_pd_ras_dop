@@ -1,0 +1,212 @@
+# -*- org-confirm-babel-evaluate: nil -*-
+#+TITLE: Initial Data Exploration and Data Extraction
+#+OPTIONS: ^:nil
+#+Author: Sam Neaves
+#+EXPORT_FILE_NAME: ../public_html/initial_exploration_and_extraction.html
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
+
+
+
+#+HTML_LINK_UP: index.html
+#+HTML: <div id="navigation"> <div id="mytitle"><h1>ParkinsonPathAI (Working title) - AI Models for Pathway Analysis in Parkinson’s Disease</h1></div>
+#+INCLUDE: "sitemap.org" :lines "3-"
+#+HTML: </div>
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css">
+
+* About
+
+This work is a part of the [[file:../readme.org][ParkinsonPathAI]] project. The code described
+here is part 2 of the work.
+
+
+* Data info
+
+"Just sending the single nuclei data for the dopaminergic neurons in our atlas as Caleb suggested.
+The file “SNatlas_DaNs_seurat.RData” is in the usual Dropbox folder.
+The Seurat object in it is called “sn_atlas_dans” and contains all
+neurons across all disease stages and subtypes. You can access disease
+by sn_atlas_dans$Disease and cell subtype by
+sn_atlas_dans$CellSubType. And extract gene expression data as raw
+counts genes_counts<-as.matrix(GetAssayData(sn_atlas_dans, slot =
+"counts")) or normalised
+genes_norm<-as.matrix(GetAssayData(sn_atlas_dans, slot = "data"))."
+
+
+
+#+begin_src R :session :eval query 
+  library(dplyr)
+  library(Seurat)
+  library(patchwork)
+
+  data_location <- "/Users/samneaves/Documents/test_data/forSam/SNatlas_DaNs_seurat.RData"
+  load(data_location)
+
+#+end_src
+
+#+RESULTS:
+: sn_atlas_dans
+
+#+begin_src R :session
+head(sn_atlas_dans$CellSubType)
+#+end_src
+
+#+RESULTS:
+| DaN_0 |
+| DaN_0 |
+| DaN_1 |
+| DaN_1 |
+| DaN_0 |
+| DaN_0 |
+
+** Get the normalised expression values
+#+begin_src R :session :results none
+genes_norm<-as.matrix(GetAssayData(sn_atlas_dans, slot = "data"))
+#+end_src
+
+#+RESULTS:
+
+
+** Get the count expression values
+
+#+begin_src R :session :results none
+genes_counts<-as.matrix(GetAssayData(sn_atlas_dans, slot = "counts"))
+#+end_src
+
+* Finding the overlap
+Find the overlap of list of genes that we get back from pathway commons and our data
+#+begin_src R :session :results output :exports both
+  network_data <- read.table("./data/pybravo_output/expanded_reg_md10-unified.sif", quote = "", header = FALSE, stringsAsFactors = FALSE, sep = "\t")
+  head(network_data)
+  nodes <- unique(c(network_data$V1, network_data$V3))
+#+end_src
+
+#+RESULTS:
+:         V1         V2     V3
+: 1 Fra1/JUN ACTIVATION   CCL2
+: 2 Fra1/JUN ACTIVATION   Fra1
+: 3 Fra1/JUN ACTIVATION    IL6
+: 4 Fra1/JUN ACTIVATION p14ARF
+: 5 Fra1/JUN ACTIVATION   MMP9
+: 6 Fra1/JUN ACTIVATION  CXCL8
+
+#+begin_src R :session :results output :exports both
+  length(nodes)
+#+end_src
+
+#+RESULTS:
+: [1] 1053
+
+#+begin_src R :session :exports both
+  # Convert the rownames of genes_counts into a vector
+  genes_names <- rownames(genes_counts)
+
+  # Get the intersection between the 'name' column in node_table and the rownames of genes_counts_subset_df
+  common_names <- intersect(nodes, genes_names)
+
+  # View the result
+  length(common_names)
+#+end_src
+
+#+RESULTS:
+: 526
+
+* Complexes
+In the graph representation we have genes and protein complexes.
+A protein complex node is represented by Item/Item. For example
+
+SMAD3/SMAD4/JUN/FOS
+
+When we match our gene expression data to the network. These nodes
+will be unobserved. We will need to infer if they are able to
+form/activate.
+
+In the way that the pybravo paper describes these nodes are used in
+there iggy analysis. The 'part_of' edge is treated as plus. But I think the standard consistency
+check is only looking for at least one positive edge to label a node
+as consistant So not sure if that is appropiate. (will add detail to
+this point later).
+
+For the time being the number of complexes seem to be :
+
+#+begin_src R :session :exports both
+# Identify rows in the 'name' column that contain '/'
+complexes <- grep("/", nodes)
+
+# Count the number of complexes
+num_complexes <- length(complexes)
+
+# View the count
+num_complexes
+#+end_src
+
+#+RESULTS:
+: 296
+
+* Edge types
+#+begin_src R :session :exports both
+# Count occurrences of each edge type in the second column (V2)
+edge_counts <- table(network_data$V2)
+
+# Display the counts of each edge type
+print(edge_counts)
+#+end_src
+
+#+RESULTS:
+| ACTIVATION | 1710 |
+| INHIBITION |  655 |
+| PART_OF    |  567 |
+| UNKNOWN    |   95 |
+
+
+
+#+begin_src R :session :exports both
+  str(sn_atlas_dans)
+  summary(sn_atlas_dans)
+#+end_src
+
+#+RESULTS:
+* Select cells and genes
+We want to select Cells that are either control or parkinsons
+We want to only select the genes that are in our network.
+#+begin_src R :session :exports both
+  sn_atlas_dans_ctrl_vs_pd <- subset(sn_atlas_dans, subset = Disease %in% c("CTR", "PD_B5-6", "PD_B3-4"))
+  sn_atlas_dans_ctrl_vs_pd_pathway <- sn_atlas_dans_ctrl_vs_pd[common_names,]
+  dim(sn_atlas_dans_ctrl_vs_pd_pathway)
+
+  
+#+end_src
+
+#+RESULTS:
+|  526 |
+| 6385 |
+
+#+begin_src R :session :exports both
+
+# Extract the expression matrix for the subset
+expression_matrix <- as.data.frame(t(as.matrix(sn_atlas_dans_ctrl_vs_pd_pathway@assays$RNA@data)))
+
+# Add Disease column from metadata
+expression_matrix$Disease <- sn_atlas_dans_ctrl_vs_pd_pathway@meta.data$Disease
+
+# Save to CSV
+write.csv(expression_matrix, file = "./data/cell_expression_with_disease.csv", row.names = TRUE)
+
+
+#+end_src
+
+#+RESULTS:
+
+
+#+begin_src R :session :exports both
+
+# Extract the count matrix for the subset and transpose it for cells as rows
+count_matrix <- as.data.frame(t(as.matrix(sn_atlas_dans_ctrl_vs_pd_pathway@assays$RNA@counts)))
+
+# Add Disease column from metadata
+count_matrix$Disease <- sn_atlas_dans_ctrl_vs_pd_pathway@meta.data$Disease
+
+# Save to CSV
+write.csv(count_matrix, file = "./data/cell_count_with_disease.csv", row.names = TRUE)
+
+#+end_src

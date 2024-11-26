@@ -1,0 +1,202 @@
+# -*- org-confirm-babel-evaluate: nil -*-
+#+TITLE: Overview
+#+OPTIONS: ^:nil
+#+Author: Sam Neaves
+#+HTML_HEAD: <style>
+#+HTML_HEAD: pre.example { max-height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; background-color: #f9f9f9; }
+#+HTML_HEAD: </style>
+#+EXPORT_FILE_NAME: ../public_html/overview.html
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
+
+#+HTML_LINK_UP: index.html
+#+HTML: <div id="navigation"> <div id="mytitle"><h1>ParkinsonPathAI (Working title) - AI Models for Pathway Analysis in Parkinson’s Disease</h1></div>
+#+INCLUDE: "sitemap.org" :lines "3-"
+#+HTML: </div>
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css">
+
+
+
+* Introduction
+
+This project focuses on analyzing single-cell transcriptomic data from
+brain cells of both control and Parkinson’s disease donors. Our goal
+is to characterize the complex interplay between the RAS and dopamine
+pathways, we will attempt to do this using symbolic AI techniques. By employing methods like
+descriptive rule induction, causal analysis, and model
+building/repair, we aim to identify and understand unique cell states
+associated with Parkinson’s disease.
+
+Our approach reconciles gene networks with experimental data, allowing
+us to reason about network consistency and potentially discover key
+molecular signatures involved in disease progression. This repository will
+contain code, data preprocessing steps, and model implementation
+details for this exploratory analysis.
+
+This is an open scientific project, actively developed in the
+open-source community and a continuous work in progress. As the
+results are preliminary, they may evolve over time with further
+analysis and validation. If you spot any errors or have suggestions,
+please feel free to open an issue. Contributions and feedback from the
+community are welcome to help improve and refine our understanding of
+the RAS and dopamine pathways in Parkinson’s disease.
+
+* Code Organization
+
+This project is hosted on GitHub and follows a clear and structured
+approach to organizing code and documentation.
+
+** Code Accessibility and Literate Programming
+The code is written in a
+[[https://en.wikipedia.org/wiki/Literate_programming][literate programming style]] , integrating code
+and explanatory prose. This approach enhances readability and provides
+clear context for each step in the analysis. The primary medium for
+this documentation is [[https://orgmode.org/][Emacs Org mode files]] , which resemble Markdown
+but offer several additional features, including:
+
+- Advanced Formatting: Support for tables, source code blocks, and
+  inline evaluation of code.
+  
+- Integration with Analysis: Directly execute embedded code blocks.
+  
+- Export Capabilities: Generate various formats like HTML, PDF, and
+  plain text from the same source file.
+  
+- Tangled Scripts and Workflow Execution
+From these Org files, tangled scripts are generated. Tangling extracts
+the source code blocks into standalone scripts, enabling flexible
+execution:
+
+
+- Step-by-Step Execution: Run individual scripts to focus on specific
+  parts of the analysis. This is especially useful if you are
+  interested in a single stage of the workflow.
+  
+- Pipeline Execution: The tangled scripts are also integrated into a
+  Nextflow pipeline, allowing the entire workflow to be executed in
+  one process. The Nextflow execution enhances reproducibilty,
+  portabilty and scalabilty of the code.
+  
+
+** File Formats and Visualization
+The Org files are plain text and can be viewed or edited in any text
+editor. However, to improve accessibility and provide a visually
+appealing presentation, the Org files are exported to HTML and hosted
+on GitHub Pages. This HTML version enhances the user experience by
+incorporating multimedia elements like images, links, and interactive
+visualizations.
+
+
+** Accessing the Files
+- Org File: The main Org file for this project is located at: [Link to Org file].
+- HTML View: The corresponding HTML version can be accessed here: [Link to GitHub Pages].
+This organization ensures that the code is both transparent and
+user-friendly, making it easy for collaborators to understand,
+replicate, and extend the analysis.
+
+
+* Data
+
+Biological cell samples were collected postmortem from the ventral
+substantia nigra of seven control samples, nine Parkinson's disease
+samples, and four samples from patients with Incidental Lewy Body
+Disorder. The nuclei of these cells were extracted and sequenced,
+totaling 23,885 nuclei. The sequecning was deep and full
+length.
+** TODO [INSERT DETALS OF SEQUENCING TECH OR REFERNCE]
+
+* System biology approach
+
+Our approach to this analysis is grounded in symbolic systems
+biology. In systems biology, our goal is to understand and model
+biological reality at a systems level. This means focusing on how
+multiple aspects of biology interact to produce observable outcomes,
+contrasting with traditional approaches that isolate individual
+phenomena. Symbolic systems biology differs from quantitative systems
+biology in the level of abstraction it applies.
+
+
+Using discrete symbols to represent components of the system, rather
+than specific quantities, offers several advantages. First,
+abstracting measured data into symbolic form allows us to manage noise
+in the data. Second, this abstraction reduces the size of the state
+space we analyze, making certain computational methods more
+feasible. Third, our goal is not only to understand the system but
+also to control it. Therefore, it’s essential that our models and
+their dynamics are interpretable, allowing suggested interventions and
+their potential consequences to be validated in a laboratory setting.
+
+
+Finally, there is evidence that symbolic abstraction is sufficient to
+model biological dynamics in many cases.
+
+
+Biological reality is highly complex. While the central dogma—DNA
+transcribed to RNA, translated to protein—outlines the basic process
+of cellular maintenance and control, the specifics of transcription,
+translation, and metabolic pathways leading to disease are intricate
+and require further exploration.
+
+
+For instance, in somatic cells, DNA remains stable as cells
+replicate. Differences between cells arise through processes such as
+differentiation and gene regulation. Transcription can occur in
+bursts, and alternative splicing allows for multiple proteins from a
+single gene. Additionally, protein complexes may form with the aid of
+chaperones, and epigenetic mechanisms, such as methylation and histone
+modification, affect gene accessibility.
+
+
+** Intreptation of sequence data as instances in state space.
+
+In our analysis of transcriptome from nuclei, previous work has
+identified cell types using x method.
+In addition cell states have been identified by y method.
+
+* Analysis Steps
+
+The following litrate notebook constitute the analysis done in this
+work. Each one contains code and prose explaining the work done.
+
+** Step 1. Get the prior knowledge network
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+   [[file:scripts/get_prior_knowledge_network.org][Get prior knowledge network steps]]
+
+** Step 2. Basic properties of single cell data and prior knowledge network
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+   [[file:scripts/initial_exploration_and_extraction.org][Initial data exploration and extraction]]
+
+** Step 3. Subgroup discovery of cellular states
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+   [[file:scripts/cell_state_subgroup_discover.org][Cell state subgroup discovery]]
+
+** TODO Step 4. Sign Consitency Modeling
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+   
+ho
+** TODO Step 5.  Boolean network modeling
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+   
+
+** TODO Step 6.  Counterfactual Reasoning
+:PROPERTIES:
+:UNNUMBERED: t
+:END:
+
+* Nextflow execution
+
+If you just want to just run the analysis yourself you may want to
+execute the code steps as part of the nextflow pipline.
+
+** TODO add code and instructions for nextflow execution
+

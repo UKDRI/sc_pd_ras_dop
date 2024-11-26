@@ -1,0 +1,373 @@
+# -*- org-confirm-babel-evaluate: nil -*-
+#+TITLE: Cell State Subgroup Discovery
+#+OPTIONS: ^:nil
+#+Author: Sam Neaves
+#+EXPORT_FILE_NAME: ../public_html/cell_state_subgroup_discover.html
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-bigblow.setup
+
+#+HTML_LINK_UP: index.html
+#+HTML: <div id="navigation"> <div id="mytitle"><h1>ParkinsonPathAI (Working title) - AI Models for Pathway Analysis in Parkinson’s Disease</h1></div>
+#+INCLUDE: "sitemap.org" :lines "3-"
+#+HTML: </div>
+
+
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles.css">
+* About
+
+This work is a part of the [[file:../readme.org][ParkinsonPathAI]] project. The code described
+here follows part 1 this is part 2 of the work.
+
+* Introduction
+
+This notebook contains code to perform subgroup discovery of single
+Cell Gene expression data.
+
+** Subgroup discovery of celluar states
+
+
+As a first step in our analysis, we take inspiration from an approach
+used by WWII bomber command to improve aircraft survivability. The
+story goes that analysts examined planes returning to England to see
+where they had sustained damage. They inferred that planes could
+survive damage in these areas, so to improve survivability, they added
+armor to areas where damage had not been observed, presuming planes
+hit in these unscathed areas did not return. This concept, known as
+"survivorship bias," helps us focus on the states that are less likely
+to survive or, in our case, cells lost in disease.
+
+
+#+CAPTION: A 'State' of a surviving bomber
+#+NAME:   fig:2
+#+ATTR_ORG: :width "50"
+#+ATTR_HTML: :width "100px"
+[[./data/plots/Survivorship-bias.png]]
+
+
+
+In our analogy, dopaminergic neurons (DNs) are known to be lost in
+Parkinson’s disease. Therefore, cell states we observe in Parkinson’s
+patients represent neurons that have managed to survive the
+disease. Unlike bomber command who did not have access to planes that
+did not return we also have access to data from control (CTRL)
+individuals who do not have Parkinson’s disease, which we use as a
+proxy for healthy neuron states.
+
+
+Our goal is to identify descriptions—defined as combinations of gene
+expression levels—that select subgroups of cell states with
+statistically distinct patterns compared to the overall population of
+cells. Specifically, we want to identify cellular states that are
+common in CTRL samples but absent in Parkinson’s patients, aiming to
+uncover features that may correlate with cell survival.
+
+Once we have done this, we will be able to order cellular states using
+pseudo time methods and try to understand why healthy peoples cells
+are able to transistion into these states but people with parkinsons
+disease are not.
+
+To achieve this first step of identifying cellular states that appear
+in CTRLS but not parkinson patients, we employ subgroup discovery, a data mining task
+first described by Wrobel et al., which lies at the intersection of
+classification and clustering. Subgroup discovery uses labeled data as
+in classification, but its purpose is to describe statistically
+interesting instances within these groups, aiming for descriptions
+that are both interpretable and informative.
+
+
+Subgroup discovery has previously been used in bioinformatics to
+analyze gene expression, in tasks similar to gene set enrichment
+analysis (GSEA). In GSEA, genes are instances, their descriptions are
+annotations (such as GO terms), and labels are binary (e.g.,
+differentially expressed or not). In contrast, our instances are cells
+(or nuclei), our labels are CTRL or Parkinson’s, and our features are
+gene expression values. Our goal is to identify and describe subgroups
+of cellular transcriptomic states that are prominent in CTRL samples
+but absent in Parkinson’s patients, potentially uncovering gene
+expression profiles linked to neuron survival.
+
+
+For this initial analysis, we limit subgroup discovery to a
+propositional data mining task, focusing on attributes at the
+individual cell level. While we do not yet incorporate relational
+information available from Pathway Commons, such relationships could
+provide valuable context in the future. Exploring this would require
+methods like Relational Subgroup Discovery (RSD) or potentially
+Hedwig. Currently, we use the query to Pathway Commons, executed
+through Pybravo, primarily as a feature selection technique to focus
+on gene expressions of interest.
+
+
+
+#+begin_src python :session myorangesession  :exports both :results output :eval (conda-env-activate "orange3")
+# Your Python code here
+print("Hello from Conda environment woop!")
+
+import os
+
+conda_env = os.environ.get("CONDA_DEFAULT_ENV")
+print(f"Current Conda environment: {conda_env}")
+
+#+end_src
+
+#+RESULTS:
+: Hello from Conda environment woop!
+: Current Conda environment: orange3
+
+The following code makes sure orange know which attribute is class
+#+begin_src python :session myorangesession :results output :exports both
+  conda_env = os.environ.get("CONDA_DEFAULT_ENV")
+  print(f"Current Conda environment second go: {conda_env}")
+  import Orange
+  from Orange.data import Domain, Table, StringVariable
+
+  # Load the data
+  data = Table("./data/cell_count_with_disease.csv")
+
+
+
+  # Separate attributes and disease variable
+  attributes = [attr for attr in data.domain.attributes if attr.name != "Disease"]
+  disease = data.domain["Disease"]
+  meta_var = StringVariable("ID")
+
+  # Create a new domain with the disease column as the class variable
+  new_domain = Domain(attributes, class_vars=disease,  metas=[meta_var])
+
+  # Apply this new domain to your data
+  data_with_class = Table.from_table(new_domain, data)
+
+  # Add back the meta var
+  data_with_class.metas = data.metas
+
+
+  # Verify the domain and check the class variable
+  print("New domain:", data_with_class.domain)
+  print("Class variable:", data_with_class.domain.class_var)
+  print("Class values:", data_with_class.domain.class_var.values)
+
+#+end_src
+
+#+RESULTS:
+: Current Conda environment second go: orange3
+: New domain: [CCL2, FOS, JUN, CREB1, SRF, ELK1, JDP2, HGF, SP1, VEGFA, TNF, AGTR1, INS, AKT1, NLRC5, TP63, NOG, ARRB1, TGFB1, IFNG, EPO, ATF4, EIF2A, ESR2, AHR, CALM3, CCL5, IL4, ALB, IL1B, S100B, HMGB1, LEP, IL17A, OSM, IL1A, IKBKB, CRP, VDR, SOD2, EGF, SLC6A3, TGFA, TNFSF11, F2, ADRB2, MFGE8, PIK3CA, IFNA1, JAK2, NR1I2, BCL2L1, IGF1, MAPK12, IAPP, SULF1, KRAS, PARP1, IGF1R, IL18, MAPK14, FN1, NFKB1, MAPK9, TP53, IGBP1, PPP3CA, CXCL12, CDKN1A, STAT3, NDFIP1, IFNB1, ESR1, NTN1, MPO, CCND1, C5, FOXO3, NQO1, IL33, PTGS2, SNCA, CLEC4E, IL15, TNFAIP3, CYP3A4, SHH, FGF8, CNTF, FOXP3, IL32, AGXT, GDNF, YAP1, IL23R, TYK2, SMAD3, SMAD4, RHOA, CD4, FOSB, E2F3, EGR4, EGR1, PPARA, NR3C1, CNR2, HRH2, PPARG, NFKBIA, TLR4, P2RY6, KAT2B, CREBBP, GATA3, PAK1, FOXA1, ENO1, MYCBP, IL6, FOXO4, RB1, HBP1, HDAC2, POU4F1, MITF, HIF1A, SLC39A8, CXCR4, CYP4Z1, CTNNB1, CGB3, TNFSF10, BMP4, CSF2, TAC1, ICAM1, ABCB4, GH1, IL5, ALPK1, IL2, CXCL8, MVK, FCER2, TP73, CD28, FOXO1, HMOX1, ELANE, BDNF, GHRL, DDB2, PTHLH, EDN1, CLPTM1L, CA9, EP300, TYMP, FSHB, MAP3K20, GNAQ, IL24, RNF34, IL6R, IGF2, BSG, PML, MAPT, PRKN, CD40LG, ERCC4, SIRT1, CITED2, NPM1, SOX30, SERPINB5, NGF, RB1CC1, MDM2, AKR1B1, TGFB2, ACTA2, STK11, SRSF2, RELA, DNMT3B, RASSF1, HDAC1, HRH4, TGIF1, FGF7, EZH2, TFAP2C, PTEN, HRAS, CDKN1B, GSN, KEAP1, E2F1, VEGFC, TLR2, PRODH, NFE2L2, PSEN2, SQSTM1, CYP1A1, PKM, DPP3, CYP1A2, BRCA1, RXRA, RHEB, SRC, NCOA6, SULT2A1, PPARGC1A, NR1H3, AR, TRIM33, MSI1, EGFR, BRAF, CXCR3, LY96, CYLD, FOXM1, CREM, PTPRH, ZBTB17, FGF13, AP1S1, S1PR3, ARNT, HDAC7, RBPJ, MAF, IRF4, PIM1, SKI, CEBPA, E2F4, JUND, TNIK, HES1, TLE1, AES, YY1, DVL3, JAK1, LCK, JAK3, TRRAP, TERT, DNMT3A, GFI1, IRF7, LEF1, TAF9, FOXG1, SSRP1, IL12A, IL12B, TRPV1, CD3D, CD3E, CD247, RNASEL, PDGFB, NFKB2, BCL3, GBA, NCOA1, CD44, GATA1, FOXA2, EOMES, EGR3, EGR2, ETS1, WT1, TWIST1, SNAI1, GATA2, IL13, IL1RN, CFD, BID, E4F1, EPAS1, HSPA1A, PLAUR, WNT3A, DHFR, IRF1, ADIPOQ, MMP9, TGFBI, CD2, NTS, PLA2G1B, KIT, MAP2K6, PPARD, ERCC6, OGT, CAV1, RALA, ATG7, LGALS1, ATG13, DHCR24, DDIT4, MUC1, ARSB, PROM1, JAG1, NCOA2, NFATC1, CSF1, RNF128, RBL1, FGF16, SMARCA4, RNF39, CPAMD8, HNF1A, LHB, COPS5, TCF7L2, SMARCA2, KAT2A, TCF7L1, NOC2L, IL27, ATF3, USF2, PARP14, BCL6, E2F6, IL4R, NFX1, TAF10, TAF12, PITX2, PTCH1, HTR2A, PTGER1, NR1H4, P2RY11, RELB, CYSLTR1, NRIP1, CTCF, ETS2, MEN1, GLI1, CHGA, THPO, KITLG, FASLG, HSF1, ATG5, CFTR, ADAR, FASN, TIMP1, HSPA5, HOXC4, KISS1, HHIP, TBX21, RNASEH2A, APP, PSEN1, RASSF3, NDUFA2, BRIP1, SPTLC3, INSR, PPIA, GLI3, KLF4, FAS, GLI2, CD82, PRKAA2, CEBPZ, TSHB, PTMA, CTGF, MTSS1, TXLNG, MLX, TRH, KAT5, RUVBL1, RUVBL2, SRPRA, TRIM28, AKT3, TH, SLC18A2, PCBP4, ACE, PTK2, ARNTL, COMT, STAT1, MAPK3, MAPK1, PRKCA, CALML4, CAMK2D, GNG11, GNG5, GSK3A, ITPR3, MAOB, LRTOMT, MAPK13, PLCB1, PPP1CA, PPP1CB, PRKACG, PTGER2, SHC1, VAT1, DAP, TP53BP1, ZNF225, AREG, ERAL1, MLXIPL, AKT2, CACNA1A, CALM1, CACNA1B, CAMK2G, CREB3L2, CREB5, DAG1, CREB3L4, DRD4, DRD2, GNAL, GNAI2, GNAS, GNAO1, GNG10, GNB5, GNG12, GNG2, GNG8, GNG7, GNG4, GRIA1, GNGT1, GRIA3, GRIA2, GRIA4, GRIN2A, GSK3B, ITPR1, ITPR2, KCNJ3, KIF5C, KIF5A, MAOA, MAPK10, MAPK8, PPP1R1B, PPP2CA, PPP2R2D, PPP2R1B, PPP2R2A, PPP2R2B, PPP2R2C, PPP2R5A, PPP2R5E, PPP2R5C, PPP3CC, PRKACB, PRKCB, SCN1A, HLA-DQB1, PRRT2, RNASE1, KCTD11, MPP2, RAD1, HEBP1, IL27RA, HDAC9, SCG2, ARRB2, CALML3, CALML5, CAMK2B, CREB3L1, GNB4, GNB3, KCNJ5, MAP3K1, MAPK11, PLCB4, CGB7, CGB5, CGB8, AHRR, DDC, KCNJ6, PPP2R5B, CAMK2A, CREB3L3, GNB1, PPP2CB, PPP2R5D, GRIP1, PRODH2, PEMT, SPEN, RAF1, LAP3, PTK2B, TPO | Disease] {ID}
+: Class variable: Disease
+: Class values: ('CTR', 'PD_B3-4', 'PD_B5-6')
+
+My export to csv is weird. Ignore for the moment.
+#+begin_src python :session myorangesession :results output :exports both
+  import pandas as pd
+  conda_env = os.environ.get("CONDA_DEFAULT_ENV")
+  print(f"Current Conda environment second go: {conda_env}")
+
+  disc = Orange.preprocess.Discretize()
+  disc.method = Orange.preprocess.discretize.EntropyMDL()
+  data_with_class_discrete = disc(data_with_class)
+  data_with_class_discrete.save("./data/cell_count_with_disease_mdl_discrete2.tab")
+
+  # Convert the Orange table to a pandas DataFrame
+  data_df = pd.DataFrame(data_with_class_discrete.X, columns=[attr.name for attr in data_with_class_discrete.domain.attributes])
+
+  # Add the class variable if it exists
+  data_df[data_with_class_discrete.domain.class_var.name] = [str(val) for val in data_with_class_discrete.Y]
+
+  # Save the DataFrame as a CSV file
+  data_df.to_csv("./data/cell_count_with_disease_mdl_discrete.csv", index=False)
+
+#+end_src
+
+#+RESULTS:
+: Current Conda environment second go: orange3
+
+
+#+begin_src python :session myorangesession :results output :exports both
+
+
+  print("Hello from third block")
+  conda_env = os.environ.get("CONDA_DEFAULT_ENV")
+  print(f"Current Conda environment second go: {conda_env}")
+  import Orange
+  print(Orange.version.version)
+  learner = Orange.classification.CN2SDLearner()
+  learner.rule_finder.search_algorithm.beam_width = 10
+  learner.rule_finder.search_strategy.constrain_continuous = True
+  learner.rule_finder.general_validator.min_covered_examples = 15
+  learner.rule_finder.general_validator.max_rule_length = 6
+  classifier = learner(data_with_class_discrete)
+  for rule in classifier.rule_list:
+     print(f"Rule: {rule}")
+#+end_src
+
+
+
+#+begin_src python :session myorangesession :results output :exports both
+from collections import Counter
+
+# Extract the features and class labels from data
+X = data_with_class_discrete.X  # feature matrix
+Y = data_with_class_discrete.Y  # class labels
+
+# Evaluate each rule and count class occurrences
+for rule in classifier.rule_list:
+    covered_examples = rule.evaluate_data(X)  # returns a boolean array of covered examples
+    class_counts = Counter(
+        str(data_with_class_discrete.domain.class_var.values[int(Y[i])])
+        for i in range(len(Y)) if covered_examples[i]
+    )
+
+    # Print rule and counts for each class
+    print(f"Rule: {rule}")
+    for class_value, count in class_counts.items():
+        print(f"  {class_value}: {count}")
+
+    # Now get the instance IDs covered by the rule
+    instance_ids = [
+        str(data_with_class_discrete.metas[i][0])  # assuming the meta attribute is at index 0
+        for i in range(len(covered_examples)) if covered_examples[i]
+    ]
+
+    print(f"  Covered instance IDs: {', '.join(instance_ids)}")
+
+#+end_src
+
+
+* Visualise discovered subgroups
+
+
+* Lets make an up set plot
+
+#+begin_src R :session :exports both
+
+  
+#+end_src
+
+#+begin_src R :file 4.png :session :results graphics file :exports both
+library(lattice)
+xyplot(1:10 ~ 1:10)
+#+end_src
+
+#+RESULTS:
+[[file:4.png]]
+
+#+begin_src R :file upset_demo.png :session :results graphics file :exports both
+  movies <- read.csv( system.file("extdata", "movies.csv", package = "UpSetR"), header=T, sep=";" )
+  library("UpSetR")
+  upset(movies,attribute.plots=list(gridrows=60,plots=list(list(plot=scatter_plot, x="ReleaseDate", y="AvgRating"),
+  list(plot=scatter_plot, x="ReleaseDate", y="Watches"),list(plot=scatter_plot, x="Watches", y="AvgRating"),
+  list(plot=histogram, x="ReleaseDate")), ncols = 2))
+#+end_src
+
+#+RESULTS:
+[[file:upset_demo.png]]
+
+Try and have the ids in the first colum
+#+begin_src python :session myorangesession :results output :exports both
+import pandas as pd
+
+# Extract the features and class labels from data
+X = data_with_class_discrete.X  # feature matrix
+Y = data_with_class_discrete.Y  # class labels
+
+# Get instance IDs
+instance_ids = [str(data_with_class_discrete.metas[i][0]) for i in range(len(Y))]
+
+# Initialize a DataFrame to store coverage information
+coverage_df = pd.DataFrame(index=range(X.shape[0]), columns=['id'] + [str(rule) for rule in classifier.rule_list])
+
+# Fill the 'id' column with instance IDs
+coverage_df['id'] = instance_ids
+
+# Evaluate each rule and fill coverage DataFrame
+for rule in classifier.rule_list:
+    covered_examples = rule.evaluate_data(X)  # returns a boolean array of covered examples
+    
+    # Fill the DataFrame with 1s and 0s based on rule coverage
+    coverage_df[str(rule)] = covered_examples.astype(int)
+
+# Save the coverage DataFrame to a CSV file
+coverage_df.to_csv('./data/rule_coverage.csv', index=False)
+
+print("Coverage matrix saved to './data/rule_coverage.csv'")
+#+end_src
+
+#+RESULTS:
+: Coverage matrix saved to 'rule_coverage.csv'
+
+#+begin_src R :file upset_instances.png :session :results graphics file :exports both
+  rule_cover_data <- read.csv("./data/rule_coverage.csv", row.names = 1)
+   library(UpSetR)
+
+  data_binary <- data.frame(t(rule_cover_data))
+
+  upset(data_binary, nsets = 20, sets = colnames(data), keep.order = TRUE)
+#+end_src
+
+#+RESULTS:
+[[file:upset_instances.png]]
+
+
+#+begin_src R :file upset_rules.png :session :results graphics file :exports both
+  #rule_cover_data <- read.csv("./data/rule_coverage.csv", row.names = 1)
+  #library(UpSetR)
+
+  data_binary <- data.frame(rule_cover_data)
+
+  upset(data_binary, nsets = 20, sets = colnames(data), keep.order = TRUE)
+#+end_src
+
+#+RESULTS:
+[[file:upset_rules.png]]
+
+#+begin_src R :file upset_rules_complex.png :session :results graphics file :exports both
+  #rule_cover_data <- read.csv("./data/rule_coverage.csv", row.names = 1)
+  #library(UpSetR)
+  #detach("package:UpSetR", unload=TRUE)
+  library(ComplexUpset)
+
+  set_size(8, 3)
+  genres = colnames(movies)[18:24]
+  upset(movies, genres, name='genre', width_ratio=0.1)
+#+end_src
+
+#+RESULTS:
+[[file:upset_rules_complex.png]]
+
+* Mini graph for each rule?
+* thing
+#+header: :width 2000 :height 800
+#+begin_src R :file complex_upset_rules.png :session :results graphics file :exports both
+
+
+
+  library(ggplot2)
+  library(ComplexUpset)
+  movies = as.data.frame(ggplot2movies::movies)
+  head(movies, 3)
+  genres = colnames(movies)[18:24]
+  genres
+
+  movies[genres] = movies[genres] == 1
+  t(head(movies[genres], 3))
+
+  movies[movies$mpaa == '', 'mpaa'] = NA
+  movies = na.omit(movies)
+
+  #upset(movies, genres, name='genre', width_ratio=0.1)
+
+  rule_cover_data <- read.csv("./data/rule_coverage.csv", row.names = 1)
+
+  items = colnames(rule_cover_data)[1:10]
+
+
+#  quartz(width = 100, height = 5)
+#pdf("upset_plot_test_10_8.pdf", width = 100, height = 8)
+upset(rule_cover_data, items, name='genre', width_ratio=0.1, n_intersections=15)
+#dev.off()
+#+end_src
+
+#+RESULTS:
+[[file:complex_upset_rules.png]]
+
+* Next steps
+
+In the next page we will perform sign consistency modeling :
