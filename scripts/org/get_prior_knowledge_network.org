@@ -18,7 +18,10 @@
 This work is a part of the [[file:../readme.org][ParkinsonPathAI]] project. The code described
 here is part 1 of the work.
 
-* TODO RAS MAPK pathway (Check where Viola got these gene lists from).
+* TODO RAS MAPK pathway
+#+BEGIN_COMMENT
+Check where Viola got these gene lists from).
+#+END_COMMENT
 
 In this work we are intrested in the interplay between the RAAS and
 MAPK pathways because..
