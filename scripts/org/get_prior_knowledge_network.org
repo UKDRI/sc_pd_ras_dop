@@ -523,10 +523,21 @@ The expanded_reg_md10-unified.sif file can be viewed in cyto scape.
 
 * Visualize the network
 
-
+This visualization was manually created with cytoscape.
 #+CAPTION: Gene Regulation Network
 #+NAME:   fig:1
-[[./data/plots/expanded_reg_md10-unified.png]]
+#+attr_html: :width 800px
+[[../../data/plots/expanded_reg_md10-unified.png]]
+
+* TODO Visualize the network d3
+#+BEGIN_COMMENT
+Check nodes. There seems to be an activation and inhibition node so
+the parsing might be broken.
+#+END_COMMENT
+
+#+BEGIN_EXPORT html
+<iframe src="../test_html/test.html" width="960" height="600" style="border:none;"></iframe>
+#+END_EXPORT
 
 
 * Next steps
