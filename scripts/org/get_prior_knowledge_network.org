@@ -536,7 +536,7 @@ the parsing might be broken.
 #+END_COMMENT
 
 #+BEGIN_EXPORT html
-<iframe src="../test_html/test.html" width="960" height="600" style="border:none;"></iframe>
+<iframe src="./test.html" width="960" height="600" style="border:none;"></iframe>
 #+END_EXPORT
 
 
