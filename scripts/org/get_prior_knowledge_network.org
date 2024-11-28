@@ -464,9 +464,53 @@ scripts directory).
 
 
 
-#+begin_src bash :dir "./scripts/" :exports both :eval query :results output
+#+begin_src bash :dir ".." :exports both :eval query :results output
   biomake "augment_gene_list" | tail -n 40
 #+end_src
+
+#+RESULTS:
+#+begin_example
+--- Upstream regulation network in 47.15 seconds ---
+Number of nodes = 1138
+Number of edges = 3041
+SIF network written to ../data/pybravo_output/expanded_reg_md10.sif
+Basic regulation reaction provenance written to ../data/pybravo_output/expanded_reg_md10-provenance.csv
+
+| Node | Degree Centrality |
+|------|------|
+| NOG | 0.229 | 
+| TGFB1 | 0.138 | 
+| TNF | 0.099 | 
+| INS | 0.095 | 
+| NSC 689534/Copper | 0.067 | 
+| IL1B | 0.054 | 
+| MYC | 0.052 | 
+| IL6 | 0.05 | 
+| pirinixic acid/PPARA | 0.047 | 
+| TP53 | 0.045 | 
+
+--- Network simplification in 0.71 seconds ---
+SIF network written to ../data/pybravo_output/expanded_reg_md10-unified.sif
+Basic regulation reaction provenance written to ../data/pybravo_output/expanded_reg_md10-unified-provenance.csv
+Nodes after simplification = 1053
+Edges after simplification = 3027
+
+| Node | Degree Centrality |
+|------|------|
+| NOG | 0.238 | 
+| TGFB1 | 0.148 | 
+| TNF | 0.115 | 
+| INS | 0.103 | 
+| CDKN1A | 0.076 | 
+| NSC 689534/Copper | 0.072 | 
+| CXCL8 | 0.058 | 
+| IL1B | 0.058 | 
+| PVT1 | 0.056 | 
+| IL6 | 0.054 | 
+
+
+Target augment_gene_list built
+#+end_example
 
 
 This results in the creation of four files in the pybravo_output dir
