@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-26 Tue 16:15 -->
+<!-- 2024-11-28 Thu 12:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Get prior knowledge network</title>
@@ -33,15 +33,16 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgb595046">1. About</a></li>
-<li><a href="#org4b82f4d">2. <span class="todo TODO">TODO</span> RAS MAPK pathway (Check where Viola got these gene lists from).</a>
+<li><a href="#org3883220">1. About</a></li>
+<li><a href="#org5a0c5b2">2. <span class="todo TODO">TODO</span> RAS MAPK pathway</a>
 <ul>
-<li><a href="#org20bb925">2.1. Raas genes:</a></li>
-<li><a href="#orgf796d9d">2.2. Dopamine KEGG pathway:</a></li>
+<li><a href="#org650d939">2.1. Raas genes:</a></li>
+<li><a href="#org1774f0f">2.2. Dopamine KEGG pathway:</a></li>
 </ul>
 </li>
-<li><a href="#orgd627708">3. Visualize the network</a></li>
-<li><a href="#org0857872">4. Next steps</a></li>
+<li><a href="#org0a85816">3. Visualize the network</a></li>
+<li><a href="#org2ac1b81">4. <span class="todo TODO">TODO</span> Visualize the network d3</a></li>
+<li><a href="#org5e84c6d">5. Next steps</a></li>
 </ul>
 </div>
 </div>
@@ -55,8 +56,8 @@
 </ul>
 </div>
 
-<div id="outline-container-orgb595046" class="outline-2">
-<h2 id="orgb595046"><span class="section-number-2">1.</span> About</h2>
+<div id="outline-container-org3883220" class="outline-2">
+<h2 id="org3883220"><span class="section-number-2">1.</span> About</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This work is a part of the <a href="../readme.html">ParkinsonPathAI</a> project. The code described
@@ -65,8 +66,8 @@ here is part 1 of the work.
 </div>
 </div>
 
-<div id="outline-container-org4b82f4d" class="outline-2">
-<h2 id="org4b82f4d"><span class="section-number-2">2.</span> <span class="todo TODO">TODO</span> RAS MAPK pathway (Check where Viola got these gene lists from).</h2>
+<div id="outline-container-org5a0c5b2" class="outline-2">
+<h2 id="org5a0c5b2"><span class="section-number-2">2.</span> <span class="todo TODO">TODO</span> RAS MAPK pathway</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 In this work we are intrested in the interplay between the RAAS and
@@ -89,32 +90,228 @@ The intial list is :
 </div>
 
 
-<div id="outline-container-org20bb925" class="outline-3">
-<h3 id="org20bb925"><span class="section-number-3">2.1.</span> Raas genes:</h3>
+<div id="outline-container-org650d939" class="outline-3">
+<h3 id="org650d939"><span class="section-number-3">2.1.</span> Raas genes:</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
-<pre class="src src-bash">cat ../data/initial_gene_list_files/raas_genes.txt
+<pre class="src src-bash">cat ../../data/initial_gene_list_files/raas_genes.txt
 </pre>
 </div>
+
+<pre class="example" id="orgb8c0920">
+ACE
+ADCY
+AGTR1
+AGTR2
+AGT
+ATF2
+CCL2
+CCL5
+DAG1
+ELK1
+ERK1
+ERK2
+FOS
+GNAQ
+GRB2
+IP3
+JAK2
+JNK
+JUN
+MAP2K1
+MAP2K2
+MAP2K4
+MAP3K1
+NFKB1
+NO
+NOX1
+MAPK
+PAK
+PGE2
+PI3K
+PIP2
+PKA
+PKC
+PLCG1
+PTGER2
+PTK2
+PTK2B
+PTPN6
+RAC1
+RAF1
+HRAS
+KRAS
+REN
+SHC1
+SOS1
+STAT1
+STAT3
+TNF
+</pre>
 </div>
 </div>
 
-<div id="outline-container-orgf796d9d" class="outline-3">
-<h3 id="orgf796d9d"><span class="section-number-3">2.2.</span> Dopamine KEGG pathway:</h3>
+<div id="outline-container-org1774f0f" class="outline-3">
+<h3 id="org1774f0f"><span class="section-number-3">2.2.</span> Dopamine KEGG pathway:</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
-<pre class="src src-bash">cat ./data/initial_gene_list_files/DopamineKEGGpathway.txt
+<pre class="src src-bash">cat ../../data/initial_gene_list_files/DopamineKEGGpathway.txt
 </pre>
 </div>
+
+<pre class="example" id="orge2a87a1">
+AKT3
+CREB3
+GNB5
+ADCY5
+COMT
+CREB1
+ATF2
+ATF6B
+MAPK14
+CREB3L4
+CALML6
+DDC
+DRD1
+DRD2
+DRD3
+DRD4
+DRD5
+AKT1
+AKT2
+LRTOMT
+PLCB1
+FOS
+GNAI1
+GNAI2
+GNAI3
+GNAL
+GNAQ
+GNAO1
+GNAS
+GNB1
+GNB2
+GNB3
+GNG3
+GNG4
+GNG5
+GNG7
+GNG10
+GNG11
+GNGT1
+GNGT2
+PPP2R3B
+GRIA1
+GRIA2
+GRIA3
+GRIA4
+GRIN2A
+GRIN2B
+GSK3A
+GSK3B
+ITPR1
+ITPR2
+ITPR3
+KCNJ3
+KCNJ5
+KCNJ6
+KCNJ9
+KIF5A
+KIF5B
+KIF5C
+ARNTL
+ARRB1
+ARRB2
+MAOA
+MAOB
+ATF4
+CALY
+GNG13
+CALML5
+PLCB2
+PLCB3
+PLCB4
+GNG2
+PPP1CA
+PPP1CB
+PPP1CC
+PPP2R3C
+PPP2CA
+PPP2CB
+PPP2R1A
+PPP2R1B
+PPP2R2A
+PPP2R2B
+PPP2R2C
+PPP2R3A
+PPP2R5A
+PPP2R5B
+PPP2R5C
+PPP2R5D
+PPP2R5E
+PPP3CA
+PPP3CB
+PPP3CC
+PRKACA
+PRKACB
+PRKACG
+PRKCA
+PRKCB
+PRKCG
+PPP2R2D
+GNG12
+MAPK8
+MAPK11
+MAPK13
+GNB4
+MAPK12
+SCN1A
+CREB3L2
+SLC6A3
+TH
+CACNA1A
+CACNA1B
+CACNA1C
+CACNA1D
+CALM1
+CALM2
+CALM3
+CALML3
+CAMK2A
+CAMK2B
+CAMK2D
+CAMK2G
+PPP1R1B
+CREB3L3
+CREB3L1
+CALML4
+GNG8
+CLOCK
+CREB5
+SLC18A2
+SLC18A1
+MAPK9
+MAPK10
+
+</pre>
+
+
 
 
 <p>
 The intersection of these files is:
 </p>
 <div class="org-src-container">
-<pre class="src src-bash">grep -Fxf ./data/initial_gene_list_files/DopamineKEGGpathway.txt ./data/initial_gene_list_files/raas_genes.txt
+<pre class="src src-bash">grep -Fxf ../../data/initial_gene_list_files/DopamineKEGGpathway.txt ../../data/initial_gene_list_files/raas_genes.txt
 </pre>
 </div>
+
+<pre class="example">
+ATF2
+FOS
+GNAQ
+</pre>
+
 
 
 
@@ -123,10 +320,192 @@ The union of these files is:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-bash">cat ./data/initial_gene_list_files/DopamineKEGGpathway.txt ./data/initial_gene_list_files/raas_genes.txt | sort | uniq | tee ./data/initial_gene_list_files/initial_gene_list.txt
-wc -l ./data/initial_gene_list_files/initial_gene_list.txt
+<pre class="src src-bash">cat ../../data/initial_gene_list_files/DopamineKEGGpathway.txt ../../data/initial_gene_list_files/raas_genes.txt | sort | uniq | tee ../../data/initial_gene_list_files/initial_gene_list.txt
+wc -l ../../data/initial_gene_list_files/initial_gene_list.txt
 </pre>
 </div>
+
+<pre class="example" id="orgab73727">
+
+ACE
+ADCY
+ADCY5
+AGT
+AGTR1
+AGTR2
+AKT1
+AKT2
+AKT3
+ARNTL
+ARRB1
+ARRB2
+ATF2
+ATF4
+ATF6B
+CACNA1A
+CACNA1B
+CACNA1C
+CACNA1D
+CALM1
+CALM2
+CALM3
+CALML3
+CALML4
+CALML5
+CALML6
+CALY
+CAMK2A
+CAMK2B
+CAMK2D
+CAMK2G
+CCL2
+CCL5
+CLOCK
+COMT
+CREB1
+CREB3
+CREB3L1
+CREB3L2
+CREB3L3
+CREB3L4
+CREB5
+DAG1
+DDC
+DRD1
+DRD2
+DRD3
+DRD4
+DRD5
+ELK1
+ERK1
+ERK2
+FOS
+GNAI1
+GNAI2
+GNAI3
+GNAL
+GNAO1
+GNAQ
+GNAS
+GNB1
+GNB2
+GNB3
+GNB4
+GNB5
+GNG10
+GNG11
+GNG12
+GNG13
+GNG2
+GNG3
+GNG4
+GNG5
+GNG7
+GNG8
+GNGT1
+GNGT2
+GRB2
+GRIA1
+GRIA2
+GRIA3
+GRIA4
+GRIN2A
+GRIN2B
+GSK3A
+GSK3B
+HRAS
+IP3
+ITPR1
+ITPR2
+ITPR3
+JAK2
+JNK
+JUN
+KCNJ3
+KCNJ5
+KCNJ6
+KCNJ9
+KIF5A
+KIF5B
+KIF5C
+KRAS
+LRTOMT
+MAOA
+MAOB
+MAP2K1
+MAP2K2
+MAP2K4
+MAP3K1
+MAPK
+MAPK10
+MAPK11
+MAPK12
+MAPK13
+MAPK14
+MAPK8
+MAPK9
+NFKB1
+NO
+NOX1
+PAK
+PGE2
+PI3K
+PIP2
+PKA
+PKC
+PLCB1
+PLCB2
+PLCB3
+PLCB4
+PLCG1
+PPP1CA
+PPP1CB
+PPP1CC
+PPP1R1B
+PPP2CA
+PPP2CB
+PPP2R1A
+PPP2R1B
+PPP2R2A
+PPP2R2B
+PPP2R2C
+PPP2R2D
+PPP2R3A
+PPP2R3B
+PPP2R3C
+PPP2R5A
+PPP2R5B
+PPP2R5C
+PPP2R5D
+PPP2R5E
+PPP3CA
+PPP3CB
+PPP3CC
+PRKACA
+PRKACB
+PRKACG
+PRKCA
+PRKCB
+PRKCG
+PTGER2
+PTK2
+PTK2B
+PTPN6
+RAC1
+RAF1
+REN
+SCN1A
+SHC1
+SLC18A1
+SLC18A2
+SLC6A3
+SOS1
+STAT1
+STAT3
+TH
+TNF
+     178 ../../data/initial_gene_list_files/initial_gene_list.txt
+</pre>
 
 
 
@@ -167,6 +546,49 @@ scripts directory).
 </pre>
 </div>
 
+<pre class="example" id="orgbbe8727">
+--- Upstream regulation network in 47.15 seconds ---
+Number of nodes = 1138
+Number of edges = 3041
+SIF network written to ../data/pybravo_output/expanded_reg_md10.sif
+Basic regulation reaction provenance written to ../data/pybravo_output/expanded_reg_md10-provenance.csv
+
+| Node | Degree Centrality |
+|------|------|
+| NOG | 0.229 | 
+| TGFB1 | 0.138 | 
+| TNF | 0.099 | 
+| INS | 0.095 | 
+| NSC 689534/Copper | 0.067 | 
+| IL1B | 0.054 | 
+| MYC | 0.052 | 
+| IL6 | 0.05 | 
+| pirinixic acid/PPARA | 0.047 | 
+| TP53 | 0.045 | 
+
+--- Network simplification in 0.71 seconds ---
+SIF network written to ../data/pybravo_output/expanded_reg_md10-unified.sif
+Basic regulation reaction provenance written to ../data/pybravo_output/expanded_reg_md10-unified-provenance.csv
+Nodes after simplification = 1053
+Edges after simplification = 3027
+
+| Node | Degree Centrality |
+|------|------|
+| NOG | 0.238 | 
+| TGFB1 | 0.148 | 
+| TNF | 0.115 | 
+| INS | 0.103 | 
+| CDKN1A | 0.076 | 
+| NSC 689534/Copper | 0.072 | 
+| CXCL8 | 0.058 | 
+| IL1B | 0.058 | 
+| PVT1 | 0.056 | 
+| IL6 | 0.054 | 
+
+
+Target augment_gene_list built
+</pre>
+
 
 <p>
 This results in the creation of four files in the pybravo_output dir
@@ -185,22 +607,32 @@ The expanded_reg_md10-unified.sif file can be viewed in cyto scape.
 </div>
 </div>
 
-<div id="outline-container-orgd627708" class="outline-2">
-<h2 id="orgd627708"><span class="section-number-2">3.</span> Visualize the network</h2>
+<div id="outline-container-org0a85816" class="outline-2">
+<h2 id="org0a85816"><span class="section-number-2">3.</span> Visualize the network</h2>
 <div class="outline-text-2" id="text-3">
+<p>
+This visualization was manually created with cytoscape.
+</p>
 
-<div id="org51f89ee" class="figure">
-<p><img src="./data/plots/expanded_reg_md10-unified.png" alt="expanded_reg_md10-unified.png" />
+<div id="orgf1018d9" class="figure">
+<p><img src="../../data/plots/expanded_reg_md10-unified.png" alt="expanded_reg_md10-unified.png" width="800px" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Gene Regulation Network</p>
 </div>
 </div>
 </div>
 
-
-<div id="outline-container-org0857872" class="outline-2">
-<h2 id="org0857872"><span class="section-number-2">4.</span> Next steps</h2>
+<div id="outline-container-org2ac1b81" class="outline-2">
+<h2 id="org2ac1b81"><span class="section-number-2">4.</span> <span class="todo TODO">TODO</span> Visualize the network d3</h2>
 <div class="outline-text-2" id="text-4">
+<iframe src="./test.html" width="960" height="600" style="border:none;"></iframe>
+</div>
+</div>
+
+
+<div id="outline-container-org5e84c6d" class="outline-2">
+<h2 id="org5e84c6d"><span class="section-number-2">5.</span> Next steps</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 In the next page we will import the single cell data alongside the
 network describe some properties of the data and then make a data
@@ -211,7 +643,7 @@ table of the transcriptome in our samples and genes of intrest.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Sam Neaves</p>
-<p class="date">Created: 2024-11-26 Tue 16:15</p>
+<p class="date">Created: 2024-11-28 Thu 12:36</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
