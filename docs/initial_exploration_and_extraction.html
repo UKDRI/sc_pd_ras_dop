@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-11-26 Tue 16:15 -->
+<!-- 2024-11-29 Fri 14:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Initial Data Exploration and Data Extraction</title>
@@ -33,17 +33,17 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orga5706ce">1. About</a></li>
-<li><a href="#orgf958c29">2. Data info</a>
+<li><a href="#orgb1e47b7">1. About</a></li>
+<li><a href="#orge48499d">2. Data info</a>
 <ul>
-<li><a href="#org807b5c6">2.1. Get the normalised expression values</a></li>
-<li><a href="#orga81c410">2.2. Get the count expression values</a></li>
+<li><a href="#org77f7547">2.1. Get the normalised expression values</a></li>
+<li><a href="#org7c79a63">2.2. Get the count expression values</a></li>
 </ul>
 </li>
-<li><a href="#orgff4fc78">3. Finding the overlap</a></li>
-<li><a href="#org0fb76b5">4. Complexes</a></li>
-<li><a href="#org57e068a">5. Edge types</a></li>
-<li><a href="#orga00a45d">6. Select cells and genes</a></li>
+<li><a href="#org822a6b9">3. Finding the overlap</a></li>
+<li><a href="#org95f6fbc">4. Complexes</a></li>
+<li><a href="#org3fadd46">5. Edge types</a></li>
+<li><a href="#org545df26">6. Select cells and genes</a></li>
 </ul>
 </div>
 </div>
@@ -57,8 +57,8 @@
 </ul>
 </div>
 
-<div id="outline-container-orga5706ce" class="outline-2">
-<h2 id="orga5706ce"><span class="section-number-2">1.</span> About</h2>
+<div id="outline-container-orgb1e47b7" class="outline-2">
+<h2 id="orgb1e47b7"><span class="section-number-2">1.</span> About</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 This work is a part of the <a href="../readme.html">ParkinsonPathAI</a> project. The code described
@@ -68,8 +68,8 @@ here is part 2 of the work.
 </div>
 
 
-<div id="outline-container-orgf958c29" class="outline-2">
-<h2 id="orgf958c29"><span class="section-number-2">2.</span> Data info</h2>
+<div id="outline-container-orge48499d" class="outline-2">
+<h2 id="orge48499d"><span class="section-number-2">2.</span> Data info</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 "Just sending the single nuclei data for the dopaminergic neurons in our atlas as Caleb suggested.
@@ -100,10 +100,45 @@ data_location <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b
 <pre class="src src-R">head(sn_atlas_dans$CellSubType)
 </pre>
 </div>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">DaN_0</td>
+</tr>
+
+<tr>
+<td class="org-left">DaN_0</td>
+</tr>
+
+<tr>
+<td class="org-left">DaN_1</td>
+</tr>
+
+<tr>
+<td class="org-left">DaN_1</td>
+</tr>
+
+<tr>
+<td class="org-left">DaN_0</td>
+</tr>
+
+<tr>
+<td class="org-left">DaN_0</td>
+</tr>
+</tbody>
+</table>
 </div>
 
-<div id="outline-container-org807b5c6" class="outline-3">
-<h3 id="org807b5c6"><span class="section-number-3">2.1.</span> Get the normalised expression values</h3>
+
+
+<div id="outline-container-org77f7547" class="outline-3">
+<h3 id="org77f7547"><span class="section-number-3">2.1.</span> Get the normalised expression values</h3>
 <div class="outline-text-3" id="text-2-1">
 <div class="org-src-container">
 <pre class="src src-R">genes_norm<span style="color: #008b8b;">&lt;-</span>as.matrix(GetAssayData(sn_atlas_dans, slot = <span style="color: #8b2252;">"data"</span>))
@@ -113,8 +148,8 @@ data_location <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b
 </div>
 
 
-<div id="outline-container-orga81c410" class="outline-3">
-<h3 id="orga81c410"><span class="section-number-3">2.2.</span> Get the count expression values</h3>
+<div id="outline-container-org7c79a63" class="outline-3">
+<h3 id="org7c79a63"><span class="section-number-3">2.2.</span> Get the count expression values</h3>
 <div class="outline-text-3" id="text-2-2">
 <div class="org-src-container">
 <pre class="src src-R">genes_counts<span style="color: #008b8b;">&lt;-</span>as.matrix(GetAssayData(sn_atlas_dans, slot = <span style="color: #8b2252;">"counts"</span>))
@@ -124,14 +159,14 @@ data_location <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b
 </div>
 </div>
 
-<div id="outline-container-orgff4fc78" class="outline-2">
-<h2 id="orgff4fc78"><span class="section-number-2">3.</span> Finding the overlap</h2>
+<div id="outline-container-org822a6b9" class="outline-2">
+<h2 id="org822a6b9"><span class="section-number-2">3.</span> Finding the overlap</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Find the overlap of list of genes that we get back from pathway commons and our data
 </p>
 <div class="org-src-container">
-<pre class="src src-R">network_data <span style="color: #008b8b;">&lt;-</span> read.table(<span style="color: #8b2252;">"./data/pybravo_output/expanded_reg_md10-unified.sif"</span>, quote = <span style="color: #8b2252;">""</span>, header = <span style="color: #228b22;">FALSE</span>, stringsAsFactors = <span style="color: #228b22;">FALSE</span>, sep = <span style="color: #8b2252;">"\t"</span>)
+<pre class="src src-R">network_data <span style="color: #008b8b;">&lt;-</span> read.table(<span style="color: #8b2252;">"../../data/pybravo_output/expanded_reg_md10-unified.sif"</span>, quote = <span style="color: #8b2252;">""</span>, header = <span style="color: #228b22;">FALSE</span>, stringsAsFactors = <span style="color: #228b22;">FALSE</span>, sep = <span style="color: #8b2252;">"\t"</span>)
 head(network_data)
 nodes <span style="color: #008b8b;">&lt;-</span> unique(c(network_data$V1, network_data$V3))
 </pre>
@@ -146,6 +181,7 @@ nodes <span style="color: #008b8b;">&lt;-</span> unique(c(network_data$V1, netwo
 5 Fra1/JUN ACTIVATION   MMP9
 6 Fra1/JUN ACTIVATION  CXCL8
 </pre>
+
 
 
 <div class="org-src-container">
@@ -171,13 +207,13 @@ length(common_names)
 </div>
 
 <pre class="example">
-526
+[1] 526
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org0fb76b5" class="outline-2">
-<h2 id="org0fb76b5"><span class="section-number-2">4.</span> Complexes</h2>
+<div id="outline-container-org95f6fbc" class="outline-2">
+<h2 id="org95f6fbc"><span class="section-number-2">4.</span> Complexes</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 In the graph representation we have genes and protein complexes.
@@ -219,13 +255,13 @@ num_complexes
 </div>
 
 <pre class="example">
-296
+[1] 296
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org57e068a" class="outline-2">
-<h2 id="org57e068a"><span class="section-number-2">5.</span> Edge types</h2>
+<div id="outline-container-org3fadd46" class="outline-2">
+<h2 id="org3fadd46"><span class="section-number-2">5.</span> Edge types</h2>
 <div class="outline-text-2" id="text-5">
 <div class="org-src-container">
 <pre class="src src-R"><span style="color: #b22222;"># </span><span style="color: #b22222;">Count occurrences of each edge type in the second column (V2)</span>
@@ -236,36 +272,12 @@ print(edge_counts)
 </pre>
 </div>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<pre class="example">
 
+ACTIVATION INHIBITION    PART_OF    UNKNOWN 
+      1711        654        567         95
+</pre>
 
-<colgroup>
-<col  class="org-left" />
-
-<col  class="org-right" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">ACTIVATION</td>
-<td class="org-right">1710</td>
-</tr>
-
-<tr>
-<td class="org-left">INHIBITION</td>
-<td class="org-right">655</td>
-</tr>
-
-<tr>
-<td class="org-left">PART_OF</td>
-<td class="org-right">567</td>
-</tr>
-
-<tr>
-<td class="org-left">UNKNOWN</td>
-<td class="org-right">95</td>
-</tr>
-</tbody>
-</table>
 
 
 
@@ -274,10 +286,270 @@ print(edge_counts)
 summary(sn_atlas_dans)
 </pre>
 </div>
+
+<pre class="example" id="org2c0fd2f">
+Formal class 'Seurat' [package "SeuratObject"] with 13 slots
+  ..@ assays      :List of 1
+  .. ..$ RNA:Formal class 'Assay' [package "SeuratObject"] with 8 slots
+  .. .. .. ..@ counts       :Formal class 'dgCMatrix' [package "Matrix"] with 6 slots
+  .. .. .. .. .. ..@ i       : int [1:78129850] 3 4 7 10 12 13 16 18 19 20 ...
+  .. .. .. .. .. ..@ p       : int [1:7489] 0 15120 31612 38747 52967 66145 77907 88892 104156 114056 ...
+  .. .. .. .. .. ..@ Dim     : int [1:2] 19803 7488
+  .. .. .. .. .. ..@ Dimnames:List of 2
+  .. .. .. .. .. .. ..$ : chr [1:19803] "OR4F5" "OR4F29" "OR4F16" "SAMD11" ...
+  .. .. .. .. .. .. ..$ : chr [1:7488] "ATTCAAGGCGATATCC_chip02_HC1" "ATTCAAGGTTAGGCGG_chip02_HC1" "GACTCAAGAGTCTCCG_chip02_HC1" "CTAAGCATCTTCTTAC_chip02_HC1" ...
+  .. .. .. .. .. ..@ x       : num [1:78129850] 5 1 3 7 13 8 1 1 3 3 ...
+  .. .. .. .. .. ..@ factors : list()
+  .. .. .. ..@ data         :Formal class 'dgCMatrix' [package "Matrix"] with 6 slots
+  .. .. .. .. .. ..@ i       : int [1:78129850] 3 4 7 10 12 13 16 18 19 20 ...
+  .. .. .. .. .. ..@ p       : int [1:7489] 0 15120 31612 38747 52967 66145 77907 88892 104156 114056 ...
+  .. .. .. .. .. ..@ Dim     : int [1:2] 19803 7488
+  .. .. .. .. .. ..@ Dimnames:List of 2
+  .. .. .. .. .. .. ..$ : chr [1:19803] "OR4F5" "OR4F29" "OR4F16" "SAMD11" ...
+  .. .. .. .. .. .. ..$ : chr [1:7488] "ATTCAAGGCGATATCC_chip02_HC1" "ATTCAAGGTTAGGCGG_chip02_HC1" "GACTCAAGAGTCTCCG_chip02_HC1" "CTAAGCATCTTCTTAC_chip02_HC1" ...
+  .. .. .. .. .. ..@ x       : num [1:78129850] 0.096 0.0199 0.0587 0.1319 0.2326 ...
+  .. .. .. .. .. ..@ factors : list()
+  .. .. .. ..@ scale.data   : num [1:2000, 1:7488] -0.0491 -0.0694 0.2405 -0.064 -0.0377 ...
+  .. .. .. .. ..- attr(*, "dimnames")=List of 2
+  .. .. .. .. .. ..$ : chr [1:2000] "HES4" "RNF223" "C1QTNF12" "FNDC10" ...
+  .. .. .. .. .. ..$ : chr [1:7488] "ATTCAAGGCGATATCC_chip02_HC1" "ATTCAAGGTTAGGCGG_chip02_HC1" "GACTCAAGAGTCTCCG_chip02_HC1" "CTAAGCATCTTCTTAC_chip02_HC1" ...
+  .. .. .. ..@ assay.orig   : NULL
+  .. .. .. ..@ var.features : chr [1:2000] "RGS1" "HLA-DRA" "RNASE6" "FOS" ...
+  .. .. .. ..@ meta.features:'data.frame':	19803 obs. of  5 variables:
+  .. .. .. .. ..$ vst.mean                 : num [1:19803] 0.09773 0.00126 0.00148 1.08839 2.46327 ...
+  .. .. .. .. ..$ vst.variance             : num [1:19803] 3.04 2.39e-03 2.95e-03 2.80e+02 1.48e+03 ...
+  .. .. .. .. ..$ vst.variance.expected    : num [1:19803] 4.53 3.41e-03 4.26e-03 2.88e+02 8.75e+02 ...
+  .. .. .. .. ..$ vst.variance.standardized: num [1:19803] 0.672 0.699 0.693 0.973 1.698 ...
+  .. .. .. .. ..$ vst.variable             : logi [1:19803] FALSE FALSE FALSE FALSE FALSE FALSE ...
+  .. .. .. ..@ misc         : list()
+  .. .. .. ..@ key          : chr "rna_"
+  ..@ meta.data   :'data.frame':	7488 obs. of  16 variables:
+  .. ..$ orig.ident     : Factor w/ 1 level "SeuratProject": 1 1 1 1 1 1 1 1 1 1 ...
+  .. ..$ nCount_RNA     : num [1:7488] 496313 680897 23228 362198 450873 ...
+  .. ..$ nFeature_RNA   : int [1:7488] 15120 16492 7135 14220 13178 11762 10985 15264 9900 15011 ...
+  .. ..$ Barcode        : chr [1:7488] "ATTCAAGGCGATATCC" "ATTCAAGGTTAGGCGG" "GACTCAAGAGTCTCCG" "CTAAGCATCTTCTTAC" ...
+  .. ..$ Sample         : chr [1:7488] "HC1" "HC1" "HC1" "HC1" ...
+  .. ..$ name           : chr [1:7488] "ATTCAAGGCGATATCC_chip02_HC1" "ATTCAAGGTTAGGCGG_chip02_HC1" "GACTCAAGAGTCTCCG_chip02_HC1" "CTAAGCATCTTCTTAC_chip02_HC1" ...
+  .. ..$ Sample_v2      : chr [1:7488] "12_137" "12_137" "12_137" "12_137" ...
+  .. ..$ Disease        : chr [1:7488] "CTR" "CTR" "CTR" "CTR" ...
+  .. ..$ Sex            : chr [1:7488] "M" "M" "M" "M" ...
+  .. ..$ CellType       : chr [1:7488] "DaN" "DaN" "DaN" "DaN" ...
+  .. ..$ CellSubType    : chr [1:7488] "DaN_0" "DaN_0" "DaN_1" "DaN_1" ...
+  .. ..$ clust.disease  : chr [1:7488] "DaN_CTR" "DaN_CTR" "DaN_CTR" "DaN_CTR" ...
+  .. ..$ cluster        : Factor w/ 86 levels "Microglia_1_CTR",..: 8 8 10 10 8 8 8 10 8 8 ...
+  .. ..$ RNA_snn_res.0.6: Factor w/ 12 levels "0","1","2","3",..: 4 4 4 4 2 4 11 4 2 4 ...
+  .. ..$ seurat_clusters: Factor w/ 12 levels "0","1","2","3",..: 4 4 4 4 2 4 11 4 2 4 ...
+  .. ..$ cellt_dis      : chr [1:7488] "DaN_0_CTR" "DaN_0_CTR" "DaN_1_CTR" "DaN_1_CTR" ...
+  ..@ active.assay: chr "RNA"
+  ..@ active.ident: Factor w/ 16 levels "DaN_0_CTR","DaN_1_CTR",..: 1 1 2 2 1 1 1 2 1 1 ...
+  .. ..- attr(*, "names")= chr [1:7488] "ATTCAAGGCGATATCC_chip02_HC1" "ATTCAAGGTTAGGCGG_chip02_HC1" "GACTCAAGAGTCTCCG_chip02_HC1" "CTAAGCATCTTCTTAC_chip02_HC1" ...
+  ..@ graphs      :List of 2
+  .. ..$ RNA_nn :Formal class 'Graph' [package "SeuratObject"] with 7 slots
+  .. .. .. ..@ assay.used: chr(0) 
+  .. .. .. ..@ i         : int [1:133383] 0 121 132 180 203 861 1013 2542 2554 2947 ...
+  .. .. .. ..@ p         : int [1:7489] 0 17 34 39 50 62 65 71 78 96 ...
+  .. .. .. ..@ Dim       : int [1:2] 7488 7488
+  .. .. .. ..@ Dimnames  :List of 2
+  .. .. .. .. ..$ : chr [1:7488] "ATTCAAGGCGATATCC_chip02_HC1" "ATTCAAGGTTAGGCGG_chip02_HC1" "GACTCAAGAGTCTCCG_chip02_HC1" "CTAAGCATCTTCTTAC_chip02_HC1" ...
+  .. .. .. .. ..$ : chr [1:7488] "ATTCAAGGCGATATCC_chip02_HC1" "ATTCAAGGTTAGGCGG_chip02_HC1" "GACTCAAGAGTCTCCG_chip02_HC1" "CTAAGCATCTTCTTAC_chip02_HC1" ...
+  .. .. .. ..@ x         : num [1:133383] 1 1 1 1 1 1 1 1 1 1 ...
+  .. .. .. ..@ factors   : list()
+  .. ..$ RNA_snn:Formal class 'Graph' [package "SeuratObject"] with 7 slots
+  .. .. .. ..@ assay.used: chr(0) 
+  .. .. .. ..@ i         : int [1:431820] 0 42 121 180 203 580 793 1011 1013 1022 ...
+  .. .. .. ..@ p         : int [1:7489] 0 39 99 131 173 215 243 269 305 344 ...
+  .. .. .. ..@ Dim       : int [1:2] 7488 7488
+  .. .. .. ..@ Dimnames  :List of 2
+  .. .. .. .. ..$ : chr [1:7488] "ATTCAAGGCGATATCC_chip02_HC1" "ATTCAAGGTTAGGCGG_chip02_HC1" "GACTCAAGAGTCTCCG_chip02_HC1" "CTAAGCATCTTCTTAC_chip02_HC1" ...
+  .. .. .. .. ..$ : chr [1:7488] "ATTCAAGGCGATATCC_chip02_HC1" "ATTCAAGGTTAGGCGG_chip02_HC1" "GACTCAAGAGTCTCCG_chip02_HC1" "CTAAGCATCTTCTTAC_chip02_HC1" ...
+  .. .. .. ..@ x         : num [1:431820] 1 0.25 0.25 0.25 0.25 ...
+  .. .. .. ..@ factors   : list()
+  ..@ neighbors   : list()
+  ..@ reductions  :List of 2
+  .. ..$ pca :Formal class 'DimReduc' [package "SeuratObject"] with 9 slots
+  .. .. .. ..@ cell.embeddings           : num [1:7488, 1:50] 4.437 4.6 3.875 0.431 0.952 ...
+  .. .. .. .. ..- attr(*, "dimnames")=List of 2
+  .. .. .. .. .. ..$ : chr [1:7488] "ATTCAAGGCGATATCC_chip02_HC1" "ATTCAAGGTTAGGCGG_chip02_HC1" "GACTCAAGAGTCTCCG_chip02_HC1" "CTAAGCATCTTCTTAC_chip02_HC1" ...
+  .. .. .. .. .. ..$ : chr [1:50] "PC_1" "PC_2" "PC_3" "PC_4" ...
+  .. .. .. ..@ feature.loadings          : num [1:2000, 1:50] 0.0687 0.0849 0.0327 0.0306 0.0231 ...
+  .. .. .. .. ..- attr(*, "dimnames")=List of 2
+  .. .. .. .. .. ..$ : chr [1:2000] "RGS1" "HLA-DRA" "RNASE6" "FOS" ...
+  .. .. .. .. .. ..$ : chr [1:50] "PC_1" "PC_2" "PC_3" "PC_4" ...
+  .. .. .. ..@ feature.loadings.projected: num[0 , 0 ] 
+  .. .. .. ..@ assay.used                : chr "RNA"
+  .. .. .. ..@ global                    : logi FALSE
+  .. .. .. ..@ stdev                     : num [1:50] 4.08 3.83 3.06 2.55 2.36 ...
+  .. .. .. ..@ jackstraw                 :Formal class 'JackStrawData' [package "SeuratObject"] with 4 slots
+  .. .. .. .. .. ..@ empirical.p.values     : num[0 , 0 ] 
+  .. .. .. .. .. ..@ fake.reduction.scores  : num[0 , 0 ] 
+  .. .. .. .. .. ..@ empirical.p.values.full: num[0 , 0 ] 
+  .. .. .. .. .. ..@ overall.p.values       : num[0 , 0 ] 
+  .. .. .. ..@ misc                      :List of 1
+  .. .. .. .. ..$ total.variance: num 1241
+  .. .. .. ..@ key                       : chr "PC_"
+  .. ..$ umap:Formal class 'DimReduc' [package "SeuratObject"] with 9 slots
+  .. .. .. ..@ cell.embeddings           : num [1:7488, 1:2] -6.53 -7.2 -5.86 -5.47 -4.25 ...
+  .. .. .. .. ..- attr(*, "dimnames")=List of 2
+  .. .. .. .. .. ..$ : chr [1:7488] "ATTCAAGGCGATATCC_chip02_HC1" "ATTCAAGGTTAGGCGG_chip02_HC1" "GACTCAAGAGTCTCCG_chip02_HC1" "CTAAGCATCTTCTTAC_chip02_HC1" ...
+  .. .. .. .. .. ..$ : chr [1:2] "umap_1" "umap_2"
+  .. .. .. ..@ feature.loadings          : num[0 , 0 ] 
+  .. .. .. ..@ feature.loadings.projected: num[0 , 0 ] 
+  .. .. .. ..@ assay.used                : chr "RNA"
+  .. .. .. ..@ global                    : logi TRUE
+  .. .. .. ..@ stdev                     : num(0) 
+  .. .. .. ..@ jackstraw                 :Formal class 'JackStrawData' [package "SeuratObject"] with 4 slots
+  .. .. .. .. .. ..@ empirical.p.values     : num[0 , 0 ] 
+  .. .. .. .. .. ..@ fake.reduction.scores  : num[0 , 0 ] 
+  .. .. .. .. .. ..@ empirical.p.values.full: num[0 , 0 ] 
+  .. .. .. .. .. ..@ overall.p.values       : num[0 , 0 ] 
+  .. .. .. ..@ misc                      : list()
+  .. .. .. ..@ key                       : chr "umap_"
+  ..@ images      : list()
+  ..@ project.name: chr "SeuratProject"
+  ..@ misc        : list()
+  ..@ version     :Classes 'package_version', 'numeric_version'  hidden list of 1
+  .. ..$ : int [1:3] 4 1 3
+  ..@ commands    :List of 7
+  .. ..$ NormalizeData.RNA       :Formal class 'SeuratCommand' [package "SeuratObject"] with 5 slots
+  .. .. .. ..@ name       : chr "NormalizeData.RNA"
+  .. .. .. ..@ time.stamp : POSIXct[1:1], format: "2024-07-31 14:50:00"
+  .. .. .. ..@ assay.used : chr "RNA"
+  .. .. .. ..@ call.string: chr "NormalizeData(sn_atlas_processed)"
+  .. .. .. ..@ params     :List of 5
+  .. .. .. .. ..$ assay               : chr "RNA"
+  .. .. .. .. ..$ normalization.method: chr "LogNormalize"
+  .. .. .. .. ..$ scale.factor        : num 10000
+  .. .. .. .. ..$ margin              : num 1
+  .. .. .. .. ..$ verbose             : logi TRUE
+  .. ..$ FindVariableFeatures.RNA:Formal class 'SeuratCommand' [package "SeuratObject"] with 5 slots
+  .. .. .. ..@ name       : chr "FindVariableFeatures.RNA"
+  .. .. .. ..@ time.stamp : POSIXct[1:1], format: "2024-07-31 14:50:12"
+  .. .. .. ..@ assay.used : chr "RNA"
+  .. .. .. ..@ call.string: chr [1:2] "FindVariableFeatures(sn_atlas_processed, selection.method = \"vst\", " "    nfeatures = 2000)"
+  .. .. .. ..@ params     :List of 12
+  .. .. .. .. ..$ assay              : chr "RNA"
+  .. .. .. .. ..$ selection.method   : chr "vst"
+  .. .. .. .. ..$ loess.span         : num 0.3
+  .. .. .. .. ..$ clip.max           : chr "auto"
+  .. .. .. .. ..$ mean.function      :function (mat, display_progress)  
+  .. .. .. .. ..$ dispersion.function:function (mat, display_progress)  
+  .. .. .. .. ..$ num.bin            : num 20
+  .. .. .. .. ..$ binning.method     : chr "equal_width"
+  .. .. .. .. ..$ nfeatures          : num 2000
+  .. .. .. .. ..$ mean.cutoff        : num [1:2] 0.1 8
+  .. .. .. .. ..$ dispersion.cutoff  : num [1:2] 1 Inf
+  .. .. .. .. ..$ verbose            : logi TRUE
+  .. ..$ ScaleData.RNA           :Formal class 'SeuratCommand' [package "SeuratObject"] with 5 slots
+  .. .. .. ..@ name       : chr "ScaleData.RNA"
+  .. .. .. ..@ time.stamp : POSIXct[1:1], format: "2024-07-31 14:50:13"
+  .. .. .. ..@ assay.used : chr "RNA"
+  .. .. .. ..@ call.string: chr "ScaleData(sn_atlas_processed)"
+  .. .. .. ..@ params     :List of 10
+  .. .. .. .. ..$ features          : chr [1:2000] "RGS1" "HLA-DRA" "RNASE6" "FOS" ...
+  .. .. .. .. ..$ assay             : chr "RNA"
+  .. .. .. .. ..$ model.use         : chr "linear"
+  .. .. .. .. ..$ use.umi           : logi FALSE
+  .. .. .. .. ..$ do.scale          : logi TRUE
+  .. .. .. .. ..$ do.center         : logi TRUE
+  .. .. .. .. ..$ scale.max         : num 10
+  .. .. .. .. ..$ block.size        : num 1000
+  .. .. .. .. ..$ min.cells.to.block: num 3000
+  .. .. .. .. ..$ verbose           : logi TRUE
+  .. ..$ RunPCA.RNA              :Formal class 'SeuratCommand' [package "SeuratObject"] with 5 slots
+  .. .. .. ..@ name       : chr "RunPCA.RNA"
+  .. .. .. ..@ time.stamp : POSIXct[1:1], format: "2024-07-31 14:50:52"
+  .. .. .. ..@ assay.used : chr "RNA"
+  .. .. .. ..@ call.string: chr "RunPCA(sn_atlas_processed, features = VariableFeatures(object = sn_atlas_processed))"
+  .. .. .. ..@ params     :List of 11
+  .. .. .. .. ..$ assay          : chr "RNA"
+  .. .. .. .. ..$ features       : chr [1:2000] "RGS1" "HLA-DRA" "RNASE6" "FOS" ...
+  .. .. .. .. ..$ npcs           : num 50
+  .. .. .. .. ..$ rev.pca        : logi FALSE
+  .. .. .. .. ..$ weight.by.var  : logi TRUE
+  .. .. .. .. ..$ verbose        : logi TRUE
+  .. .. .. .. ..$ ndims.print    : int [1:5] 1 2 3 4 5
+  .. .. .. .. ..$ nfeatures.print: num 30
+  .. .. .. .. ..$ reduction.name : chr "pca"
+  .. .. .. .. ..$ reduction.key  : chr "PC_"
+  .. .. .. .. ..$ seed.use       : num 42
+  .. ..$ FindNeighbors.RNA.pca   :Formal class 'SeuratCommand' [package "SeuratObject"] with 5 slots
+  .. .. .. ..@ name       : chr "FindNeighbors.RNA.pca"
+  .. .. .. ..@ time.stamp : POSIXct[1:1], format: "2024-07-31 14:50:57"
+  .. .. .. ..@ assay.used : chr "RNA"
+  .. .. .. ..@ call.string: chr "FindNeighbors(sn_atlas_processed, dims = 1:10)"
+  .. .. .. ..@ params     :List of 16
+  .. .. .. .. ..$ reduction      : chr "pca"
+  .. .. .. .. ..$ dims           : int [1:10] 1 2 3 4 5 6 7 8 9 10
+  .. .. .. .. ..$ assay          : chr "RNA"
+  .. .. .. .. ..$ k.param        : num 20
+  .. .. .. .. ..$ return.neighbor: logi FALSE
+  .. .. .. .. ..$ compute.SNN    : logi TRUE
+  .. .. .. .. ..$ prune.SNN      : num 0.0667
+  .. .. .. .. ..$ nn.method      : chr "annoy"
+  .. .. .. .. ..$ n.trees        : num 50
+  .. .. .. .. ..$ annoy.metric   : chr "euclidean"
+  .. .. .. .. ..$ nn.eps         : num 0
+  .. .. .. .. ..$ verbose        : logi TRUE
+  .. .. .. .. ..$ do.plot        : logi FALSE
+  .. .. .. .. ..$ graph.name     : chr [1:2] "RNA_nn" "RNA_snn"
+  .. .. .. .. ..$ l2.norm        : logi FALSE
+  .. .. .. .. ..$ cache.index    : logi FALSE
+  .. ..$ FindClusters            :Formal class 'SeuratCommand' [package "SeuratObject"] with 5 slots
+  .. .. .. ..@ name       : chr "FindClusters"
+  .. .. .. ..@ time.stamp : POSIXct[1:1], format: "2024-07-31 14:51:01"
+  .. .. .. ..@ assay.used : chr "RNA"
+  .. .. .. ..@ call.string: chr "FindClusters(sn_atlas_processed, resolution = 0.6)"
+  .. .. .. ..@ params     :List of 11
+  .. .. .. .. ..$ graph.name      : chr "RNA_snn"
+  .. .. .. .. ..$ cluster.name    : chr "RNA_snn_res.0.6"
+  .. .. .. .. ..$ modularity.fxn  : num 1
+  .. .. .. .. ..$ resolution      : num 0.6
+  .. .. .. .. ..$ method          : chr "matrix"
+  .. .. .. .. ..$ algorithm       : num 1
+  .. .. .. .. ..$ n.start         : num 10
+  .. .. .. .. ..$ n.iter          : num 10
+  .. .. .. .. ..$ random.seed     : num 0
+  .. .. .. .. ..$ group.singletons: logi TRUE
+  .. .. .. .. ..$ verbose         : logi TRUE
+  .. ..$ RunUMAP.RNA.pca         :Formal class 'SeuratCommand' [package "SeuratObject"] with 5 slots
+  .. .. .. ..@ name       : chr "RunUMAP.RNA.pca"
+  .. .. .. ..@ time.stamp : POSIXct[1:1], format: "2024-07-31 14:51:28"
+  .. .. .. ..@ assay.used : chr "RNA"
+  .. .. .. ..@ call.string: chr "RunUMAP(sn_atlas_processed, dims = 1:10)"
+  .. .. .. ..@ params     :List of 25
+  .. .. .. .. ..$ dims                : int [1:10] 1 2 3 4 5 6 7 8 9 10
+  .. .. .. .. ..$ reduction           : chr "pca"
+  .. .. .. .. ..$ assay               : chr "RNA"
+  .. .. .. .. ..$ slot                : chr "data"
+  .. .. .. .. ..$ umap.method         : chr "uwot"
+  .. .. .. .. ..$ return.model        : logi FALSE
+  .. .. .. .. ..$ n.neighbors         : int 30
+  .. .. .. .. ..$ n.components        : int 2
+  .. .. .. .. ..$ metric              : chr "cosine"
+  .. .. .. .. ..$ learning.rate       : num 1
+  .. .. .. .. ..$ min.dist            : num 0.3
+  .. .. .. .. ..$ spread              : num 1
+  .. .. .. .. ..$ set.op.mix.ratio    : num 1
+  .. .. .. .. ..$ local.connectivity  : int 1
+  .. .. .. .. ..$ repulsion.strength  : num 1
+  .. .. .. .. ..$ negative.sample.rate: int 5
+  .. .. .. .. ..$ uwot.sgd            : logi FALSE
+  .. .. .. .. ..$ seed.use            : int 42
+  .. .. .. .. ..$ angular.rp.forest   : logi FALSE
+  .. .. .. .. ..$ densmap             : logi FALSE
+  .. .. .. .. ..$ dens.lambda         : num 2
+  .. .. .. .. ..$ dens.frac           : num 0.3
+  .. .. .. .. ..$ dens.var.shift      : num 0.1
+  .. .. .. .. ..$ verbose             : logi TRUE
+  .. .. .. .. ..$ reduction.name      : chr "umap"
+  ..@ tools       : list()
+Length  Class   Mode 
+     1 Seurat     S4
+</pre>
 </div>
 </div>
-<div id="outline-container-orga00a45d" class="outline-2">
-<h2 id="orga00a45d"><span class="section-number-2">6.</span> Select cells and genes</h2>
+<div id="outline-container-org545df26" class="outline-2">
+<h2 id="org545df26"><span class="section-number-2">6.</span> Select cells and genes</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 We want to select Cells that are either control or parkinsons
@@ -292,22 +564,10 @@ dim(sn_atlas_dans_ctrl_vs_pd_pathway)
 </pre>
 </div>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<pre class="example">
+[1]  526 6385
+</pre>
 
-
-<colgroup>
-<col  class="org-right" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-right">526</td>
-</tr>
-
-<tr>
-<td class="org-right">6385</td>
-</tr>
-</tbody>
-</table>
 
 <div class="org-src-container">
 <pre class="src src-R">
@@ -318,7 +578,7 @@ expression_matrix <span style="color: #008b8b;">&lt;-</span> as.data.frame(t(as.
 expression_matrix$Disease <span style="color: #008b8b;">&lt;-</span> sn_atlas_dans_ctrl_vs_pd_pathway@meta.data$Disease
 
 <span style="color: #b22222;"># </span><span style="color: #b22222;">Save to CSV</span>
-write.csv(expression_matrix, file = <span style="color: #8b2252;">"./data/cell_expression_with_disease.csv"</span>, row.names = <span style="color: #228b22;">TRUE</span>)
+write.csv(expression_matrix, file = <span style="color: #8b2252;">"../../data/cell_expression_with_disease.csv"</span>, row.names = <span style="color: #228b22;">TRUE</span>)
 
 
 </pre>
@@ -333,7 +593,7 @@ count_matrix <span style="color: #008b8b;">&lt;-</span> as.data.frame(t(as.matri
 count_matrix$Disease <span style="color: #008b8b;">&lt;-</span> sn_atlas_dans_ctrl_vs_pd_pathway@meta.data$Disease
 
 <span style="color: #b22222;"># </span><span style="color: #b22222;">Save to CSV</span>
-write.csv(count_matrix, file = <span style="color: #8b2252;">"./data/cell_count_with_disease.csv"</span>, row.names = <span style="color: #228b22;">TRUE</span>)
+write.csv(count_matrix, file = <span style="color: #8b2252;">"../../data/cell_count_with_disease.csv"</span>, row.names = <span style="color: #228b22;">TRUE</span>)
 
 </pre>
 </div>
@@ -342,7 +602,7 @@ write.csv(count_matrix, file = <span style="color: #8b2252;">"./data/cell_count_
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Sam Neaves</p>
-<p class="date">Created: 2024-11-26 Tue 16:15</p>
+<p class="date">Created: 2024-11-29 Fri 14:14</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
